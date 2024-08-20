@@ -1,1 +1,40 @@
-node_modules
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Env files
+.env
+.env.*.local
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+
+# Build directories
+dist/
+build/
+
+# Typescript compiled output
+*.tsbuildinfo
+
+# Coverage files
+coverage/
+
+# Temporary files
+tmp/
+temp/
+
+# Local environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# System files
+Thumbs.db
+Desktop.ini
