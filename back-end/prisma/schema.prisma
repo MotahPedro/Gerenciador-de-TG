@@ -1,0 +1,69 @@
+datasource db {
+  provider = "mysql"
+  url      = env("mysql://root:P@ssword@localhost:3306/gestor_tg")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model ProfessorOrientador {
+  id                     Int      @id @default(autoincrement())
+  cpf                    String   @unique
+  nome                   String
+  email                  String   @unique
+  quantidadeInstituicoes Int
+  quantidadeAlunos       Int
+  
+  linhasOrientacao       LinhaOrientacao[]
+  cursosAtuacao          CursoAtuacao[]
+  alunosOrientados       AlunoOrientado[]
+}
+
+model LinhaOrientacao {
+  id                     Int      @id @default(autoincrement())
+  linha                  String
+  professorOrientadorId  Int
+  professorOrientador    ProfessorOrientador @relation(fields: [professorOrientadorId], references: [id])
+}
+
+model CursoAtuacao {
+  id                     Int      @id @default(autoincrement())
+  curso                  String
+  professorOrientadorId  Int
+  professorOrientador    ProfessorOrientador @relation(fields: [professorOrientadorId], references: [id])
+}
+
+model AlunoOrientado {
+  id                     Int      @id @default(autoincrement())
+  matricula              String   @unique
+  nome                   String
+  email                  String
+  curso                  String
+  turma                  String
+  periodo                String
+  semestre               String
+  filaDependencia        Boolean
+  professorOrientadorId  Int
+  professorOrientador    ProfessorOrientador @relation(fields: [professorOrientadorId], references: [id])
+  trabalhos              Trabalho[]
+}
+
+model Trabalho {
+  id                     Int      @id @default(autoincrement())
+  tema                   String
+  objetivo               String
+  questaoProblema        String
+  alunoOrientadoId       Int
+  alunoOrientado         AlunoOrientado @relation(fields: [alunoOrientadoId], references: [id])
+  professorCoordenadorId Int?
+  professorCoordenador   ProfessorCoordenador? @relation(fields: [professorCoordenadorId], references: [id])
+}
+
+model ProfessorCoordenador {
+  id                     Int      @id @default(autoincrement())
+  cpf                    String   @unique
+  nome                   String
+  email                  String
+  trabalhos              Trabalho[]
+}
