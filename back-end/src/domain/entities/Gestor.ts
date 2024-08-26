@@ -1,1 +1,0 @@
-// Classes de entidade do gestor

@@ -1,1 +1,0 @@
-// Classes de repositorio do gestor
