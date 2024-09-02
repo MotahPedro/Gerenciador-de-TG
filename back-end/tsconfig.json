@@ -22,7 +22,7 @@
       "@domain/*": ["./src/domain/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@infra/*": ["./src/infra/*"],
-      "@test/*": ["./test/*"]
+      "@test/*": ["test/*"]
     }
   }
 }

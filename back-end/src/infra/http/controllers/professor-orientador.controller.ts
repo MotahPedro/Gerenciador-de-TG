@@ -36,7 +36,7 @@ import { createOrientadorResponseExample } from '../dtos/CreateOrientadorRespons
 // mais 4 dtos a fazer
 // JwtAuth
 
-@Controller('professor-orientador')
+@Controller('gerenciadorDeTG/v1')
 export class ProfessorOrientadorController extends BaseController {
     constructor(
     private readonly createOrientadorUseCase: CreateOrientadorUseCase,
@@ -45,7 +45,7 @@ export class ProfessorOrientadorController extends BaseController {
     super();
   }
 
-  @Post('reservation')
+  @Post('orientador')
   @ApiBody({ type: OrientadorRequestDto })
   @ApiResponse({
     status: HttpStatus.OK,
