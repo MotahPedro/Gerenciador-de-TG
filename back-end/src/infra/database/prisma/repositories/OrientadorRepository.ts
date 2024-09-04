@@ -36,5 +36,21 @@ export class PrismaOrientadorRepository
   //   return await this.prisma.professorOrientador.findFirst({
   // })
   // }
+
+  async findByCpf(cpf: string): Promise<any> {
+    return await this.prisma.professorOrientador.findFirst({
+      where: {
+        cpf,
+      },
+    });
+  }	
+
+  async findByEmail(email: string): Promise<any> {
+    return await this.prisma.professorOrientador.findFirst({
+      where: {
+        email,
+      },
+    });
+  }
   
 }

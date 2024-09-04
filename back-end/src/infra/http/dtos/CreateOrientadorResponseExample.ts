@@ -3,6 +3,7 @@ export const createOrientadorResponseExample = {
   cpf: '123.456.789-00',
   nome: 'João Silva',
   email: 'joao.silva@example.com',
+  senha: '123456789',
   quantidadeInstituicoes: 3,
   quantidadeAlunos: 10,
   linhasOrientacao: ['Linha 1', 'Linha 2'],

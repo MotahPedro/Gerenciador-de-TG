@@ -3,6 +3,7 @@ export interface ProfessorOrientadorProps {
   cpf: string;
   nome: string;
   email: string;
+  senha: string;
   linhasOrientacao: { linha: string }[]; // Atualizado para refletir a estrutura usada no toPrisma
   quantidadeInstituicoes: number;
   cursosAtuacao: { curso: string }[]; // Atualizado para refletir a estrutura usada no toPrisma
@@ -11,6 +12,7 @@ export interface ProfessorOrientadorProps {
     matricula: string;
     nome: string;
     email: string;
+    senha: string;
     curso: string;
     turma: string;
     periodo: string;
