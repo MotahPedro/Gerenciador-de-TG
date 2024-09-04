@@ -15,13 +15,12 @@ export class CreateOrientadorUseCase {
 
     async execute(orientador: ProfessorOrientadorProps) {
         
-        this.validadeOrientador(orientador);
+        await this.validadeOrientador(orientador);
 
         const prismaOrientador = OrientadorMapper.toPrisma(orientador);
 
         try {
             const savedOrientador = await this.repository.save(prismaOrientador);
-            
             return OrientadorMapper.toDomain(savedOrientador);
         } catch (error) {
             throw new AppError(
@@ -30,12 +29,24 @@ export class CreateOrientadorUseCase {
             );
         }
 
-
     }
 
-    private validadeOrientador(orientador: ProfessorOrientadorProps) {
-        if (!orientador.cpf || !orientador.nome || !orientador.email) {
-            throw new AppError(constant.ORIENTADOR.VALIDADE, HttpStatus.BAD_REQUEST.toString());
+    private async validadeOrientador(orientador: ProfessorOrientadorProps) {
+        const requiredFields = ['cpf', 'nome', 'email', 'senha', 'linhasOrientacao', 'cursosAtuacao'];
+        for (const field of requiredFields) {
+            if (!orientador[field]) {
+                throw new AppError(constant.ORIENTADOR.VALIDADE, HttpStatus.BAD_REQUEST.toString());
+            }
+        }
+
+        const existingCPF = await this.repository.findByCpf(orientador.cpf);
+        if (existingCPF) {
+            throw new AppError(constant.ORIENTADOR.CPF, HttpStatus.BAD_REQUEST.toString());
+        }
+
+        const existingEmail = await this.repository.findByEmail(orientador.email);
+        if (existingEmail) {
+            throw new AppError(constant.ORIENTADOR.EMAIL, HttpStatus.BAD_REQUEST.toString());
         }
     }
 }

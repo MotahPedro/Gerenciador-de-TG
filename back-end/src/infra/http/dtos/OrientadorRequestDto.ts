@@ -10,6 +10,9 @@ export class OrientadorRequestDto {
   @ApiProperty({ example: 'joao.silva@example.com'})
   email: string;
 
+  @ApiProperty({ example: '123456789'})
+  senha: string;
+
   @ApiProperty({ type: [Object], example: [{ linha: 'Linha 1' }, { linha: 'Linha 2' }] })
   linhasOrientacao: { linha: string }[];
 
@@ -65,6 +68,7 @@ export class OrientadorRequestDto {
     matricula: string;
     nome: string;
     email: string;
+    senha: string;
     curso: string;
     turma: string;
     periodo: string;

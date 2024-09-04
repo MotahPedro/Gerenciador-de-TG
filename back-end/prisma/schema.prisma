@@ -12,10 +12,14 @@ model ProfessorOrientador {
   cpf                 String             @unique
   nome                String
   email               String             @unique
+  senha               String
+
   quantidadeInstituicoes Int
   quantidadeAlunos    Int
+
   linhasOrientacao    LinhaOrientacao[]
   cursosAtuacao       CursoAtuacao[]
+  
   alunosOrientados    AlunoOrientado[]
 
   @@map("professororientador")
@@ -40,6 +44,7 @@ model AlunoOrientado {
   matricula           String
   nome                String
   email               String
+  senha               String
   curso               String
   turma               String
   periodo             String

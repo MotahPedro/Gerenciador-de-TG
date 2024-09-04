@@ -1,8 +1,10 @@
 export default function getConstants() {
     return {
         ORIENTADOR:{
-            VALIDADE: 'CPF, Nome e Email são obrigatórios',
+            VALIDADE: 'CPF, Nome, Email, Senha, linhasOrientacao e cursosAtuacaoo são obrigatórios',
             INTERNAL:  'Erro ao criar orientador: ',
+            CPF: 'CPF já cadastrado',
+            EMAIL: 'Email já cadastrado',
         }    
     }
 }
