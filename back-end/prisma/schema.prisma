@@ -14,8 +14,8 @@ model ProfessorOrientador {
   email               String             @unique
   senha               String
 
-  quantidadeInstituicoes Int
-  quantidadeAlunos    Int
+  quantidadeInstituicoes Int             @default(0)
+  quantidadeAlunos    Int                @default(0)
 
   linhasOrientacao    LinhaOrientacao[]
   cursosAtuacao       CursoAtuacao[]
@@ -28,14 +28,14 @@ model ProfessorOrientador {
 model LinhaOrientacao {
   id                  Int                @id @default(autoincrement())
   linha               String
-  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorId], references: [id])
+  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorId], references: [id], onDelete: Cascade)
   professorOrientadorId Int
 }
 
 model CursoAtuacao {
   id                  Int                @id @default(autoincrement())
   curso               String
-  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorId], references: [id])
+  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorId], references: [id], onDelete: Cascade)
   professorOrientadorId Int
 }
 

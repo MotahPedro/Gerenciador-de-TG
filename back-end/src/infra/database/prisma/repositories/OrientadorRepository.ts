@@ -21,8 +21,12 @@ export class PrismaOrientadorRepository
 
     return await this.prisma.professorOrientador.create({
       data: accountDb,
+      include: {
+        linhasOrientacao: true,
+        cursosAtuacao: true,
+        alunosOrientados: true,
+      }
     });
-
   }
 
   // async update(id: string): Promise<any> {

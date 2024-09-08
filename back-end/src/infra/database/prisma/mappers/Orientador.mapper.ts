@@ -8,9 +8,9 @@ export class OrientadorMapper {
             email: orientador.email,
             senha: orientador.senha,
             
-            linhasOrientacao: Array.isArray(orientador.linhasOrientacao) ? { create: orientador.linhasOrientacao.map(l => ({ linha: l })) } : undefined,
+            linhasOrientacao: Array.isArray(orientador.linhasOrientacao)  && orientador.linhasOrientacao.length > 0 ? { create: orientador.linhasOrientacao.map((linha) => ({ linha: linha.linha })) } : undefined,
 
-            cursosAtuacao: Array.isArray(orientador.cursosAtuacao) ? { create: orientador.cursosAtuacao.map(c => ({ curso: c })) } : undefined,
+            cursosAtuacao: Array.isArray(orientador.cursosAtuacao) && orientador.cursosAtuacao.length > 0 ? { create: orientador.cursosAtuacao.map((curso) => ({ curso: curso.curso })) } : undefined,
 
             alunosOrientados: Array.isArray(orientador.alunosOrientados) && orientador.alunosOrientados.length > 0
                 ? { create: orientador.alunosOrientados.map(a => ({

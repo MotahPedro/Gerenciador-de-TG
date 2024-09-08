@@ -1,7 +1,8 @@
 import { ProfessorOrientadorProps } from "@domain/entities/ProfessorOrientador";
 
 export abstract class OrientadorRepository {
-  abstract save(reservation: ProfessorOrientadorProps): Promise<any>;
+  abstract save(orientador: ProfessorOrientadorProps): Promise<any>;
+  abstract findByCpf(cpf: string);
   // abstract update(id: string): Promise<void>;
   // abstract findByOrientadorId(Orientadorid: string);
 }

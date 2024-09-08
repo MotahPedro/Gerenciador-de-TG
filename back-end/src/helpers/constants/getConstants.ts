@@ -5,6 +5,7 @@ export default function getConstants() {
             INTERNAL:  'Erro ao criar orientador: ',
             CPF: 'CPF já cadastrado',
             EMAIL: 'Email já cadastrado',
+            GET_FAIL: 'Erro ao buscar orientador',
         }    
     }
 }

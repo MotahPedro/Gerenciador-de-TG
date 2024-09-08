@@ -5,8 +5,8 @@ CREATE TABLE `professororientador` (
     `nome` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `senha` VARCHAR(191) NOT NULL,
-    `quantidadeInstituicoes` INTEGER NOT NULL,
-    `quantidadeAlunos` INTEGER NOT NULL,
+    `quantidadeInstituicoes` INTEGER NOT NULL DEFAULT 0,
+    `quantidadeAlunos` INTEGER NOT NULL DEFAULT 0,
 
     UNIQUE INDEX `professororientador_cpf_key`(`cpf`),
     UNIQUE INDEX `professororientador_email_key`(`email`),
@@ -60,10 +60,10 @@ CREATE TABLE `Trabalho` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `LinhaOrientacao` ADD CONSTRAINT `LinhaOrientacao_professorOrientadorId_fkey` FOREIGN KEY (`professorOrientadorId`) REFERENCES `professororientador`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `LinhaOrientacao` ADD CONSTRAINT `LinhaOrientacao_professorOrientadorId_fkey` FOREIGN KEY (`professorOrientadorId`) REFERENCES `professororientador`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `CursoAtuacao` ADD CONSTRAINT `CursoAtuacao_professorOrientadorId_fkey` FOREIGN KEY (`professorOrientadorId`) REFERENCES `professororientador`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `CursoAtuacao` ADD CONSTRAINT `CursoAtuacao_professorOrientadorId_fkey` FOREIGN KEY (`professorOrientadorId`) REFERENCES `professororientador`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `AlunoOrientado` ADD CONSTRAINT `AlunoOrientado_professorOrientadorId_fkey` FOREIGN KEY (`professorOrientadorId`) REFERENCES `professororientador`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

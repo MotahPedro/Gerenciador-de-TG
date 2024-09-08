@@ -32,7 +32,8 @@ import { InternalServerError } from '../dtos/errors/internalServerError.dto';
 import { Forbidden } from '../dtos/errors/forbidden.dto';
 import { NotFound } from '../dtos/errors/notFound.dto';
 import { OrientadorRequestDto } from '../dtos/OrientadorRequestDto';
-import { createOrientadorResponseExample } from '../dtos/CreateOrientadorResponseExample';
+import { createOrientadorResponseExample } from '../dtos/examples/CreateOrientadorResponseExample';
+import { OrientadorResponseDto } from '../dtos/OrientadorResponseDto';
 // mais 4 dtos a fazer
 // JwtAuth
 
@@ -111,6 +112,68 @@ export class ProfessorOrientadorController extends BaseController {
     @Res() res: Response,
   ) {
     const response = await this.createOrientadorUseCase.execute(orientador);
+
+    this.ok(res, response);
+  }
+
+  @Get('orientador/:cpf')
+  @ApiExcludeEndpoint()
+  @ApiQuery({ name: 'cpf', type: String })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Success',
+    type: OrientadorResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+    type: BadRequest,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+    type: Unauthorized,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+    type: Forbidden,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found',
+    type: NotFound,
+  })
+  @ApiResponse({
+    status: 405,
+    description: 'Method Not allowed',
+    type: MethodNotAllowed,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Conflict',
+    type: Conflict,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Server Error',
+    type: InternalServerError,
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Service Unavailable',
+    type: ServiceUnavailable,
+  })
+  @ApiResponse({
+    status: 504,
+    description: 'Gateway Timeout',
+    type: GatewayTimeout,
+  })
+  async findByCpf(
+    @Query('cpf') cpf: string,
+    @Res() res: Response,
+  ) {
+    const response = await this.getOrientadorUseCase.execute(cpf);
 
     this.ok(res, response);
   }
