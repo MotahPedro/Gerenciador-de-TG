@@ -6,6 +6,7 @@ export default function getConstants() {
             CPF: 'CPF já cadastrado',
             EMAIL: 'Email já cadastrado',
             GET_FAIL: 'Erro ao buscar orientador',
+            NOT_FOUND: 'Orientador não encontrado',
         }    
     }
 }

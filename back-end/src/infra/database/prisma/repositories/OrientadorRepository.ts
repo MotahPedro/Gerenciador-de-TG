@@ -56,5 +56,13 @@ export class PrismaOrientadorRepository
       },
     });
   }
+
+  async deleteByCpf(cpf: string): Promise<any> {
+    return await this.prisma.professorOrientador.delete({
+      where: {
+        cpf,
+      },
+    });
+  }
   
 }
