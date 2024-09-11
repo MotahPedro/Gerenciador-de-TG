@@ -1,10 +1,13 @@
 import { PrismaRepository } from '@infra/database/prisma/core/PrismaRepository';
 import { OrientadorRepository } from '@domain/repositories/Orientador.repository';
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { ProfessorOrientadorProps } from '@domain/entities/ProfessorOrientador';
 import { OrientadorMapper } from '../mappers/Orientador.mapper';
 import { BaseRepository } from '../core/Base.repository';
+import AppError from '@helpers/errors/AppError';
+import getConstants from '@helpers/constants/getConstants';
 
+const constants = getConstants()
 @Injectable()
 export class PrismaOrientadorRepository 
   extends BaseRepository 
@@ -42,7 +45,8 @@ export class PrismaOrientadorRepository
   // }
 
   async findByCpf(cpf: string): Promise<any> {
-    return await this.prisma.professorOrientador.findFirst({
+
+    return await this.prisma.professorOrientador.findUnique({
       where: {
         cpf,
       },

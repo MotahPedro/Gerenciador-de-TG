@@ -15,13 +15,13 @@ export class GetOrientadorUseCase {
         const data = await this.repository.findByCpf(cpf);
 
         if (!data) {
-            throw new AppError(constant.ORIENTADOR.GET_FAIL, HttpStatus.NOT_FOUND.toString());
+            throw new AppError(constant.ORIENTADOR.GET_CPF.ERRO, HttpStatus.NOT_FOUND.toString());
         }
 
         const response = OrientadorMapper.toGET(data);
 
         if (!response) {
-            throw new AppError(constant.ORIENTADOR.GET_FAIL, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            throw new AppError(constant.ORIENTADOR.GET_CPF.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
         }
 
         return response;

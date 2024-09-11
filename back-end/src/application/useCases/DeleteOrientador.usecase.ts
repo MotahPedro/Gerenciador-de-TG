@@ -17,6 +17,10 @@ export class DeleteOrientadorUseCase {
       throw new AppError(constant.ORIENTADOR.NOT_FOUND, HttpStatus.NOT_FOUND.toString());
     }
 
+    if (!cpf) {
+        throw new AppError('CPF não pode ser vazio', HttpStatus.BAD_REQUEST.toString());
+    }
+
     await this.repository.deleteByCpf(cpf);
   }
 }

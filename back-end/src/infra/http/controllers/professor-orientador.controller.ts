@@ -16,6 +16,7 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiExcludeEndpoint,
+  ApiParam,
   ApiQuery,
   ApiResponse,
   ApiTags,
@@ -122,7 +123,7 @@ export class ProfessorOrientadorController extends BaseController {
 
   @Get('orientador/:cpf')
   @ApiExcludeEndpoint()
-  @ApiQuery({ name: 'cpf', type: String })
+  @ApiParam({ name: 'cpf', type: String })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Success',
@@ -174,17 +175,17 @@ export class ProfessorOrientadorController extends BaseController {
     type: GatewayTimeout,
   })
   async findByCpf(
-    @Query('cpf') cpf: string,
+    @Param('cpf') cpf: string,
     @Res() res: Response,
   ) {
+    console.log('CPF recebido:', cpf);
     const response = await this.getOrientadorUseCase.execute(cpf);
-
     this.ok(res, response);
   }
 
   @Delete('orientador/delete/:cpf')
   @ApiExcludeEndpoint()
-  @ApiQuery({ name: 'cpf', type: String })
+  @ApiParam({ name: 'cpf', type: String })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Success',
@@ -236,7 +237,7 @@ export class ProfessorOrientadorController extends BaseController {
     type: GatewayTimeout,
   })
   async delete(
-    @Query('cpf') cpf: string,
+    @Param('cpf') cpf: string,
     @Res() res: Response,
   ) {
     const response = await this.deleteOrientadorUseCase.execute(cpf);
