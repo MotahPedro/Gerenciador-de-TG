@@ -22,8 +22,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { BaseController } from '../../../helpers/infra/controller/BaseController';
-import { CreateOrientadorUseCase } from '@application/useCases/CreateOrientador.usecase';
-import { GetOrientadorUseCase } from '@application/useCases/GetOrientador.usecase';
+import { CreateOrientadorUseCase } from '@application/useCases/Orientador/CreateOrientador.usecase';
+import { GetOrientadorUseCase } from '@application/useCases/Orientador/GetOrientador.usecase';
 import { GatewayTimeout } from '../dtos/errors/gatewayTimeout.dto';
 import { ServiceUnavailable } from '../dtos/errors/serviceUnavailable.dto';
 import { Unauthorized } from '../dtos/errors/unauthorized.dto';
@@ -36,7 +36,7 @@ import { NotFound } from '../dtos/errors/notFound.dto';
 import { OrientadorRequestDto } from '../dtos/OrientadorRequestDto';
 import { createOrientadorResponseExample } from '../dtos/examples/CreateOrientadorResponseExample';
 import { OrientadorResponseDto } from '../dtos/OrientadorResponseDto';
-import { DeleteOrientadorUseCase } from '@application/useCases/DeleteOrientador.usecase';
+import { DeleteOrientadorUseCase } from '@application/useCases/Orientador/DeleteOrientador.usecase';
 // mais 4 dtos a fazer
 // JwtAuth
 

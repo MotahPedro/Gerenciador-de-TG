@@ -10,6 +10,18 @@ export default function getConstants() {
                 VAZIO: 'CPF não pode ser vazio',
             },
             NOT_FOUND: 'Orientador não encontrado',
-        }    
+        },
+        ALUNO:{
+            VALIDADE: 'CPF, Nome, Email, Senha, curso e turma são obrigatórios',
+            INTERNAL:  'Erro ao criar aluno: ',
+            RA: 'RA já cadastrado',
+            EMAIL: 'Email já cadastrado',
+            GET_RA: {
+                ERRO:'Erro ao buscar aluno',
+                VAZIO: 'RA não pode ser vazio',
+            },
+            NOT_FOUND: 'aluno não encontrado',
+        },
+
     }
 }
