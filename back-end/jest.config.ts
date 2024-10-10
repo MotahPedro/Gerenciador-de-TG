@@ -86,6 +86,9 @@ module.exports = {
     '<import-path>': '<rootDir>/src',
     'tests/(.*)': '<rootDir>/__tests__/$1',
     axios: 'axios/dist/node/axios.cjs',
+    '^@infra/(.*)$': '<rootDir>/src/infra/$1',
+    '^@domain/(.*)$': '<rootDir>/src/domain/$1',
+    '^@helpers/(.*)$': '<rootDir>/src/helpers/$1',
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
