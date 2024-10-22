@@ -3,7 +3,7 @@ import { PrismaOrientadorRepository } from '@infra/database/prisma/repositories/
 import { OrientadorMapper } from '@infra/database/prisma/mappers/Orientador.mapper';
 import AppError from '@helpers/errors/AppError';
 import getConstants from '@helpers/constants/getConstants';
-import { mockOrientadorCompleto, mockOrientadorIncompleto } from '@helpers/__mocks__/CreateOrientadorUseCase.mocks';
+import { mockOrientadorCompleto, mockOrientadorIncompleto } from '@helpers/__mocks__/OrientadorUseCase.mocks';
 
 const constant = getConstants();
 

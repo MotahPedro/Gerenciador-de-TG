@@ -6,6 +6,8 @@ import { RepositoriesModule } from '@infra/database/prisma/repositories.module';
 import { DeleteOrientadorUseCase } from '@application/useCases/Orientador/DeleteOrientador.usecase';
 import { CreateAlunoUseCase } from '@application/useCases/Aluno/CreateAluno.usecase';
 import { AlunoOrientadoController } from '@infra/http/controllers/alunos-orientados.controller';
+import { GetAlunoUseCase } from '@application/useCases/Aluno/GetAluno.usecase';
+import { DeleteAlunoUseCase } from '@application/useCases/Aluno/DeleteAluno.usecase';
 
 @Module({
   imports: [RepositoriesModule],
@@ -14,9 +16,12 @@ import { AlunoOrientadoController } from '@infra/http/controllers/alunos-orienta
     GetOrientadorUseCase,    
     DeleteOrientadorUseCase,
     CreateAlunoUseCase,
+    GetAlunoUseCase,
+    DeleteAlunoUseCase
 ],
   controllers: [
     ProfessorOrientadorController,
-    AlunoOrientadoController]
+    AlunoOrientadoController,
+  ]
 })
 export class AppModule {}

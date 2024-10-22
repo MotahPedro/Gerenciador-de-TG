@@ -20,8 +20,18 @@ export default function getConstants() {
                 ERRO:'Erro ao buscar aluno',
                 VAZIO: 'RA não pode ser vazio',
             },
-            NOT_FOUND: 'aluno não encontrado',
+            NOT_FOUND: 'Trabalho não encontrado',
         },
-
+        TRABALHO:{
+            VALIDADE: 'Tema, Objetivo e Questão Problema são obrigatórios',
+            INTERNAL:  'Erro ao registrar trabalho: ',
+            RA: 'RA já cadastrado',
+            EMAIL: 'Email já cadastrado',
+            GET_ID: {
+                ERRO:'Erro ao buscar trabalho',
+                VAZIO: 'ID não pode ser vazio',
+            },
+            NOT_FOUND: 'Trabalho não encontrado',
+        },
     }
 }

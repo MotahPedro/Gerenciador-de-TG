@@ -1,4 +1,4 @@
-import { Injectable, HttpStatus, Inject } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import { AlunoOrientadoProps } from '@domain/entities/AlunoOrientado';
 import { AlunoMapper } from '@infra/database/prisma/mappers/Aluno.mapper';
 import AppError from '@helpers/errors/AppError';

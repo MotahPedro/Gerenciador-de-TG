@@ -4,9 +4,9 @@ export interface ProfessorOrientadorProps {
   nome: string;
   email: string;
   senha: string;
-  linhasOrientacao: { linha: string }[]; // Atualizado para refletir a estrutura usada no toPrisma
+  linhasOrientacao: { linha: string }[];
   quantidadeInstituicoes: number;
-  cursosAtuacao: { curso: string }[]; // Atualizado para refletir a estrutura usada no toPrisma
+  cursosAtuacao: { curso: string }[];
   quantidadeAlunos: number;
   alunosOrientados: {
     matricula: string;
@@ -23,5 +23,5 @@ export interface ProfessorOrientadorProps {
       objetivo: string;
       questaoProblema: string;
     }[];
-  }[]; // Atualizado para refletir a estrutura usada no toPrisma
+  }[];
 }
