@@ -1,0 +1,15 @@
+import { ApiProperty } from '@nestjs/swagger';
+
+export class TrabalhoResponseDto {
+  @ApiProperty({ example: 1 })
+  id: number;
+
+  @ApiProperty({ example: 'Desenvolvimento de Software' })
+  tema: string;
+
+  @ApiProperty({ example: 'Criar um sistema de gestão' })
+  objetivo: string;
+
+  @ApiProperty({ example: 'Como melhorar a eficiência do desenvolvimento de software?' })
+  questaoProblema: string;
+}

@@ -23,7 +23,7 @@ export default function getConstants() {
             NOT_FOUND: 'Trabalho não encontrado',
         },
         TRABALHO:{
-            VALIDADE: 'Tema, Objetivo e Questão Problema são obrigatórios',
+            CREATE_ERROR: 'Tema, Objetivo e Questão Problema são obrigatórios',
             INTERNAL:  'Erro ao registrar trabalho: ',
             RA: 'RA já cadastrado',
             EMAIL: 'Email já cadastrado',
