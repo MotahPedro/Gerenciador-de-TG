@@ -33,7 +33,7 @@ import {
   import { NotFound } from '../dtos/errors/notFound.dto';
   import { TrabalhoRequestDto } from '../dtos/TrabalhoRequestDto';
   import { TrabalhoResponseDto } from '../dtos/TrabalhoResponseDto';
-  import { createTrabalhoResponseExample } from '../dtos/examples/createTrabalhoResponseExample';
+  import { createTrabalhoResponseExample } from '../dtos/examples/CreateTrabalhoResponseExample';
   import { CreateTrabalhoUseCase } from '@application/useCases/Trabalhos/CreateTrabalho.usecase';
   import { GetTrabalhoUseCase } from '@application/useCases/Trabalhos/GetTrabalho.usecase';
   import { DeleteTrabalhoUseCase } from '@application/useCases/Trabalhos/DeleteTrabalho.usecase';
