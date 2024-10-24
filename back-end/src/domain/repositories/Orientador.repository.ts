@@ -4,4 +4,5 @@ export abstract class OrientadorRepository {
   abstract save(orientador: ProfessorOrientadorProps): Promise<any>;
   abstract findByCpf(cpf: string): Promise<void>;
   abstract deleteByCpf(cpf: string): Promise<void>;
+  abstract update(cpf: string, orientador: ProfessorOrientadorProps): Promise<void>;
 }

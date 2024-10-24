@@ -1,7 +1,7 @@
 import { ProfessorOrientadorProps } from "@domain/entities/ProfessorOrientador";
 
 export class OrientadorMapper {
-    static toPrisma(orientador: ProfessorOrientadorProps): any {
+    static toPrisma(orientador: Partial<ProfessorOrientadorProps>): any {
         return {
             cpf: orientador.cpf,
             nome: orientador.nome,

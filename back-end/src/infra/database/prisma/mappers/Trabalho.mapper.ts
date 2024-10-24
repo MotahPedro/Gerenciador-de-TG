@@ -1,7 +1,7 @@
 import { TrabalhoProps } from "@domain/entities/Trabalhos";
 
 export class TrabalhoMapper {
-    static toPrisma (trabalho: TrabalhoProps): any {
+    static toPrisma (trabalho: Partial<TrabalhoProps>): any {
         return {
             tema: trabalho.tema,
             objetivo: trabalho.objetivo,

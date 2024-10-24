@@ -27,12 +27,14 @@ export class PrismaAlunoRepository
     });
   }
 
-  // async update(id: string): Promise<any> {
-  //   await this.prisma.alunoOrientado.update({
-  //     where: { id: Number(id) },
-  //     data: { updatedAt: new Date() },
-  //   });
-  // }
+  async update(matricula: string, data: Partial<AlunoOrientadoProps>): Promise<any> {
+    const accountDb = AlunoMapper.toPrisma(data);
+
+    return await this.prisma.alunoOrientado.update({
+      where: { matricula: String(matricula) },
+      data: accountDb,
+    });
+  }
 
   // async findByOrientadorId (subscriberId: string) {
   //   return await this.prisma.alunoOrientado.findFirst({

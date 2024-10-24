@@ -31,12 +31,14 @@ export class PrismaTrabalhoRepository
     });
   }
 
-  // async update(id: string): Promise<any> {
-  //   await this.prisma.alunoOrientado.update({
-  //     where: { id: Number(id) },
-  //     data: { updatedAt: new Date() },
-  //   });
-  // }
+  async update(id: number, data: Partial<TrabalhoProps>): Promise<any> {
+    const accountDb = TrabalhoMapper.toPrisma(data);
+
+    return await this.prisma.trabalho.update({
+      where: { id: Number(id) },
+      data: accountDb,
+    });
+  }
 
   // async findByOrientadorId (subscriberId: string) {
   //   return await this.prisma.alunoOrientado.findFirst({

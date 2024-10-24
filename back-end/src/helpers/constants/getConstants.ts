@@ -9,6 +9,10 @@ export default function getConstants() {
                 ERRO:'Erro ao buscar orientador',
                 VAZIO: 'CPF não pode ser vazio',
             },
+            UPDATE: {
+                ERRO:'Erro ao atualizar orientador',
+                VAZIO: 'Os dados não podem ser vazios',
+            },
             NOT_FOUND: 'Orientador não encontrado',
         },
         ALUNO:{
@@ -20,6 +24,10 @@ export default function getConstants() {
                 ERRO:'Erro ao buscar aluno',
                 VAZIO: 'RA não pode ser vazio',
             },
+            UPDATE: {
+                ERRO:'Erro ao atualizar aluno',
+                VAZIO: 'RA não pode ser vazio',
+            },
             NOT_FOUND: 'Trabalho não encontrado',
         },
         TRABALHO:{
@@ -29,6 +37,10 @@ export default function getConstants() {
             EMAIL: 'Email já cadastrado',
             GET_ID: {
                 ERRO:'Erro ao buscar trabalho',
+                VAZIO: 'ID não pode ser vazio',
+            },
+            UPDATE: {
+                ERRO:'Erro ao atualizar trabalho',
                 VAZIO: 'ID não pode ser vazio',
             },
             NOT_FOUND: 'Trabalho não encontrado',

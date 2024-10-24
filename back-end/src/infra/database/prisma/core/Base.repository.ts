@@ -14,7 +14,7 @@ export class BaseRepository {
     return await this.prisma[this.entityName].create({ ...entity });
   }
 
-  async update(id: string, data: any): Promise<any> {
+  async update(id: string | number, data: any): Promise<any> {
     return await this.prisma[this.entityName].update({
       where: { id },
       data,

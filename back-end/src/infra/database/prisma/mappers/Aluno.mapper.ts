@@ -1,7 +1,7 @@
 import { AlunoOrientadoProps } from "@domain/entities/AlunoOrientado";
 
 export class AlunoMapper {
-    static toPrisma (aluno: AlunoOrientadoProps): any {
+    static toPrisma (aluno: Partial<AlunoOrientadoProps>): any {
         return {
             matricula: aluno.matricula,
             nome: aluno.nome,
