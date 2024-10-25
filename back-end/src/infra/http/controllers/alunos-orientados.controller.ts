@@ -38,6 +38,7 @@ import {
   import { AlunosRequestDto } from '../dtos/AlunosRequestDto';
   import { AlunosResponseDto } from '../dtos/AlunosResponseDto';
   import { createAlunoResponseExample } from '../dtos/examples/CreateAlunoREsponseExample';
+  import { UpdateAlunoUsecase } from '@application/useCases/Aluno/UpdateAluno.usecase';
   // mais 4 dtos a fazer
   // JwtAuth
   
@@ -47,7 +48,7 @@ import {
       private readonly createAlunoUseCase: CreateAlunoUseCase,
       private readonly getAlunoUseCase: GetAlunoUseCase,
       private readonly deleteAlunoUseCase: DeleteAlunoUseCase,
-  
+      private readonly updateAlunoUseCase: UpdateAlunoUsecase,
     ) {
       super();
     }
@@ -242,6 +243,69 @@ import {
       @Res() res: Response,
     ) {
       const response = await this.deleteAlunoUseCase.execute(ra);
+  
+      this.ok(res, response);
+    }
+
+    @Patch('trabalho/update/:ra')
+    @ApiExcludeEndpoint()
+    @ApiParam({ name: 'ra', type: String })
+    @ApiResponse({
+      status: HttpStatus.OK,
+      description: 'Success',
+      type: AlunosResponseDto,
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Bad Request',
+      type: BadRequest,
+    })
+    @ApiResponse({
+      status: 401,
+      description: 'Unauthorized',
+      type: Unauthorized,
+    })
+    @ApiResponse({
+      status: 403,
+      description: 'Forbidden',
+      type: Forbidden,
+    })
+    @ApiResponse({
+      status: 404,
+      description: 'Not Found',
+      type: NotFound,
+    })
+    @ApiResponse({
+      status: 405,
+      description: 'Method Not allowed',
+      type: MethodNotAllowed,
+    })
+    @ApiResponse({
+      status: 409,
+      description: 'Conflict',
+      type: Conflict,
+    })
+    @ApiResponse({
+      status: 500,
+      description: 'Internal Server Error',
+      type: InternalServerError,
+    })
+    @ApiResponse({
+      status: 503,
+      description: 'Service Unavailable',
+      type: ServiceUnavailable,
+    })
+    @ApiResponse({
+      status: 504,
+      description: 'Gateway Timeout',
+      type: GatewayTimeout,
+    })
+    async update(
+      @Param('ra') ra: string,
+      @Body() aluno: AlunosRequestDto,
+      @Res() res: Response,
+    ) {
+      const response = await this.updateAlunoUseCase.execute(ra, aluno);
   
       this.ok(res, response);
     }

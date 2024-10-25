@@ -37,6 +37,7 @@ import { OrientadorRequestDto } from '../dtos/OrientadorRequestDto';
 import { createOrientadorResponseExample } from '../dtos/examples/CreateOrientadorResponseExample';
 import { OrientadorResponseDto } from '../dtos/OrientadorResponseDto';
 import { DeleteOrientadorUseCase } from '@application/useCases/Orientador/DeleteOrientador.usecase';
+import { UpdateOrientadorUseCase } from '@application/useCases/Orientador/UpdateOrientador.usecase';
 // mais 4 dtos a fazer
 // JwtAuth
 
@@ -46,7 +47,7 @@ export class ProfessorOrientadorController extends BaseController {
     private readonly createOrientadorUseCase: CreateOrientadorUseCase,
     private readonly getOrientadorUseCase: GetOrientadorUseCase,
     private readonly deleteOrientadorUseCase: DeleteOrientadorUseCase,
-
+    private readonly updateOrientadorUseCase: UpdateOrientadorUseCase,
   ) {
     super();
   }
@@ -241,6 +242,69 @@ export class ProfessorOrientadorController extends BaseController {
     @Res() res: Response,
   ) {
     const response = await this.deleteOrientadorUseCase.execute(cpf);
+
+    this.ok(res, response);
+  }
+
+  @Patch('orientador/update/:cpf')
+  @ApiExcludeEndpoint()
+  @ApiParam({ name: 'cpf', type: String })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Success',
+    type: OrientadorResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+    type: BadRequest,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+    type: Unauthorized,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+    type: Forbidden,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found',
+    type: NotFound,
+  })
+  @ApiResponse({
+    status: 405,
+    description: 'Method Not allowed',
+    type: MethodNotAllowed,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Conflict',
+    type: Conflict,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Server Error',
+    type: InternalServerError,
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Service Unavailable',
+    type: ServiceUnavailable,
+  })
+  @ApiResponse({
+    status: 504,
+    description: 'Gateway Timeout',
+    type: GatewayTimeout,
+  })
+  async update(
+    @Param('cpf') cpf: string,
+    @Body() orientador: OrientadorRequestDto,
+    @Res() res: Response,
+  ) {
+    const response = await this.updateOrientadorUseCase.execute(cpf, orientador);
 
     this.ok(res, response);
   }
