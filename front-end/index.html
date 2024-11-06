@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integração com API</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+      
+      <label for="password">Senha:</label>
+      <input type="password" id="password" required>
+      
+      <button type="submit">Entrar</button>
+      <p id="error" class="error"></p>
+    </form>
+  </div>
+  <script src="./dist/index.js" defer></script>
+</body>
+</html>
