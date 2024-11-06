@@ -13,7 +13,8 @@ import { PrismaTrabalhoRepository } from './repositories/TrabalhoRepository';
   ],
   exports: [
     PrismaOrientadorRepository,
-    PrismaAlunoRepository
+    PrismaAlunoRepository,
+    PrismaTrabalhoRepository,
   ],
 })
 export class RepositoriesModule { }
