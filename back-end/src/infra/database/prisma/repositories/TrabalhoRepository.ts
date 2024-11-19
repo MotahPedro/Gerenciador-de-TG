@@ -40,11 +40,6 @@ export class PrismaTrabalhoRepository
     });
   }
 
-  // async findByOrientadorId (subscriberId: string) {
-  //   return await this.prisma.alunoOrientado.findFirst({
-  // })
-  // }
-
   async findById(id: number): Promise<any> {
 
     return await this.prisma.alunoOrientado.findUnique({

@@ -29,17 +29,14 @@ export class PrismaOrientadorRepository
     });
   }
 
-  // async update(id: string): Promise<any> {
-  //   await this.prisma.professorOrientador.update({
-  //     where: { id: Number(id) },
-  //     data: { updatedAt: new Date() },
-  //   });
-  // }
+  async update(cpf: string, data: Partial<ProfessorOrientadorProps>): Promise<any> {
+    const accountDb = OrientadorMapper.toPrisma(data);
 
-  // async findByOrientadorId (subscriberId: string) {
-  //   return await this.prisma.professorOrientador.findFirst({
-  // })
-  // }
+    return await this.prisma.professorOrientador.update({
+      where: { cpf: String(cpf) },
+      data: accountDb,
+    });
+  }
 
   async findByCpf(cpf: string): Promise<any> {
 

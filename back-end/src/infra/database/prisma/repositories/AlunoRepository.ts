@@ -36,11 +36,6 @@ export class PrismaAlunoRepository
     });
   }
 
-  // async findByOrientadorId (subscriberId: string) {
-  //   return await this.prisma.alunoOrientado.findFirst({
-  // })
-  // }
-
   async findByRa(matricula: string): Promise<any> {
 
     return await this.prisma.alunoOrientado.findUnique({
