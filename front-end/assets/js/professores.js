@@ -36,11 +36,11 @@ professorForm.addEventListener('submit', async (e) => {
         nome: formData.get('nome'),
         email: formData.get('email'),
         senha: formData.get('senha'),
-        linhasOrientacao: formData.get('linhasOrientacao').split(',').filter((item) => item),
+        linhasOrientacao: formData.get('linhasOrientacao').split(',').filter((item) => item.trim() !== ''),
         quantidadeInstituicoes: Number(formData.get('quantidadeInstituicoes')) || 0,
-        cursosAtuacao: formData.get('cursosAtuacao').split(',').filter((item) => item),
+        cursosAtuacao: formData.get('cursosAtuacao').split(',').filter((item) => item.trim() !== ''),
         quantidadeAlunos: Number(formData.get('quantidadeAlunos')) || 0,
-        alunosOrientados: formData.get('alunosOrientados').split(',').filter((item) => item),
+        alunosOrientados: formData.get('alunosOrientados').split(',').filter((item) => item.trim() !== ''),
     };
 
     try {
@@ -133,11 +133,11 @@ function editarProfessor(cpf) {
                     nome: document.getElementById('nomePopup').value,
                     email: document.getElementById('emailPopup').value,
                     senha: document.getElementById('senhaPopup').value,
-                    linhasOrientacao: document.getElementById('linhasOrientacaoPopup').value.split(','),
+                    linhasOrientacao: document.getElementById('linhasOrientacaoPopup').value.split(',').filter((item) => item.trim() !== ''),
                     quantidadeInstituicoes: Number(document.getElementById('quantidadeInstituicoesPopup').value),
-                    cursosAtuacao: document.getElementById('cursosAtuacaoPopup').value.split(','),
+                    cursosAtuacao: document.getElementById('cursosAtuacaoPopup').value.split(',').filter((item) => item.trim() !== ''),
                     quantidadeAlunos: Number(document.getElementById('quantidadeAlunosPopup').value),
-                    alunosOrientados: document.getElementById('alunosOrientadosPopup').value.split(',')
+                    alunosOrientados: document.getElementById('alunosOrientadosPopup').value.split(',').filter((item) => item.trim() !== '')
                 };
 
                 // Faz a requisição para atualizar o professor

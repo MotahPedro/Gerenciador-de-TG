@@ -34,7 +34,12 @@ export class PrismaOrientadorRepository
 
     return await this.prisma.professorOrientador.update({
       where: { cpf: String(cpf) },
-      data: accountDb,
+      data: {
+        ...accountDb,
+        linhasOrientacao: accountDb.linhasOrientacao ? { deleteMany: {}, create: accountDb.linhasOrientacao.create } : undefined,
+        cursosAtuacao: accountDb.cursosAtuacao ? { deleteMany: {}, create: accountDb.cursosAtuacao.create } : undefined,
+        alunosOrientados: accountDb.alunosOrientados ? { deleteMany: {}, create: accountDb.alunosOrientados.create } : undefined,
+      },
     });
   }
 
