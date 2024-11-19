@@ -123,7 +123,7 @@ import {
       this.ok(res, response);
     }
 
-    @Get('trabalho/:ra')
+    @Get('aluno/:ra')
     @ApiExcludeEndpoint()
     @ApiParam({ name: 'ra', type: String })
     @ApiResponse({
@@ -185,7 +185,7 @@ import {
       this.ok(res, response);
     }
   
-    @Delete('trabalho/delete/:ra')
+    @Delete('aluno/delete/:ra')
     @ApiExcludeEndpoint()
     @ApiParam({ name: 'ra', type: String })
     @ApiResponse({
@@ -247,7 +247,7 @@ import {
       this.ok(res, response);
     }
 
-    @Patch('trabalho/update/:ra')
+    @Patch('aluno/update/:ra')
     @ApiExcludeEndpoint()
     @ApiParam({ name: 'ra', type: String })
     @ApiResponse({
