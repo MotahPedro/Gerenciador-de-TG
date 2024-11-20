@@ -4,15 +4,10 @@ const alunosTable = document.getElementById('alunosTable').querySelector('tbody'
 const filtroInput = document.getElementById('filtro');
 const buscarButton = document.getElementById('buscar');
 const limparBuscaButton = document.getElementById('limparBusca');
-
-// Seletor do popup e dos campos do formulário dentro dele
 const popup = document.getElementById('popup');
 const popupForm = document.getElementById('popupForm');
 const cancelarButton = document.getElementById('cancelarButton');
 const atualizarButton = document.getElementById('atualizarButton');
-
-// Base URL
-const baseURL = 'http://127.0.0.1:3080/gerenciadorDeTG/v1';
 
 // Função para criar uma linha na tabela
 function adicionarLinha(aluno) {
@@ -22,8 +17,13 @@ function adicionarLinha(aluno) {
         <td>${aluno.nome}</td>
         <td>${aluno.email}</td>
         <td>${aluno.curso}</td>
+        <td>${aluno.turma || ''}</td>
+        <td>${aluno.periodo || ''}</td>
+        <td>${aluno.semestre || ''}</td>
+        <td>${aluno.filaDependencia ? 'Sim' : 'Não'}</td>
+        <td>${aluno.professorOrientador?.nome || ''}</td>
+        <td>${aluno.professorOrientadorId || ''}</td>
         <td>
-            <button onclick="exibirTrabalhos('${aluno.matricula}')">Trabalhos</button>
             <button onclick="editarAluno('${aluno.matricula}')">Editar</button>
             <button onclick="deletarAluno('${aluno.matricula}')">Deletar</button>
         </td>
@@ -43,15 +43,16 @@ alunoForm.addEventListener('submit', async (e) => {
         senha: formData.get('senha'),
         curso: formData.get('curso'),
         turma: formData.get('turma'),
-        periodo: Number(formData.get('periodo')),
-        semestre: Number(formData.get('semestre')),
+        periodo: formData.get('periodo'),
+        semestre: formData.get('semestre'),
         filaDependencia: formData.get('filaDependencia') === 'on',
-        professorOrientadorId: Number(formData.get('professorOrientadorId')),
-        trabalhos: [], // Trabalhos podem ser adicionados depois
+        professorOrientador: { nome: formData.get('professorOrientador') },
+        professorOrientadorId: parseInt(formData.get('professorOrientadorId')) || 0,
+        trabalhos: [],
     };
 
     try {
-        const response = await fetch(`${baseURL}/aluno`, {
+        const response = await fetch('http://127.0.0.1:3080/gerenciadorDeTG/v1/aluno', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(novoAluno),
@@ -62,73 +63,85 @@ alunoForm.addEventListener('submit', async (e) => {
             adicionarLinha(alunoCadastrado);
             alunoForm.reset();
         } else {
-            console.error('Erro ao cadastrar aluno:', response.statusText);
+            console.error('Erro ao cadastrar aluno');
+        }
+    } catch (error) {
+        console.error('Erro de conexão:', error);
+    }
+});
+
+// Buscar aluno por matrícula
+async function buscarAlunoPorMatricula(matricula) {
+    try {
+        const response = await fetch(`http://127.0.0.1:3080/gerenciadorDeTG/v1/aluno/${matricula}`, {
+            method: 'GET',
+        });
+
+        if (response.ok) {
+            const aluno = await response.json();
+            atualizarTabela([aluno]);
+        } else if (response.status === 404) {
+            atualizarTabela([]);
+        } else {
+            console.error('Erro ao buscar aluno:', response.statusText);
         }
     } catch (error) {
         console.error('Erro ao conectar à API:', error);
     }
-});
-
-// Carregar trabalhos por matrícula
-async function exibirTrabalhos(matricula) {
-    try {
-        const response = await fetch(`${baseURL}/trabalho/${matricula}`, { method: 'GET' });
-
-        if (response.ok) {
-            const trabalhos = await response.json();
-            alert(
-                trabalhos
-                    .map(
-                        (trabalho, index) =>
-                            `Trabalho ${index + 1}:\nTema: ${trabalho.tema}\nObjetivo: ${trabalho.objetivo}\nQuestão Problema: ${trabalho.questaoProblema}`
-                    )
-                    .join('\n\n')
-            );
-        } else {
-            alert('Nenhum trabalho encontrado para este aluno.');
-        }
-    } catch (error) {
-        console.error('Erro ao buscar trabalhos:', error);
-    }
 }
 
-// Atualizar aluno
+// Atualiza tabela com lista de alunos
+function atualizarTabela(alunos) {
+    alunosTable.innerHTML = '';
+    alunos.forEach(adicionarLinha);
+}
+
+// Buscar alunos ao clicar no botão de buscar
+buscarButton.addEventListener('click', () => {
+    const filtro = filtroInput.value.trim();
+    if (filtro) {
+        buscarAlunoPorMatricula(filtro);
+    } else {
+        console.log('Filtro vazio');
+    }
+});
+
+// Limpar a busca
+limparBuscaButton.addEventListener('click', () => {
+    filtroInput.value = '';
+    buscarAlunoPorMatricula(''); // Atualiza tabela sem filtro
+});
+
+// Abrir popup para editar
 function editarAluno(matricula) {
-    fetch(`${baseURL}/trabalho/${matricula}`)
-        .then((response) => response.json())
-        .then((aluno) => {
-            // Preenche os campos do popup com os dados do aluno
+    fetch(`http://127.0.0.1:3080/gerenciadorDeTG/v1/aluno/${matricula}`)
+        .then(response => response.json())
+        .then(aluno => {
             document.getElementById('matriculaPopup').value = aluno.matricula;
             document.getElementById('nomePopup').value = aluno.nome;
             document.getElementById('emailPopup').value = aluno.email;
             document.getElementById('cursoPopup').value = aluno.curso;
 
-            // Exibe o popup
             popup.style.display = 'flex';
 
-            // Configura a ação do botão "Atualizar"
             atualizarButton.onclick = async (e) => {
                 e.preventDefault();
-
-                // Cria um objeto com os dados atualizados
-                const alunoAtualizado = {
-                    matricula: document.getElementById('matriculaPopup').value,
+                const updatedAluno = {
                     nome: document.getElementById('nomePopup').value,
                     email: document.getElementById('emailPopup').value,
                     curso: document.getElementById('cursoPopup').value,
                 };
 
-                // Faz a requisição para atualizar o aluno
-                const response = await fetch(`${baseURL}/trabalho/update/${matricula}`, {
+                const response = await fetch(`http://127.0.0.1:3080/gerenciadorDeTG/v1/aluno/update/${matricula}`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(alunoAtualizado),
+                    body: JSON.stringify(updatedAluno),
                 });
 
                 if (response.ok) {
                     alert('Aluno atualizado com sucesso');
                     popup.style.display = 'none';
-                    buscarTodosAlunos();
+                    buscarAlunoPorMatricula('');
                 } else {
                     alert('Erro ao atualizar o aluno');
                 }
@@ -139,56 +152,22 @@ function editarAluno(matricula) {
 // Deletar aluno
 async function deletarAluno(matricula) {
     try {
-        const response = await fetch(`${baseURL}/trabalho/delete/${matricula}`, { method: 'DELETE' });
+        const response = await fetch(`http://127.0.0.1:3080/gerenciadorDeTG/v1/aluno/delete/${matricula}`, {
+            method: 'DELETE',
+        });
 
         if (response.ok) {
             alert('Aluno deletado com sucesso');
-            buscarTodosAlunos();
+            buscarAlunoPorMatricula('');
         } else {
-            console.error('Erro ao deletar aluno:', response.statusText);
+            alert('Erro ao deletar o aluno');
         }
     } catch (error) {
         console.error('Erro ao conectar à API:', error);
     }
 }
 
-// Atualizar tabela com lista de alunos
-async function buscarTodosAlunos() {
-    alunosTable.innerHTML = '';
-
-    try {
-        const response = await fetch(`${baseURL}/aluno`, { method: 'GET' });
-        if (response.ok) {
-            const alunos = await response.json();
-            alunos.forEach(adicionarLinha);
-        } else {
-            console.error('Erro ao carregar alunos:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Erro ao conectar à API:', error);
-    }
-}
-
-// Buscar alunos ao clicar no botão de buscar
-buscarButton.addEventListener('click', () => {
-    const filtro = filtroInput.value.trim();
-    if (filtro) {
-        exibirTrabalhos(filtro);
-    } else {
-        buscarTodosAlunos();
-    }
-});
-
-// Limpar busca
-limparBuscaButton.addEventListener('click', () => {
-    filtroInput.value = '';
-    buscarTodosAlunos();
-});
-
-// Fechar o popup sem alterações
+// Fechar o popup sem salvar alterações
 cancelarButton.addEventListener('click', () => {
     popup.style.display = 'none';
 });
-
-// Carregar alunos ao inicializar a página
-buscarTodosAlunos();

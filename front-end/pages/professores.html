@@ -5,54 +5,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Trabalhos de Graduação</title>
-    <link rel="stylesheet" href="../assets/css/professores.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
-<body>
+<body class="bg-light">
 
     <!-- Contêiner onde o header será carregado -->
-    <div id="header-container"></div>
+    <div id="header-container" class="mb-4"></div>
 
-    <div>
-        <h2>Cadastro de Orientadores</h2>
-        <form id="professorForm">
-            <label for="cpf">CPF</label>
-            <input type="text" name="cpf" id="cpf" required>
-
-            <label for="nome">Nome</label>
-            <input type="text" name="nome" id="nome" required>
-
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" required>
-
-            <label for="senha">Senha</label>
-            <input type="password" name="senha" id="senha" required>
-
-            <label for="linhasOrientacao">Linhas de Orientação</label>
-            <input type="text" name="linhasOrientacao" id="linhasOrientacao" required>
-
-            <label for="quantidadeInstituicoes">Quantidade de Instituições</label>
-            <input type="number" name="quantidadeInstituicoes" id="quantidadeInstituicoes">
-
-            <label for="cursosAtuacao">Cursos de Atuação</label>
-            <input type="text" name="cursosAtuacao" id="cursosAtuacao" required>
-
-            <label for="quantidadeAlunos">Quantidade de Alunos</label>
-            <input type="number" name="quantidadeAlunos" id="quantidadeAlunos">
-
-            <label for="alunosOrientados">Alunos Orientados</label>
-            <input type="text" name="alunosOrientados" id="alunosOrientados" required>
-
-            <button type="submit">Cadastrar</button>
+    <div class="container">
+        <h2 class="my-4 text-center">Cadastro de Orientadores</h2>
+        <form id="professorForm" class="mb-5">
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input type="text" class="form-control" name="cpf" id="cpf" required>
+            </div>
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" name="nome" id="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" class="form-control" name="senha" id="senha" required>
+            </div>
+            <div class="form-group">
+                <label for="linhasOrientacao">Linhas de Orientação</label>
+                <input type="text" class="form-control" name="linhasOrientacao" id="linhasOrientacao" required>
+            </div>
+            <div class="form-group">
+                <label for="quantidadeInstituicoes">Quantidade de Instituições</label>
+                <input type="number" class="form-control" name="quantidadeInstituicoes" id="quantidadeInstituicoes">
+            </div>
+            <div class="form-group">
+                <label for="cursosAtuacao">Cursos de Atuação</label>
+                <input type="text" class="form-control" name="cursosAtuacao" id="cursosAtuacao" required>
+            </div>
+            <div class="form-group">
+                <label for="quantidadeAlunos">Quantidade de Alunos</label>
+                <input type="number" class="form-control" name="quantidadeAlunos" id="quantidadeAlunos">
+            </div>
+            <div class="form-group">
+                <label for="alunosOrientados">Alunos Orientados</label>
+                <input type="text" class="form-control" name="alunosOrientados" id="alunosOrientados" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
         </form>
 
-        <h3>Lista de Orientadores</h3>
-        <input type="text" id="filtro" placeholder="Filtrar por CPF">
-        <button id="buscar">Buscar</button>
-        <button id="limparBusca">Limpar Busca</button>
+        <h3 class="mb-3">Lista de Orientadores</h3>
+        <div class="form-inline mb-3">
+            <input type="text" id="filtro" class="form-control mr-2" placeholder="Filtrar por CPF">
+            <button id="buscar" class="btn btn-outline-primary mr-2">Buscar</button>
+            <button id="limparBusca" class="btn btn-outline-secondary">Limpar Busca</button>
+        </div>
 
-        <table id="professoresTable">
-            <thead>
+        <table class="table table-striped" id="professoresTable">
+            <thead class="thead-dark">
                 <tr>
                     <th>CPF</th>
                     <th>Nome</th>
@@ -65,49 +76,69 @@
     </div>
 
     <!-- Popup de edição -->
-    <div id="popup">
-        <div class="popup-content">
-            <form id="popupForm">
-                <label for="cpfPopup">CPF</label>
-                <input type="text" name="cpf" id="cpfPopup" disabled>
-
-                <label for="nomePopup">Nome</label>
-                <input type="text" name="nome" id="nomePopup">
-
-                <label for="emailPopup">Email</label>
-                <input type="email" name="email" id="emailPopup">
-
-                <label for="senhaPopup">Senha</label>
-                <input type="password" name="senha" id="senhaPopup">
-
-                <label for="linhasOrientacaoPopup">Linhas de Orientação</label>
-                <input type="text" name="linhasOrientacao" id="linhasOrientacaoPopup" required>
-
-                <label for="quantidadeInstituicoesPopup">Quantidade de Instituições</label>
-                <input type="number" name="quantidadeInstituicoes" id="quantidadeInstituicoesPopup">
-
-                <label for="cursosAtuacaoPopup">Cursos de Atuação</label>
-                <input type="text" name="cursosAtuacao" id="cursosAtuacaoPopup" required>
-
-                <label for="quantidadeAlunosPopup">Quantidade de Alunos</label>
-                <input type="number" name="quantidadeAlunos" id="quantidadeAlunosPopup">
-
-                <label for="alunosOrientadosPopup">Alunos Orientados</label>
-                <input type="text" name="alunosOrientados" id="alunosOrientadosPopup" required>
-
-                <button type="button" id="cancelarButton">Cancelar</button>
-                <button type="submit" id="atualizarButton">Atualizar</button>
-            </form>
+    <div id="popup" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Orientador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="popupForm">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="cpfPopup">CPF</label>
+                            <input type="text" class="form-control" name="cpf" id="cpfPopup" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="nomePopup">Nome</label>
+                            <input type="text" class="form-control" name="nome" id="nomePopup">
+                        </div>
+                        <div class="form-group">
+                            <label for="emailPopup">Email</label>
+                            <input type="email" class="form-control" name="email" id="emailPopup">
+                        </div>
+                        <div class="form-group">
+                            <label for="senhaPopup">Senha</label>
+                            <input type="password" class="form-control" name="senha" id="senhaPopup">
+                        </div>
+                        <div class="form-group">
+                            <label for="linhasOrientacaoPopup">Linhas de Orientação</label>
+                            <input type="text" class="form-control" name="linhasOrientacao" id="linhasOrientacaoPopup" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantidadeInstituicoesPopup">Quantidade de Instituições</label>
+                            <input type="number" class="form-control" name="quantidadeInstituicoes" id="quantidadeInstituicoesPopup">
+                        </div>
+                        <div class="form-group">
+                            <label for="cursosAtuacaoPopup">Cursos de Atuação</label>
+                            <input type="text" class="form-control" name="cursosAtuacao" id="cursosAtuacaoPopup" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantidadeAlunosPopup">Quantidade de Alunos</label>
+                            <input type="number" class="form-control" name="quantidadeAlunos" id="quantidadeAlunosPopup">
+                        </div>
+                        <div class="form-group">
+                            <label for="alunosOrientadosPopup">Alunos Orientados</label>
+                            <input type="text" class="form-control" name="alunosOrientados" id="alunosOrientadosPopup" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelarButton" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="atualizarButton">Atualizar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-    <div id="footer-container">
+    <footer class="text-center mt-4">
         <p>© 2024 Gerenciador de TG</p>
-    </div>
+    </footer>
 
     <!-- Script para importar o header -->
     <script>
-        // Função para carregar o conteúdo do header
         fetch('../components/header.html')
             .then(response => response.text())
             .then(data => {
