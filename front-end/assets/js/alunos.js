@@ -21,7 +21,6 @@ function adicionarLinha(aluno) {
         <td>${aluno.periodo || ''}</td>
         <td>${aluno.semestre || ''}</td>
         <td>${aluno.filaDependencia ? 'Sim' : 'Não'}</td>
-        <td>${aluno.professorOrientador?.nome || ''}</td>
         <td>${aluno.professorOrientadorId || ''}</td>
         <td>
             <button onclick="editarAluno('${aluno.matricula}')">Editar</button>
@@ -46,7 +45,6 @@ alunoForm.addEventListener('submit', async (e) => {
         periodo: formData.get('periodo'),
         semestre: formData.get('semestre'),
         filaDependencia: formData.get('filaDependencia') === 'on',
-        professorOrientador: { nome: formData.get('professorOrientador') },
         professorOrientadorId: parseInt(formData.get('professorOrientadorId')) || 0,
         trabalhos: [],
     };
@@ -120,16 +118,26 @@ function editarAluno(matricula) {
             document.getElementById('matriculaPopup').value = aluno.matricula;
             document.getElementById('nomePopup').value = aluno.nome;
             document.getElementById('emailPopup').value = aluno.email;
+            document.getElementById('senhaPopup').value = aluno.senha;
             document.getElementById('cursoPopup').value = aluno.curso;
+            document.getElementById('turmaPopup').value = aluno.turma || '';
+            document.getElementById('periodoPopup').value = aluno.periodo || '';
+            document.getElementById('semestrePopup').value = aluno.semestre || '';
+            document.getElementById('filaDependenciaPopup').checked = aluno.filaDependencia;
 
             popup.style.display = 'flex';
 
             atualizarButton.onclick = async (e) => {
                 e.preventDefault();
                 const updatedAluno = {
-                    nome: document.getElementById('nomePopup').value,
-                    email: document.getElementById('emailPopup').value,
-                    curso: document.getElementById('cursoPopup').value,
+                    nome: document.getElementById('nomePopup').value || aluno.nome,
+                    email: document.getElementById('emailPopup').value || aluno.email,
+                    senha: document.getElementById('senhaPopup').value || aluno.senha,
+                    curso: document.getElementById('cursoPopup').value || aluno.curso,
+                    turma: document.getElementById('turmaPopup').value || aluno.turma,
+                    periodo: document.getElementById('periodoPopup').value || aluno.periodo,
+                    semestre: document.getElementById('semestrePopup').value || aluno.semestre,
+                    filaDependencia: document.getElementById('filaDependenciaPopup').checked
                 };
 
                 const response = await fetch(`http://127.0.0.1:3080/gerenciadorDeTG/v1/aluno/update/${matricula}`, {
