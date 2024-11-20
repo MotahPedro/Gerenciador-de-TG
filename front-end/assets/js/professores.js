@@ -130,14 +130,14 @@ function editarProfessor(cpf) {
                 // Cria um objeto com os dados atualizados
                 const updatedProfessor = {
                     cpf: document.getElementById('cpfPopup').value,
-                    nome: document.getElementById('nomePopup').value,
-                    email: document.getElementById('emailPopup').value,
-                    senha: document.getElementById('senhaPopup').value,
-                    linhasOrientacao: document.getElementById('linhasOrientacaoPopup').value.split(',').filter((item) => item.trim() !== ''),
-                    quantidadeInstituicoes: Number(document.getElementById('quantidadeInstituicoesPopup').value),
-                    cursosAtuacao: document.getElementById('cursosAtuacaoPopup').value.split(',').filter((item) => item.trim() !== ''),
-                    quantidadeAlunos: Number(document.getElementById('quantidadeAlunosPopup').value),
-                    alunosOrientados: document.getElementById('alunosOrientadosPopup').value.split(',').filter((item) => item.trim() !== '')
+                    nome: document.getElementById('nomePopup').value || professor.nome,
+                    email: document.getElementById('emailPopup').value || professor.email,
+                    senha: document.getElementById('senhaPopup').value || professor.senha,
+                    linhasOrientacao: document.getElementById('linhasOrientacaoPopup').value.split(',').filter((item) => item.trim() !== '') || professor.linhasOrientacao,
+                    quantidadeInstituicoes: Number(document.getElementById('quantidadeInstituicoesPopup').value) || professor.quantidadeInstituicoes,
+                    cursosAtuacao: document.getElementById('cursosAtuacaoPopup').value.split(',').filter((item) => item.trim() !== '') || professor.cursosAtuacao,
+                    quantidadeAlunos: Number(document.getElementById('quantidadeAlunosPopup').value) || professor.quantidadeAlunos,
+                    alunosOrientados: document.getElementById('alunosOrientadosPopup').value.split(',').filter((item) => item.trim() !== '') || professor.alunosOrientados
                 };
 
                 // Faz a requisição para atualizar o professor
