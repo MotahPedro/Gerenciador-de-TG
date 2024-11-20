@@ -7,26 +7,29 @@ export class OrientadorMapper {
             nome: orientador.nome,
             email: orientador.email,
             senha: orientador.senha,
-            linhasOrientacao: orientador.linhasOrientacao ? { create: orientador.linhasOrientacao.map((linha) => ({ linha: linha.linha })) } : undefined,
-            cursosAtuacao: orientador.cursosAtuacao ? { create: orientador.cursosAtuacao.map((curso) => ({ curso: curso.curso })) } : undefined,
-            alunosOrientados: orientador.alunosOrientados ? { create: orientador.alunosOrientados.map(a => ({
-                matricula: a.matricula,
-                nome: a.nome,
-                email: a.email,
-                senha: a.senha,
-                curso: a.curso,
-                turma: a.turma,
-                periodo: a.periodo,
-                semestre: a.semestre,
-                filaDependencia: a.filaDependencia,
-                trabalhos: a.trabalhos ? a.trabalhos.map(t => ({
-                    tema: t.tema,
-                    objetivo: t.objetivo,
-                    questaoProblema: t.questaoProblema,
-                })) : []
-            })) } : undefined,
-            quantidadeInstituicoes: orientador.quantidadeInstituicoes,
-            quantidadeAlunos: orientador.quantidadeAlunos,
+            
+            linhasOrientacao: Array.isArray(orientador.linhasOrientacao)  && orientador.linhasOrientacao.length > 0 ? { create: orientador.linhasOrientacao.map((linha) => ({ linha: linha.linha })) } : undefined,
+            cursosAtuacao: Array.isArray(orientador.cursosAtuacao) && orientador.cursosAtuacao.length > 0 ? { create: orientador.cursosAtuacao.map((curso) => ({ curso: curso.curso })) } : undefined,
+            alunosOrientados: Array.isArray(orientador.alunosOrientados) && orientador.alunosOrientados.length > 0
+                ? { create: orientador.alunosOrientados.map(a => ({
+                    matricula: a.matricula,
+                    nome: a.nome,
+                    email: a.email,
+                    senha: a.senha,
+                    curso: a.curso,
+                    turma: a.turma,
+                    periodo: a.periodo,
+                    semestre: a.semestre,
+                    filaDependencia: a.filaDependencia,
+                    trabalhos: a.trabalhos ? a.trabalhos.map(t => ({
+                        tema: t.tema,
+                        objetivo: t.objetivo,
+                        questaoProblema: t.questaoProblema,
+                    })) : []
+                })) }
+                : undefined,
+            quantidadeInstituicoes: orientador.quantidadeInstituicoes ?? 0,
+            quantidadeAlunos: orientador.quantidadeAlunos ?? 0,
         }
     }
 
