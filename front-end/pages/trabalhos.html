@@ -4,86 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador de Trabalhos de Graduação - Alunos</title>
+    <title>Gerenciador de Trabalhos de Graduação</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/alunos.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body class="bg-light">
 
-    <!-- Header -->
+    <!-- Contêiner onde o header será carregado -->
     <div id="header-container" class="mb-4"></div>
 
     <div class="container">
-        <h2 class="text-center my-4">Gerenciamento de Alunos</h2>
-
-        <!-- Formulário para cadastrar alunos -->
-        <form id="alunoForm" class="mb-5">
-            <!-- Campos existentes -->
+        <h2 class="my-4 text-center">Cadastro de Trabalhos</h2>
+        <form id="trabalhoForm" class="mb-5">
             <div class="form-group">
-                <label for="matricula">Matrícula</label>
-                <input type="text" class="form-control" id="matricula" name="matricula" required>
+                <label for="tema">Tema</label>
+                <input type="text" class="form-control" name="tema" id="tema" required>
             </div>
             <div class="form-group">
-                <label for="nome">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" required>
+                <label for="objetivo">Objetivo</label>
+                <input type="text" class="form-control" name="objetivo" id="objetivo" required>
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <label for="questaoProblema">Questão Problema</label>
+                <input type="text" class="form-control" name="questaoProblema" id="questaoProblema" required>
             </div>
             <div class="form-group">
-                <label for="senha">Senha</label>
-                <input type="password" class="form-control" id="senha" name="senha" required>
+                <label for="alunoOrientadoId">ID do Aluno Orientado</label>
+                <input type="number" class="form-control" name="alunoOrientadoId" id="alunoOrientadoId" required>
             </div>
-            <div class="form-group">
-                <label for="curso">Curso</label>
-                <input type="text" class="form-control" id="curso" name="curso" required>
-            </div>
-            <div class="form-group">
-                <label for="turma">Turma</label>
-                <input type="text" class="form-control" id="turma" name="turma">
-            </div>
-            <div class="form-group">
-                <label for="periodo">Período</label>
-                <input type="text" class="form-control" id="periodo" name="periodo">
-            </div>
-            <div class="form-group">
-                <label for="semestre">Semestre</label>
-                <input type="text" class="form-control" id="semestre" name="semestre">
-            </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="filaDependencia" name="filaDependencia">
-                <label class="form-check-label" for="filaDependencia">Fila de Dependência</label>
-            </div>
-            <div class="form-group">
-                <label for="professorOrientadorId">ID do Professor Orientador</label>
-                <input type="number" class="form-control" id="professorOrientadorId" name="professorOrientadorId">
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Cadastrar Aluno</button>
+            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
         </form>
 
-        <!-- Filtro de busca -->
-        <div class="form-inline mb-4">
-            <input type="text" id="filtro" class="form-control mr-2" placeholder="Filtrar por matrícula">
-            <button id="buscar" class="btn btn-outline-primary">Buscar</button>
-            <button id="limparBusca" class="btn btn-outline-secondary ml-2">Limpar Busca</button>
+        <h3 class="mb-3">Lista de Trabalhos</h3>
+        <div class="form-inline mb-3">
+            <input type="text" id="filtro" class="form-control mr-2" placeholder="Filtrar por ID">
+            <button id="buscar" class="btn btn-outline-primary mr-2">Buscar</button>
+            <button id="limparBusca" class="btn btn-outline-secondary">Limpar Busca</button>
         </div>
 
-        <!-- Tabela de alunos -->
-        <table class="table table-striped" id="alunosTable">
+        <table class="table table-striped" id="trabalhosTable">
             <thead class="thead-dark">
                 <tr>
-                    <th>Matrícula</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Curso</th>
-                    <th>Turma</th>
-                    <th>Período</th>
-                    <th>Semestre</th>
-                    <th>Fila Dependência</th>
-                    <th>Professor Orientador</th>
-                    <th>Orientador ID</th>
+                    <th>ID</th>
+                    <th>Tema</th>
+                    <th>Objetivo</th>
+                    <th>Questão Problema</th>
+                    <th>ID do Aluno Orientado</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -96,65 +64,48 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Editar Aluno</h5>
+                    <h5 class="modal-title">Editar Trabalho</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <form id="popupForm">
-                    <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                    <div class="modal-body">
                         <div class="form-group">
-                            <label for="matriculaPopup">Matrícula</label>
-                            <input type="text" class="form-control" id="matriculaPopup" name="matricula" disabled>
+                            <label for="idPopup">ID</label>
+                            <input type="text" class="form-control" name="id" id="idPopup" disabled>
                         </div>
                         <div class="form-group">
-                            <label for="nomePopup">Nome</label>
-                            <input type="text" class="form-control" id="nomePopup" name="nome" required>
+                            <label for="temaPopup">Tema</label>
+                            <input type="text" class="form-control" name="tema" id="temaPopup">
                         </div>
                         <div class="form-group">
-                            <label for="emailPopup">Email</label>
-                            <input type="email" class="form-control" id="emailPopup" name="email" required>
+                            <label for="objetivoPopup">Objetivo</label>
+                            <input type="text" class="form-control" name="objetivo" id="objetivoPopup">
                         </div>
                         <div class="form-group">
-                            <label for="senhaPopup">Senha</label>
-                            <input type="password" class="form-control" id="senhaPopup" name="senha">
+                            <label for="questaoProblemaPopup">Questão Problema</label>
+                            <input type="text" class="form-control" name="questaoProblema" id="questaoProblemaPopup">
                         </div>
                         <div class="form-group">
-                            <label for="cursoPopup">Curso</label>
-                            <input type="text" class="form-control" id="cursoPopup" name="curso" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="turmaPopup">Turma</label>
-                            <input type="text" class="form-control" id="turmaPopup" name="turma">
-                        </div>
-                        <div class="form-group">
-                            <label for="periodoPopup">Período</label>
-                            <input type="text" class="form-control" id="periodoPopup" name="periodo">
-                        </div>
-                        <div class="form-group">
-                            <label for="semestrePopup">Semestre</label>
-                            <input type="text" class="form-control" id="semestrePopup" name="semestre">
-                        </div>
-                        <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="filaDependenciaPopup" name="filaDependencia">
-                            <label class="form-check-label" for="filaDependenciaPopup">Fila de Dependência</label>
+                            <label for="alunoOrientadoIdPopup">ID do Aluno Orientado</label>
+                            <input type="number" class="form-control" name="alunoOrientadoId" id="alunoOrientadoIdPopup">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" id="cancelarButton" data-dismiss="modal">Cancelar</button>
-                        <button id="atualizarButton" type="submit" class="btn btn-primary">Atualizar</button>
+                        <button type="submit" class="btn btn-primary" id="atualizarButton">Atualizar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="text-center mt-4">
         <p>© 2024 Gerenciador de TG</p>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Script para importar o header -->
     <script>
         fetch('../components/header.html')
             .then(response => response.text())
@@ -163,7 +114,132 @@
             })
             .catch(error => console.error('Erro ao carregar o header:', error));
     </script>
-    <script src="../assets/js/alunos.js"></script>
+
+    <script>
+        // Funções para carregar e salvar os dados no cache
+        const salvarNoCache = (trabalhos) => {
+            localStorage.setItem('trabalhos', JSON.stringify(trabalhos));
+        };
+
+        const carregarDoCache = () => {
+            const trabalhosCache = localStorage.getItem('trabalhos');
+            return trabalhosCache ? JSON.parse(trabalhosCache) : [];
+        };
+
+        const limparCache = () => {
+            localStorage.removeItem('trabalhos');
+        };
+
+        // Seletor de elementos
+        const trabalhoForm = document.getElementById('trabalhoForm');
+        const trabalhosTable = document.getElementById('trabalhosTable').querySelector('tbody');
+        const filtroInput = document.getElementById('filtro');
+        const buscarButton = document.getElementById('buscar');
+        const limparBuscaButton = document.getElementById('limparBusca');
+        const popup = document.getElementById('popup');
+        const popupForm = document.getElementById('popupForm');
+        const cancelarButton = document.getElementById('cancelarButton');
+        const atualizarButton = document.getElementById('atualizarButton');
+
+        // Função para criar uma linha na tabela
+        function adicionarLinha(trabalho) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${trabalho.id}</td>
+                <td>${trabalho.tema}</td>
+                <td>${trabalho.objetivo}</td>
+                <td>${trabalho.questaoProblema}</td>
+                <td>${trabalho.alunoOrientadoId}</td>
+                <td>
+                    <button onclick="editarTrabalho('${trabalho.id}')">Editar</button>
+                    <button onclick="deletarTrabalho('${trabalho.id}')">Deletar</button>
+                </td>
+            `;
+            trabalhosTable.appendChild(row);
+        }
+
+        // Atualizar tabela com lista de trabalhos
+        function atualizarTabela() {
+            const trabalhos = carregarDoCache();
+            trabalhosTable.innerHTML = '';
+            trabalhos.forEach(adicionarLinha);
+        }
+
+        // Submeter formulário de cadastro
+        trabalhoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(trabalhoForm);
+
+            const novoTrabalho = {
+                id: Date.now(), // Gerar um ID único com base no timestamp
+                tema: formData.get('tema'),
+                objetivo: formData.get('objetivo'),
+                questaoProblema: formData.get('questaoProblema'),
+                alunoOrientadoId: Number(formData.get('alunoOrientadoId')),
+            };
+
+            const trabalhos = carregarDoCache();
+            trabalhos.push(novoTrabalho);
+            salvarNoCache(trabalhos);
+            trabalhoForm.reset();
+            atualizarTabela();
+        });
+
+        // Editar trabalho
+        function editarTrabalho(id) {
+            const trabalhos = carregarDoCache();
+            const trabalho = trabalhos.find(t => t.id == id);
+            if (trabalho) {
+                document.getElementById('idPopup').value = trabalho.id;
+                document.getElementById('temaPopup').value = trabalho.tema;
+                document.getElementById('objetivoPopup').value = trabalho.objetivo;
+                document.getElementById('questaoProblemaPopup').value = trabalho.questaoProblema;
+                document.getElementById('alunoOrientadoIdPopup').value = trabalho.alunoOrientadoId;
+
+                $('#popup').modal('show'); // Usando o Bootstrap para exibir o modal
+
+                atualizarButton.onclick = function () {
+                    trabalho.tema = document.getElementById('temaPopup').value;
+                    trabalho.objetivo = document.getElementById('objetivoPopup').value;
+                    trabalho.questaoProblema = document.getElementById('questaoProblemaPopup').value;
+                    trabalho.alunoOrientadoId = document.getElementById('alunoOrientadoIdPopup').value;
+                    
+                    salvarNoCache(trabalhos);
+                    $('#popup').modal('hide');
+                    atualizarTabela();
+                };
+            }
+        }
+
+        // Deletar trabalho
+        function deletarTrabalho(id) {
+            const trabalhos = carregarDoCache();
+            const index = trabalhos.findIndex(t => t.id == id);
+            if (index !== -1) {
+                trabalhos.splice(index, 1);
+                salvarNoCache(trabalhos);
+                atualizarTabela();
+            }
+        }
+
+        // Filtro de busca
+        buscarButton.addEventListener('click', () => {
+            const filtro = filtroInput.value;
+            const trabalhos = carregarDoCache();
+            const resultados = trabalhos.filter(t => t.id.toString().includes(filtro));
+            trabalhosTable.innerHTML = '';
+            resultados.forEach(adicionarLinha);
+        });
+
+        limparBuscaButton.addEventListener('click', () => {
+            filtroInput.value = '';
+            atualizarTabela();
+        });
+
+        // Inicializa a tabela com os dados armazenados
+        atualizarTabela();
+
+    </script>
 </body>
 
 </html>
