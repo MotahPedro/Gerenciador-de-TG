@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Trabalhos de Graduação</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+    <!-- Contêiner onde o header será carregado -->
+    <div id="header-container" class="mb-4"></div>
+
+    <div class="container">
+        <h2 class="my-4 text-center">Cadastro de Trabalhos</h2>
+        <form id="trabalhoForm" class="mb-5">
+            <div class="form-group">
+                <label for="tema">Tema</label>
+                <input type="text" class="form-control" name="tema" id="tema" required>
+            </div>
+            <div class="form-group">
+                <label for="objetivo">Objetivo</label>
+                <input type="text" class="form-control" name="objetivo" id="objetivo" required>
+            </div>
+            <div class="form-group">
+                <label for="questaoProblema">Questão Problema</label>
+                <input type="text" class="form-control" name="questaoProblema" id="questaoProblema" required>
+            </div>
+            <div class="form-group">
+                <label for="alunoOrientadoId">ID do Aluno Orientado</label>
+                <input type="number" class="form-control" name="alunoOrientadoId" id="alunoOrientadoId" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+        </form>
+
+        <h3 class="mb-3">Lista de Trabalhos</h3>
+        <div class="form-inline mb-3">
+            <input type="text" id="filtro" class="form-control mr-2" placeholder="Filtrar por ID">
+            <button id="buscar" class="btn btn-outline-primary mr-2">Buscar</button>
+            <button id="limparBusca" class="btn btn-outline-secondary">Limpar Busca</button>
+        </div>
+
+        <table class="table table-striped" id="trabalhosTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Tema</th>
+                    <th>Objetivo</th>
+                    <th>Questão Problema</th>
+                    <th>ID do Aluno Orientado</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Popup de edição -->
+    <div id="popup" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Trabalho</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="popupForm">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="idPopup">ID</label>
+                            <input type="text" class="form-control" name="id" id="idPopup" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="temaPopup">Tema</label>
+                            <input type="text" class="form-control" name="tema" id="temaPopup">
+                        </div>
+                        <div class="form-group">
+                            <label for="objetivoPopup">Objetivo</label>
+                            <input type="text" class="form-control" name="objetivo" id="objetivoPopup">
+                        </div>
+                        <div class="form-group">
+                            <label for="questaoProblemaPopup">Questão Problema</label>
+                            <input type="text" class="form-control" name="questaoProblema" id="questaoProblemaPopup">
+                        </div>
+                        <div class="form-group">
+                            <label for="alunoOrientadoIdPopup">ID do Aluno Orientado</label>
+                            <input type="number" class="form-control" name="alunoOrientadoId" id="alunoOrientadoIdPopup">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelarButton" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="atualizarButton">Atualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-4">
+        <p>© 2024 Gerenciador de TG</p>
+    </footer>
+
+    <!-- Script para importar o header -->
+    <script>
+        fetch('../components/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            })
+            .catch(error => console.error('Erro ao carregar o header:', error));
+    </script>
+
+    <!-- Script do arquivo JS da página -->
+    <script src="../assets/js/trabalhos.js"></script>
+</body>
+
+</html>
