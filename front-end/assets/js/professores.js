@@ -158,6 +158,24 @@ function editarProfessor(cpf) {
         });
 }
 
+// Função para deletar professor
+async function deletarProfessor(cpf) {
+    try {
+        const response = await fetch(`http://localhost:3080/gerenciadorDeTG/v1/orientador/delete/${cpf}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            alert('Professor deletado com sucesso');
+            buscarProfessorPorCPF('');  // Atualiza a tabela após a exclusão
+        } else {
+            alert('Erro ao deletar o professor');
+        }
+    } catch (error) {
+        console.error('Erro ao conectar à API:', error);
+    }
+}
+
 // Fechar o popup sem fazer alterações
 cancelarButton.addEventListener('click', () => {
     popup.style.display = 'none';
