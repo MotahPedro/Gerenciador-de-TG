@@ -4,52 +4,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador de Trabalhos de Graduação</title>
+    <title>Gerenciador de Trabalhos de Graduação - Alunos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/alunos.css">
 </head>
 
 <body class="bg-light">
 
-    <!-- Contêiner onde o header será carregado -->
+    <!-- Header -->
     <div id="header-container" class="mb-4"></div>
 
     <div class="container">
-        <h2 class="my-4 text-center">Cadastro de Trabalhos</h2>
-        <form id="trabalhoForm" class="mb-5">
+        <h2 class="text-center my-4">Gerenciamento de Alunos</h2>
+
+        <!-- Formulário para cadastrar alunos -->
+        <form id="alunoForm" class="mb-5">
+            <!-- Campos existentes -->
             <div class="form-group">
-                <label for="tema">Tema</label>
-                <input type="text" class="form-control" name="tema" id="tema" required>
+                <label for="matricula">Matrícula</label>
+                <input type="text" class="form-control" id="matricula" name="matricula" required>
             </div>
             <div class="form-group">
-                <label for="objetivo">Objetivo</label>
-                <input type="text" class="form-control" name="objetivo" id="objetivo" required>
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
             </div>
             <div class="form-group">
-                <label for="questaoProblema">Questão Problema</label>
-                <input type="text" class="form-control" name="questaoProblema" id="questaoProblema" required>
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="form-group">
-                <label for="alunoOrientadoId">ID do Aluno Orientado</label>
-                <input type="number" class="form-control" name="alunoOrientadoId" id="alunoOrientadoId" required>
+                <label for="senha">Senha</label>
+                <input type="password" class="form-control" id="senha" name="senha" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+            <div class="form-group">
+                <label for="curso">Curso</label>
+                <input type="text" class="form-control" id="curso" name="curso" required>
+            </div>
+            <div class="form-group">
+                <label for="turma">Turma</label>
+                <input type="text" class="form-control" id="turma" name="turma">
+            </div>
+            <div class="form-group">
+                <label for="periodo">Período</label>
+                <input type="text" class="form-control" id="periodo" name="periodo">
+            </div>
+            <div class="form-group">
+                <label for="semestre">Semestre</label>
+                <input type="text" class="form-control" id="semestre" name="semestre">
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="filaDependencia" name="filaDependencia">
+                <label class="form-check-label" for="filaDependencia">Fila de Dependência</label>
+            </div>
+            <div class="form-group">
+                <label for="professorOrientadorId">ID do Professor Orientador</label>
+                <input type="number" class="form-control" id="professorOrientadorId" name="professorOrientadorId">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Cadastrar Aluno</button>
         </form>
 
-        <h3 class="mb-3">Lista de Trabalhos</h3>
-        <div class="form-inline mb-3">
-            <input type="text" id="filtro" class="form-control mr-2" placeholder="Filtrar por ID">
-            <button id="buscar" class="btn btn-outline-primary mr-2">Buscar</button>
-            <button id="limparBusca" class="btn btn-outline-secondary">Limpar Busca</button>
+        <!-- Filtro de busca -->
+        <div class="form-inline mb-4">
+            <input type="text" id="filtro" class="form-control mr-2" placeholder="Filtrar por matrícula">
+            <button id="buscar" class="btn btn-outline-primary">Buscar</button>
+            <button id="limparBusca" class="btn btn-outline-secondary ml-2">Limpar Busca</button>
         </div>
 
-        <table class="table table-striped" id="trabalhosTable">
+        <!-- Tabela de alunos -->
+        <table class="table table-striped" id="alunosTable">
             <thead class="thead-dark">
                 <tr>
-                    <th>ID</th>
-                    <th>Tema</th>
-                    <th>Objetivo</th>
-                    <th>Questão Problema</th>
-                    <th>ID do Aluno Orientado</th>
+                    <th>Matrícula</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Curso</th>
+                    <th>Turma</th>
+                    <th>Período</th>
+                    <th>Semestre</th>
+                    <th>Fila Dependência</th>
+                    <th>Professor Orientador</th>
+                    <th>Orientador ID</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -62,48 +96,65 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Editar Trabalho</h5>
+                    <h5 class="modal-title">Editar Aluno</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <form id="popupForm">
-                    <div class="modal-body">
+                    <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
                         <div class="form-group">
-                            <label for="idPopup">ID</label>
-                            <input type="text" class="form-control" name="id" id="idPopup" disabled>
+                            <label for="matriculaPopup">Matrícula</label>
+                            <input type="text" class="form-control" id="matriculaPopup" name="matricula" disabled>
                         </div>
                         <div class="form-group">
-                            <label for="temaPopup">Tema</label>
-                            <input type="text" class="form-control" name="tema" id="temaPopup">
+                            <label for="nomePopup">Nome</label>
+                            <input type="text" class="form-control" id="nomePopup" name="nome" required>
                         </div>
                         <div class="form-group">
-                            <label for="objetivoPopup">Objetivo</label>
-                            <input type="text" class="form-control" name="objetivo" id="objetivoPopup">
+                            <label for="emailPopup">Email</label>
+                            <input type="email" class="form-control" id="emailPopup" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="questaoProblemaPopup">Questão Problema</label>
-                            <input type="text" class="form-control" name="questaoProblema" id="questaoProblemaPopup">
+                            <label for="senhaPopup">Senha</label>
+                            <input type="password" class="form-control" id="senhaPopup" name="senha">
                         </div>
                         <div class="form-group">
-                            <label for="alunoOrientadoIdPopup">ID do Aluno Orientado</label>
-                            <input type="number" class="form-control" name="alunoOrientadoId" id="alunoOrientadoIdPopup">
+                            <label for="cursoPopup">Curso</label>
+                            <input type="text" class="form-control" id="cursoPopup" name="curso" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="turmaPopup">Turma</label>
+                            <input type="text" class="form-control" id="turmaPopup" name="turma">
+                        </div>
+                        <div class="form-group">
+                            <label for="periodoPopup">Período</label>
+                            <input type="text" class="form-control" id="periodoPopup" name="periodo">
+                        </div>
+                        <div class="form-group">
+                            <label for="semestrePopup">Semestre</label>
+                            <input type="text" class="form-control" id="semestrePopup" name="semestre">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="filaDependenciaPopup" name="filaDependencia">
+                            <label class="form-check-label" for="filaDependenciaPopup">Fila de Dependência</label>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" id="cancelarButton" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" id="atualizarButton">Atualizar</button>
+                        <button id="atualizarButton" type="submit" class="btn btn-primary">Atualizar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="text-center mt-4">
         <p>© 2024 Gerenciador de TG</p>
     </footer>
 
-    <!-- Script para importar o header -->
+    <!-- Scripts -->
     <script>
         fetch('../components/header.html')
             .then(response => response.text())
@@ -112,9 +163,7 @@
             })
             .catch(error => console.error('Erro ao carregar o header:', error));
     </script>
-
-    <!-- Script do arquivo JS da página -->
-    <script src="../assets/js/trabalhos.js"></script>
+    <script src="../assets/js/alunos.js"></script>
 </body>
 
 </html>
