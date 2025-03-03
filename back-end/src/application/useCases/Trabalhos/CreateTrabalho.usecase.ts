@@ -1,4 +1,4 @@
-import { Injectable, HttpStatus} from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import { TrabalhoProps } from '@domain/entities/Trabalhos';
 import { TrabalhoMapper } from '@infra/database/prisma/mappers/Trabalho.mapper';
 import AppError from '@helpers/errors/AppError';
@@ -9,15 +9,26 @@ const constant = getConstants()
 
 @Injectable()
 export class CreateTrabalhoUseCase {
-  constructor(private readonly repository: PrismaTrabalhoRepository) {}
+  constructor(private readonly repository: PrismaTrabalhoRepository) { }
 
   async execute(data: TrabalhoProps): Promise<any> {
-    const trabalho = TrabalhoMapper.toGET(data);
+    const trabalho = TrabalhoMapper.toPrisma(data);
 
-    if (!trabalho) {
-      throw new AppError(constant.TRABALHO.CREATE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+    try {
+      if (!trabalho) {
+        throw new AppError(constant.TRABALHO.CREATE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+      }
+
+      // Teria uma validação se o ra do aluno está registrado, mas mais a frente tentarei colocar um metodo de adicionar esse ra do aluno diretamente no payload do trabalho
+
+      const trabalhoSalvo = await this.repository.save(trabalho);
+      return TrabalhoMapper.toDomain(trabalhoSalvo);
+
+    } catch (error) {
+      throw new AppError(
+        constant.TRABALHO.INTERNAL + error.message,
+        HttpStatus.INTERNAL_SERVER_ERROR.toString()
+      );
     }
-
-    return await this.repository.save(data);
   }
 }

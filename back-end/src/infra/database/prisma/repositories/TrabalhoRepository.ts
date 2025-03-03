@@ -17,17 +17,14 @@ export class PrismaTrabalhoRepository
 
   constructor(
     public readonly prisma: PrismaRepository) {
-    super(prisma, 'alunoOrientado');
+    super(prisma, 'trabalho');
   }
 
   async save(data: TrabalhoProps): Promise<any> {
     const accountDb = TrabalhoMapper.toPrisma(data);
 
-    return await this.prisma.alunoOrientado.create({
+    return await this.prisma.trabalho.create({
       data: accountDb,
-      include: {
-        trabalhos: true,
-      }
     });
   }
 
@@ -42,23 +39,28 @@ export class PrismaTrabalhoRepository
 
   async findById(id: number): Promise<any> {
 
-    return await this.prisma.alunoOrientado.findUnique({
+    return await this.prisma.trabalho.findUnique({
       where: {
         id,
       },
     });
   }	
 
-  async findByEmail(email: string): Promise<any> {
-    return await this.prisma.alunoOrientado.findFirst({
+  async findByAlunoOrientado(alunoOrientadoId: number): Promise<any> {
+    return await this.prisma.trabalho.findFirst({
       where: {
-        email,
+        alunoOrientadoId,
       },
     });
   }
 
+  
+  async findAll(): Promise<any> {
+    return await this.prisma.trabalho.findMany();
+  }
+
   async deleteById(id: number): Promise<any> {
-    return await this.prisma.alunoOrientado.delete({
+    return await this.prisma.trabalho.delete({
       where: {
         id,
       },

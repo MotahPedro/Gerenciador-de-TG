@@ -5,4 +5,5 @@ export abstract class TrabalhoRepository {
   abstract findById(id: number): Promise<TrabalhoProps>;
   abstract deleteById(id: number): Promise<void>;
   abstract update(id: number, trabalho: TrabalhoProps): Promise<void>;
+  abstract findAll(): Promise<void>;
 }
