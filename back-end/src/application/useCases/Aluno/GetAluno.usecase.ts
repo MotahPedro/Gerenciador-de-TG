@@ -12,13 +12,13 @@ export class GetAlunoUseCase {
     constructor(private repository: PrismaAlunoRepository) {}
 
     async execute(ra: string): Promise<AlunoOrientadoProps> {
-        const data = await this.repository.findByRa(ra);
+        const raAluno = await this.repository.findByRa(ra);
 
-        if (!data) {
-            throw new AppError(constant.ALUNO.GET_RA.ERRO, HttpStatus.NOT_FOUND.toString());
+        if (!raAluno) {
+            throw new AppError(constant.ALUNO.GET_RA.ERRO, HttpStatus.BAD_REQUEST.toString());
         }
 
-        const response = AlunoMapper.toGET(data);
+        const response = AlunoMapper.toGET(raAluno);
 
         if (!response) {
             throw new AppError(constant.ALUNO.GET_RA.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());

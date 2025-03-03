@@ -35,10 +35,11 @@ import {
   import { CreateAlunoUseCase } from '@application/useCases/Aluno/CreateAluno.usecase';
   import { GetAlunoUseCase } from '@application/useCases/Aluno/GetAluno.usecase';
   import { DeleteAlunoUseCase } from '@application/useCases/Aluno/DeleteAluno.usecase';
+  import { UpdateAlunoUsecase } from '@application/useCases/Aluno/UpdateAluno.usecase';
+  import { GetTodosAlunoUseCase } from '@application/useCases/Aluno/GetTodosAlunos.usecase';
   import { AlunosRequestDto } from '../dtos/AlunosRequestDto';
   import { AlunosResponseDto } from '../dtos/AlunosResponseDto';
   import { createAlunoResponseExample } from '../dtos/examples/CreateAlunoREsponseExample';
-  import { UpdateAlunoUsecase } from '@application/useCases/Aluno/UpdateAluno.usecase';
   // mais 4 dtos a fazer
   // JwtAuth
   
@@ -47,6 +48,7 @@ import {
       constructor(
       private readonly createAlunoUseCase: CreateAlunoUseCase,
       private readonly getAlunoUseCase: GetAlunoUseCase,
+      private readonly getTodosAlunosUsecase: GetTodosAlunoUseCase,
       private readonly deleteAlunoUseCase: DeleteAlunoUseCase,
       private readonly updateAlunoUseCase: UpdateAlunoUsecase,
     ) {
@@ -307,6 +309,65 @@ import {
     ) {
       const response = await this.updateAlunoUseCase.execute(ra, aluno);
   
+      this.ok(res, response);
+    }
+
+    @Get('aluno/')
+    @ApiExcludeEndpoint()
+    @ApiResponse({
+      status: HttpStatus.OK,
+      description: 'Success',
+      type: AlunosResponseDto,
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Bad Request',
+      type: BadRequest,
+    })
+    @ApiResponse({
+      status: 401,
+      description: 'Unauthorized',
+      type: Unauthorized,
+    })
+    @ApiResponse({
+      status: 403,
+      description: 'Forbidden',
+      type: Forbidden,
+    })
+    @ApiResponse({
+      status: 404,
+      description: 'Not Found',
+      type: NotFound,
+    })
+    @ApiResponse({
+      status: 405,
+      description: 'Method Not allowed',
+      type: MethodNotAllowed,
+    })
+    @ApiResponse({
+      status: 409,
+      description: 'Conflict',
+      type: Conflict,
+    })
+    @ApiResponse({
+      status: 500,
+      description: 'Internal Server Error',
+      type: InternalServerError,
+    })
+    @ApiResponse({
+      status: 503,
+      description: 'Service Unavailable',
+      type: ServiceUnavailable,
+    })
+    @ApiResponse({
+      status: 504,
+      description: 'Gateway Timeout',
+      type: GatewayTimeout,
+    })
+    async findAll(
+      @Res() res: Response,
+    ) {
+      const response = await this.getTodosAlunosUsecase.execute();
       this.ok(res, response);
     }
 }

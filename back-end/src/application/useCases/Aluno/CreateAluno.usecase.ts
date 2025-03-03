@@ -20,8 +20,8 @@ export class CreateAlunoUseCase {
         const prismaAluno = AlunoMapper.toPrisma(aluno);
 
         try {
-            const savedAluno = await this.repository.save(prismaAluno);
-            return AlunoMapper.toDomain(savedAluno);
+            const alunoSalvo = await this.repository.save(prismaAluno);
+            return AlunoMapper.toDomain(alunoSalvo);
         } catch (error) {
             throw new AppError(
                 constant.ALUNO.INTERNAL + error.message,

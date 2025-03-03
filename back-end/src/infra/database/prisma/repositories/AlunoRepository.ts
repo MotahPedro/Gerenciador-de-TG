@@ -53,6 +53,10 @@ export class PrismaAlunoRepository
     });
   }
 
+  async findAll(): Promise<any> {
+    return await this.prisma.alunoOrientado.findMany();
+  }
+
   async deleteByRa(matricula: string): Promise<any> {
     return await this.prisma.alunoOrientado.delete({
       where: {

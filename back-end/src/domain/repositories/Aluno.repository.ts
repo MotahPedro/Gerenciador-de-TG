@@ -5,4 +5,5 @@ export abstract class AlunoRepository {
   abstract findByRa(matricula: string): Promise<void>;
   abstract deleteByRa(matricula: string): Promise<void>;
   abstract update(matricula: string, orientador: AlunoOrientadoProps): Promise<void>;
+  abstract findAll(): Promise<void>;
 }

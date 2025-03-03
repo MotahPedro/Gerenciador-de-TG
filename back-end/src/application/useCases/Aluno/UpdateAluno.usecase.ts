@@ -11,10 +11,10 @@ export class UpdateAlunoUsecase {
     constructor(private repository: PrismaAlunoRepository) {}
 
     async execute(ra: string, aluno: AlunoOrientadoProps): Promise<AlunoOrientadoProps> {
-        const data = await this.repository.findByRa(ra);
+        const raAluno = await this.repository.findByRa(ra);
 
-        if (!data) {
-            throw new AppError(constant.ALUNO.GET_RA.ERRO, HttpStatus.NOT_FOUND.toString());
+        if (!raAluno) {
+            throw new AppError(constant.ALUNO.GET_RA.ERRO, HttpStatus.BAD_REQUEST.toString());
         }
 
         const response = await this.repository.update(ra, aluno);
