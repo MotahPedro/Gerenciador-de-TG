@@ -21,8 +21,8 @@ export class CreateOrientadorUseCase {
         const prismaOrientador = OrientadorMapper.toPrisma(orientador);
 
         try {
-            const savedOrientador = await this.repository.save(prismaOrientador);
-            return OrientadorMapper.toDomain(savedOrientador);
+            const orientadorSalvo = await this.repository.save(prismaOrientador);
+            return OrientadorMapper.toDomain(orientadorSalvo);
         } catch (error) {
             throw new AppError(
                 constant.ORIENTADOR.INTERNAL + error.message,

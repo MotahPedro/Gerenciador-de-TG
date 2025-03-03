@@ -60,6 +60,10 @@ export class PrismaOrientadorRepository
     });
   }
 
+  async findAll(): Promise<any> {
+    return await this.prisma.professorOrientador.findMany();
+  }
+
   async deleteByCpf(cpf: string): Promise<any> {
     return await this.prisma.professorOrientador.delete({
       where: {
