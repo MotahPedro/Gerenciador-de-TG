@@ -18,12 +18,6 @@ export class GetTodosAlunoUseCase {
             throw new AppError(constant.ALUNO.GET_ALL.ERRO, HttpStatus.NOT_FOUND.toString());
         }
 
-        const response = AlunoMapper.toGET(data);
-
-        if (!response) {
-            throw new AppError(constant.ALUNO.GET_ALL.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
-        }
-
-        return response;
+        return data;
     }
 }

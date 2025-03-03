@@ -8,7 +8,7 @@ import { PrismaAlunoRepository } from '@infra/database/prisma/repositories/Aluno
 const constant = getConstants()
 
 @Injectable()
-export class CreateAlunoUseCase {
+export class CreateAlunosUseCase {
     constructor(
         private readonly repository: PrismaAlunoRepository,
     ) {}

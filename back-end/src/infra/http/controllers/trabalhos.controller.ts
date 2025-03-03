@@ -44,10 +44,10 @@ import { UpdateTrabalhoUseCase } from '@application/useCases/Trabalhos/UpdateTra
 @Controller('gerenciadorDeTG/v1')
 export class TrabalhoController extends BaseController {
   constructor(
-    private readonly createOrientadorUseCase: CreateTrabalhoUseCase,
-    private readonly getOrientadorUseCase: GetTrabalhoUseCase,
-    private readonly deleteOrientadorUseCase: DeleteTrabalhoUseCase,
-    private readonly updateOrientadorUseCase: UpdateTrabalhoUseCase,
+    private readonly createTrabalhoUseCase: CreateTrabalhoUseCase,
+    private readonly getTrabalhoUseCase: GetTrabalhoUseCase,
+    private readonly deleteTrabalhoUseCase: DeleteTrabalhoUseCase,
+    private readonly updateTrabalhoUseCase: UpdateTrabalhoUseCase,
   ) {
     super();
   }
@@ -60,7 +60,7 @@ export class TrabalhoController extends BaseController {
     content: {
       'application/json': {
         examples: {
-          CreateOrientadorResponse: {
+          CreateTrabalhoResponse: {
             summary: 'Create Trabalho Response',
             value: createTrabalhoResponseExample,
           },
@@ -114,10 +114,10 @@ export class TrabalhoController extends BaseController {
     type: GatewayTimeout,
   })
   async create(
-    @Body() orientador: TrabalhoRequestDto,
+    @Body() trabalho: TrabalhoRequestDto,
     @Res() res: Response,
   ) {
-    const response = await this.createOrientadorUseCase.execute(orientador);
+    const response = await this.createTrabalhoUseCase.execute(trabalho);
 
     this.ok(res, response);
   }
@@ -180,7 +180,7 @@ export class TrabalhoController extends BaseController {
     @Res() res: Response,
   ) {
     console.log('Id recebido:', id);
-    const response = await this.getOrientadorUseCase.execute(id);
+    const response = await this.getTrabalhoUseCase.execute(id);
     this.ok(res, response);
   }
 
@@ -241,7 +241,7 @@ export class TrabalhoController extends BaseController {
     @Param('id') id: number,
     @Res() res: Response,
   ) {
-    const response = await this.deleteOrientadorUseCase.execute(id);
+    const response = await this.deleteTrabalhoUseCase.execute(id);
 
     this.ok(res, response);
   }
@@ -301,10 +301,10 @@ export class TrabalhoController extends BaseController {
   })
   async update(
     @Param('id') id: number,
-    @Body() orientador: TrabalhoRequestDto,
+    @Body() trabalho: TrabalhoRequestDto,
     @Res() res: Response,
   ) {
-    const response = await this.updateOrientadorUseCase.execute(id, orientador);
+    const response = await this.updateTrabalhoUseCase.execute(id, trabalho);
 
     this.ok(res, response);
   }

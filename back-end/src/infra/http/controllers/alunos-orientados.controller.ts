@@ -32,7 +32,7 @@ import {
   import { Forbidden } from '../dtos/errors/forbidden.dto';
   import { NotFound } from '../dtos/errors/notFound.dto';
   
-  import { CreateAlunoUseCase } from '@application/useCases/Aluno/CreateAluno.usecase';
+  import { CreateAlunosUseCase } from '@application/useCases/Aluno/CreateAluno.usecase';
   import { GetAlunoUseCase } from '@application/useCases/Aluno/GetAluno.usecase';
   import { DeleteAlunoUseCase } from '@application/useCases/Aluno/DeleteAluno.usecase';
   import { UpdateAlunoUsecase } from '@application/useCases/Aluno/UpdateAluno.usecase';
@@ -46,7 +46,7 @@ import {
   @Controller('gerenciadorDeTG/v1')
   export class AlunoOrientadoController extends BaseController {
       constructor(
-      private readonly createAlunoUseCase: CreateAlunoUseCase,
+      private readonly createAlunoUseCase: CreateAlunosUseCase,
       private readonly getAlunoUseCase: GetAlunoUseCase,
       private readonly getTodosAlunosUsecase: GetTodosAlunoUseCase,
       private readonly deleteAlunoUseCase: DeleteAlunoUseCase,
