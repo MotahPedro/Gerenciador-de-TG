@@ -4,22 +4,29 @@ import { TrabalhoMapper } from '@infra/database/prisma/mappers/Trabalho.mapper';
 import AppError from '@helpers/errors/AppError';
 import getConstants from '@helpers/constants/getConstants';
 import { PrismaTrabalhoRepository } from '@infra/database/prisma/repositories/TrabalhoRepository';
+import { PrismaAlunoRepository } from '@infra/database/prisma/repositories/AlunoRepository';
 
 const constant = getConstants()
 
 @Injectable()
 export class CreateTrabalhoUseCase {
-  constructor(private readonly repository: PrismaTrabalhoRepository) { }
+  constructor(
+    private readonly repository: PrismaTrabalhoRepository,
+    private readonly alunoRepository: PrismaAlunoRepository
+  ) { }
 
   async execute(data: TrabalhoProps): Promise<any> {
-    const trabalho = TrabalhoMapper.toPrisma(data);
-
     try {
+      const trabalho = TrabalhoMapper.toPrisma(data);
+
       if (!trabalho) {
         throw new AppError(constant.TRABALHO.CREATE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString());
       }
 
-      // Teria uma validação se o ra do aluno está registrado, mas mais a frente tentarei colocar um metodo de adicionar esse ra do aluno diretamente no payload do trabalho
+      const alunoRA = await this.alunoRepository.findByRa(data.alunoOrientadoRa);
+      if (!alunoRA) {
+        throw new AppError(constant.TRABALHO.INVALID_RA, HttpStatus.BAD_REQUEST.toString());
+      }
 
       const trabalhoSalvo = await this.repository.save(trabalho);
       return TrabalhoMapper.toDomain(trabalhoSalvo);

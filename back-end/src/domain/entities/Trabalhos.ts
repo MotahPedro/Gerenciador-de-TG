@@ -3,5 +3,5 @@ export interface TrabalhoProps {
     tema: string;
     objetivo: string;
     questaoProblema: string;
-    alunoOrientadoId: number;
+    alunoOrientadoRa: string;
 }

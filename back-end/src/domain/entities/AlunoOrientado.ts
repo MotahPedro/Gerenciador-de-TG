@@ -1,5 +1,3 @@
-import { ProfessorOrientadorProps } from "./ProfessorOrientador";
-
 export interface AlunoOrientadoProps {
   id?: number;
   matricula: string;

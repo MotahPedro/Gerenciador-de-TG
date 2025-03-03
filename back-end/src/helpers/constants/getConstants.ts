@@ -48,6 +48,7 @@ export default function getConstants() {
         },
         TRABALHO:{
             CREATE_ERROR: 'Tema, Objetivo e Questão Problema são obrigatórios',
+            INVALID_RA: 'RA do aluno não cadastrado',
             INTERNAL:  'Erro ao registrar trabalho: ',
             RA: 'RA já cadastrado',
             EMAIL: 'Email já cadastrado',

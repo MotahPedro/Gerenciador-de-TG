@@ -50,8 +50,8 @@ model AlunoOrientado {
   periodo             String
   semestre            String
   filaDependencia     Boolean
-  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorId], references: [id])
-  professorOrientadorId Int
+  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
+  professorOrientadorCpf String
   trabalhos           Trabalho[]
 }
 
@@ -60,6 +60,6 @@ model Trabalho {
   tema                String
   objetivo            String
   questaoProblema     String
-  alunoOrientado      AlunoOrientado     @relation(fields: [alunoOrientadoId], references: [id])
-  alunoOrientadoId    Int
+  alunoOrientado      AlunoOrientado     @relation(fields: [alunoOrientadoRa], references: [matricula], onDelete: Cascade)
+  alunoOrientadoRa    String
 }
