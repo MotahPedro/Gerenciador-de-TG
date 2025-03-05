@@ -70,5 +70,20 @@ export default function getConstants() {
             },
             NOT_FOUND: 'Trabalho não encontrado',
         },
+        LINHA:{
+            CREATE_ERROR: 'Nome e Descrição são obrigatórios',
+            INTERNAL:  'Erro ao criar linha de orientação: ',
+            GET_CPF: 'Erro ao buscar linha de orientação por CPF',
+            INVALID_CPF: 'CPF do professor orientador não cadastrado',
+            GET_ALL: {
+                ERRO:'Erro ao buscar linhas de orientação',
+                NÃO_HA: 'Nenhuma linha de orientação cadastrada',
+            },
+            UPDATE: {
+                ERRO:'Erro ao atualizar linha de orientação',
+                VAZIO: 'Os dados não podem ser vazios',
+            },
+            NOT_FOUND: 'Linha de orientação não encontrada',
+        },
     }
 }

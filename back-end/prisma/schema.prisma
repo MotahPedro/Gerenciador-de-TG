@@ -13,14 +13,11 @@ model ProfessorOrientador {
   nome                String
   email               String             @unique
   senha               String
+  linhasOrientacao    String  
+  cursosAtuacao       String
 
   quantidadeInstituicoes Int             @default(0)
   quantidadeAlunos    Int                @default(0)
-
-  linhasOrientacao    LinhaOrientacao[]
-  cursosAtuacao       CursoAtuacao[]
-  
-  alunosOrientados    AlunoOrientado[]
 
   @@map("professororientador")
 }
@@ -28,15 +25,13 @@ model ProfessorOrientador {
 model LinhaOrientacao {
   id                  Int                @id @default(autoincrement())
   linha               String
-  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
-  professorOrientadorCpf String          @unique
+  professorOrientadorCpf String          
 }
 
 model CursoAtuacao {
   id                  Int                @id @default(autoincrement())
   curso               String
-  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
-  professorOrientadorCpf String          @unique
+  professorOrientadorCpf String          
 }
 
 model AlunoOrientado {
@@ -50,7 +45,6 @@ model AlunoOrientado {
   periodo             String
   semestre            String
   filaDependencia     Boolean
-  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
   professorOrientadorCpf String          @unique
   trabalhos           Trabalho[]
 }

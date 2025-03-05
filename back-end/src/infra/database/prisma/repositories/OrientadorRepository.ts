@@ -20,12 +20,12 @@ export class PrismaOrientadorRepository
     const accountDb = OrientadorMapper.toPrisma(data);
 
     return await this.prisma.professorOrientador.create({
-      data: accountDb,
-      include: {
-        linhasOrientacao: true,
-        cursosAtuacao: true,
-        alunosOrientados: true,
-      }
+      data: {
+        ...accountDb,
+        linhasOrientacao: accountDb.linhasOrientacao ? { create: accountDb.linhasOrientacao.create } : undefined,
+        cursosAtuacao: accountDb.cursosAtuacao ? { create: accountDb.cursosAtuacao.create } : undefined,
+        alunosOrientados: accountDb.alunosOrientados ? { create: accountDb.alunosOrientados.create } : undefined,
+      },
     });
   }
 

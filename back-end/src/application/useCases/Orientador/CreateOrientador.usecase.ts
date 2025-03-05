@@ -33,7 +33,7 @@ export class CreateOrientadorUseCase {
     }
 
     private async validadeOrientador(orientador: ProfessorOrientadorProps) {
-        const requiredFields = ['cpf', 'nome', 'email', 'senha', 'linhasOrientacao', 'cursosAtuacao'];
+        const requiredFields = ['cpf', 'nome', 'email', 'senha'];
         for (const field of requiredFields) {
             if (!orientador[field]) {
                 throw new AppError(constant.ORIENTADOR.VALIDADE, HttpStatus.BAD_REQUEST.toString());
