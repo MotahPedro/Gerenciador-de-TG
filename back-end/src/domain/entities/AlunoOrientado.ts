@@ -10,7 +10,7 @@ export interface AlunoOrientadoProps {
   semestre: string;
   filaDependencia: boolean;
   professorOrientador: { nome: string };
-  professorOrientadorId: number;
+  professorOrientadorCpf: string;
   trabalhos: {
     tema: string;
     objetivo: string;

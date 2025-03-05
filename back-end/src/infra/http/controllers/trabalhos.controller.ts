@@ -38,6 +38,7 @@ import { CreateTrabalhoUseCase } from '@application/useCases/Trabalhos/CreateTra
 import { GetTrabalhoUseCase } from '@application/useCases/Trabalhos/GetTrabalho.usecase';
 import { DeleteTrabalhoUseCase } from '@application/useCases/Trabalhos/DeleteTrabalho.usecase';
 import { UpdateTrabalhoUseCase } from '@application/useCases/Trabalhos/UpdateTrabalho.usecase';
+import { GetTodosTrabalhosUseCase } from '@application/useCases/Trabalhos/GetTodosTrabalhos';
 // mais 4 dtos a fazer
 // JwtAuth
 
@@ -46,6 +47,7 @@ export class TrabalhoController extends BaseController {
   constructor(
     private readonly createTrabalhoUseCase: CreateTrabalhoUseCase,
     private readonly getTrabalhoUseCase: GetTrabalhoUseCase,
+    private readonly getTodosTrabalhosUsecase: GetTodosTrabalhosUseCase,
     private readonly deleteTrabalhoUseCase: DeleteTrabalhoUseCase,
     private readonly updateTrabalhoUseCase: UpdateTrabalhoUseCase,
   ) {
@@ -175,12 +177,74 @@ export class TrabalhoController extends BaseController {
     description: 'Gateway Timeout',
     type: GatewayTimeout,
   })
-  async findByCpf(
+  async findById(
     @Param('id') id: number,
     @Res() res: Response,
   ) {
     console.log('Id recebido:', id);
-    const response = await this.getTrabalhoUseCase.execute(id);
+    const response = await this.getTrabalhoUseCase.byId(Number(id));
+    this.ok(res, response);
+  }
+
+  @Get('trabalho/aluno/:ra')
+  @ApiExcludeEndpoint()
+  @ApiParam({ name: 'ra', type: String })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Success',
+    type: TrabalhoResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+    type: BadRequest,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+    type: Unauthorized,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+    type: Forbidden,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found',
+    type: NotFound,
+  })
+  @ApiResponse({
+    status: 405,
+    description: 'Method Not allowed',
+    type: MethodNotAllowed,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Conflict',
+    type: Conflict,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Server Error',
+    type: InternalServerError,
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Service Unavailable',
+    type: ServiceUnavailable,
+  })
+  @ApiResponse({
+    status: 504,
+    description: 'Gateway Timeout',
+    type: GatewayTimeout,
+  })
+  async findByAlunoRa(
+    @Param('ra') ra: string,
+    @Res() res: Response,
+  ) {
+    console.log('Ra recebido:', ra);
+    const response = await this.getTrabalhoUseCase.byAlunoOrientado(ra);
     this.ok(res, response);
   }
 
@@ -308,5 +372,65 @@ export class TrabalhoController extends BaseController {
 
     this.ok(res, response);
   }
+
+  @Get('trabalho/')
+    @ApiExcludeEndpoint()
+    @ApiResponse({
+      status: HttpStatus.OK,
+      description: 'Success',
+      type: TrabalhoResponseDto,
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Bad Request',
+      type: BadRequest,
+    })
+    @ApiResponse({
+      status: 401,
+      description: 'Unauthorized',
+      type: Unauthorized,
+    })
+    @ApiResponse({
+      status: 403,
+      description: 'Forbidden',
+      type: Forbidden,
+    })
+    @ApiResponse({
+      status: 404,
+      description: 'Not Found',
+      type: NotFound,
+    })
+    @ApiResponse({
+      status: 405,
+      description: 'Method Not allowed',
+      type: MethodNotAllowed,
+    })
+    @ApiResponse({
+      status: 409,
+      description: 'Conflict',
+      type: Conflict,
+    })
+    @ApiResponse({
+      status: 500,
+      description: 'Internal Server Error',
+      type: InternalServerError,
+    })
+    @ApiResponse({
+      status: 503,
+      description: 'Service Unavailable',
+      type: ServiceUnavailable,
+    })
+    @ApiResponse({
+      status: 504,
+      description: 'Gateway Timeout',
+      type: GatewayTimeout,
+    })
+    async findAll(
+      @Res() res: Response,
+    ) {
+      const response = await this.getTodosTrabalhosUsecase.execute();
+      this.ok(res, response);
+    }
+  
 
 }

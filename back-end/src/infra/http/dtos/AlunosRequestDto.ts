@@ -34,8 +34,8 @@ export class AlunosRequestDto {
     @ApiProperty({ type: Object, example: { nome: 'John Smith' } })
     professorOrientador: { nome: string };
 
-    @ApiProperty({ example: 1 })
-    professorOrientadorId: number;
+    @ApiProperty({ example: "123456789012" })
+    professorOrientadorCpf: string;
 
     @ApiProperty({
         type: [Object],

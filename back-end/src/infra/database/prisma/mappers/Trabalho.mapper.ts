@@ -6,7 +6,7 @@ export class TrabalhoMapper {
             tema: trabalho.tema,
             objetivo: trabalho.objetivo,
             questaoProblema: trabalho.questaoProblema,
-            alunoOrientadoId: trabalho.alunoOrientadoId
+            alunoOrientadoRa: trabalho.alunoOrientadoRa
         }
     }
 
@@ -15,7 +15,7 @@ export class TrabalhoMapper {
             tema: raw.tema,
             objetivo: raw.objetivo,
             questaoProblema: raw.questaoProblema,
-            alunoOrientadoId: raw.alunoOrientadoId
+            alunoOrientadoRa: raw.alunoOrientadoRa
         }
     }
 
@@ -24,7 +24,7 @@ export class TrabalhoMapper {
             tema: raw.tema,
             objetivo: raw.objetivo,
             questaoProblema: raw.questaoProblema,
-            alunoOrientadoId: raw.alunoOrientadoId
+            alunoOrientadoRa: raw.alunoOrientadoRa
         }
     }
 }

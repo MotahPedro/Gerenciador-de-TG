@@ -28,15 +28,15 @@ model ProfessorOrientador {
 model LinhaOrientacao {
   id                  Int                @id @default(autoincrement())
   linha               String
-  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorId], references: [id], onDelete: Cascade)
-  professorOrientadorId Int
+  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
+  professorOrientadorCpf String          @unique
 }
 
 model CursoAtuacao {
   id                  Int                @id @default(autoincrement())
   curso               String
-  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorId], references: [id], onDelete: Cascade)
-  professorOrientadorId Int
+  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
+  professorOrientadorCpf String          @unique
 }
 
 model AlunoOrientado {
@@ -51,7 +51,7 @@ model AlunoOrientado {
   semestre            String
   filaDependencia     Boolean
   professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
-  professorOrientadorCpf String
+  professorOrientadorCpf String          @unique
   trabalhos           Trabalho[]
 }
 
@@ -61,5 +61,5 @@ model Trabalho {
   objetivo            String
   questaoProblema     String
   alunoOrientado      AlunoOrientado     @relation(fields: [alunoOrientadoRa], references: [matricula], onDelete: Cascade)
-  alunoOrientadoRa    String
+  alunoOrientadoRa    String             @unique
 }

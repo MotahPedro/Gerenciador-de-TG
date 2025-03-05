@@ -38,18 +38,17 @@ export class PrismaTrabalhoRepository
   }
 
   async findById(id: number): Promise<any> {
-
     return await this.prisma.trabalho.findUnique({
       where: {
-        id,
+        id: Number(id),
       },
     });
   }	
 
-  async findByAlunoOrientado(alunoOrientadoId: number): Promise<any> {
-    return await this.prisma.trabalho.findFirst({
+  async findByAlunoOrientado(alunoOrientadoRa: string): Promise<TrabalhoProps[]> {
+    return await this.prisma.trabalho.findMany({
       where: {
-        alunoOrientadoId,
+        alunoOrientadoRa,
       },
     });
   }
@@ -62,7 +61,7 @@ export class PrismaTrabalhoRepository
   async deleteById(id: number): Promise<any> {
     return await this.prisma.trabalho.delete({
       where: {
-        id,
+        id: Number(id),
       },
     });
   }

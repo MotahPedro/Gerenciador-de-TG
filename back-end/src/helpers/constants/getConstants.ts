@@ -56,7 +56,7 @@ export default function getConstants() {
                 ERRO:'Erro ao buscar trabalho',
                 VAZIO: 'ID não pode ser vazio',
             },
-            GET_ALUNOID: {
+            GET_ALUNORA: {
                 ERRO:'Erro ao buscar trabalho pelo ra aluno',
                 VAZIO: 'RA não pode ser vazio',
             },

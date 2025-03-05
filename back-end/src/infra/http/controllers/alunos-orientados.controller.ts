@@ -178,7 +178,7 @@ import {
       description: 'Gateway Timeout',
       type: GatewayTimeout,
     })
-    async findById(
+    async findByRa(
       @Param('ra') ra: string,
       @Res() res: Response,
     ) {

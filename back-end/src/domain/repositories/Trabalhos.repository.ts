@@ -3,6 +3,7 @@ import { TrabalhoProps } from "@domain/entities/Trabalhos";
 export abstract class TrabalhoRepository {
   abstract save(trabalho: TrabalhoProps): Promise<any>;
   abstract findById(id: number): Promise<TrabalhoProps>;
+  abstract findByAlunoOrientado(alunoOrientadoRa: string): Promise<TrabalhoProps[]>;
   abstract deleteById(id: number): Promise<void>;
   abstract update(id: number, trabalho: TrabalhoProps): Promise<void>;
   abstract findAll(): Promise<void>;

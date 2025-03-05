@@ -12,4 +12,7 @@ export class TrabalhoResponseDto {
 
   @ApiProperty({ example: 'Como melhorar a eficiência do desenvolvimento de software?' })
   questaoProblema: string;
+
+  @ApiProperty({ example: "111111111"})
+  alunoOrientadoRa: string;
 }
