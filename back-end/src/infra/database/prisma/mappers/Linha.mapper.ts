@@ -5,7 +5,7 @@ export class LinhaMapper {
         return {
             linha: linha.linha,
             professorOrientadorCpf: linha.professorOrientadorCpf ?? undefined,
-            cpfs: linha.cpfs ?? undefined,
+            cpfs: linha.cpfs ?? [],
         }
     }
 

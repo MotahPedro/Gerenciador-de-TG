@@ -12,19 +12,19 @@ export class PrismaLinhaRepository
 
     constructor(
         public readonly prisma: PrismaRepository) {
-        super(prisma, 'linha');
+        super(prisma, 'linhaOrientacao');
     }
 
     async save(data: LinhaProps): Promise<any> {
         const accountDb = LinhaMapper.toPrisma(data);
 
-        return await this.prisma.trabalho.create({
+        return await this.prisma.linhaOrientacao.create({
             data: accountDb,
         });
     }
     
     async findById(id: number): Promise<any> {
-        return await this.prisma.trabalho.findUnique({
+        return await this.prisma.linhaOrientacao.findUnique({
             where: {
                 id: Number(id),
             },
@@ -32,7 +32,7 @@ export class PrismaLinhaRepository
     }
     
     async findByCpf(professorOrientadorCpf: string): Promise<any> {
-        // return await this.prisma.trabalho.findUnique({
+        // return await this.prisma.linhaOrientacao.findUnique({
         //     where: {
         //         professorOrientadorCpf,
         //     },
@@ -42,18 +42,18 @@ export class PrismaLinhaRepository
     async update(id: number, data: Partial<LinhaProps>): Promise<any> {
         const accountDb = LinhaMapper.toPrisma(data);
 
-        return await this.prisma.trabalho.update({
+        return await this.prisma.linhaOrientacao.update({
             where: { id: Number(id) },
             data: accountDb,
         });
     }
 
     async findAll(): Promise<any> {
-        return await this.prisma.trabalho.findMany();
+        return await this.prisma.linhaOrientacao.findMany();
     }
 
     async delete(id: number): Promise<any> {
-        return await this.prisma.trabalho.delete({
+        return await this.prisma.linhaOrientacao.delete({
             where: {
                 id: Number(id)
             },
