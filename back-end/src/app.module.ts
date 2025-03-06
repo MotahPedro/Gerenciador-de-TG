@@ -18,6 +18,8 @@ import { GetTodosTrabalhosUseCase } from '@application/useCases/Trabalhos/GetTod
 import { DeleteTrabalhoUseCase } from '@application/useCases/Trabalhos/DeleteTrabalho.usecase';
 import { UpdateTrabalhoUseCase } from '@application/useCases/Trabalhos/UpdateTrabalho.usecase';
 import { TrabalhoController } from '@infra/http/controllers/trabalhos.controller';
+import { CreateLinhaUseCase } from '@application/useCases/LinhaOrientacao/CreateLinha.usecase';
+import { LinhaController } from '@infra/http/controllers/linha.controller';
 
 @Module({
   imports: [RepositoriesModule],
@@ -37,11 +39,13 @@ import { TrabalhoController } from '@infra/http/controllers/trabalhos.controller
     GetTodosTrabalhosUseCase,
     DeleteTrabalhoUseCase,
     UpdateTrabalhoUseCase,
+    CreateLinhaUseCase,
   ],
   controllers: [
     ProfessorOrientadorController,
     AlunoOrientadoController,
     TrabalhoController,
+    LinhaController,
   ]
 })
 export class AppModule { }

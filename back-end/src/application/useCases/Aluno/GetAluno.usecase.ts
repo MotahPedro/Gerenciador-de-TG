@@ -15,7 +15,7 @@ export class GetAlunoUseCase {
         const raAluno = await this.repository.findByRa(ra);
 
         if (!raAluno) {
-            throw new AppError(constant.ALUNO.GET_RA.ERRO, HttpStatus.BAD_REQUEST.toString());
+            throw new AppError(constant.ALUNO.GET_RA.VAZIO, HttpStatus.BAD_REQUEST.toString());
         }
 
         const response = AlunoMapper.toGET(raAluno);

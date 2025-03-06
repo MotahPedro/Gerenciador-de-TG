@@ -37,8 +37,8 @@ import {
   import { DeleteAlunoUseCase } from '@application/useCases/Aluno/DeleteAluno.usecase';
   import { UpdateAlunoUsecase } from '@application/useCases/Aluno/UpdateAluno.usecase';
   import { GetTodosAlunoUseCase } from '@application/useCases/Aluno/GetTodosAlunos.usecase';
-  import { AlunosRequestDto } from '../dtos/AlunosRequestDto';
-  import { AlunosResponseDto } from '../dtos/AlunosResponseDto';
+  import { AlunosRequestDto } from '../dtos/Requests/AlunosRequestDto';
+  import { AlunosResponseDto } from '../dtos/Responses/AlunosResponseDto';
   import { createAlunoResponseExample } from '../dtos/examples/CreateAlunoREsponseExample';
   // mais 4 dtos a fazer
   // JwtAuth

@@ -29,14 +29,16 @@ model LinhaOrientacao {
   id                  Int                @id @default(autoincrement())
   linha               String
   professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
-  professorOrientadorCpf String          @unique
+  professorOrientadorCpf String
+  cpfs String          
 }
 
 model CursoAtuacao {
   id                  Int                @id @default(autoincrement())
   curso               String
   professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
-  professorOrientadorCpf String          @unique
+  professorOrientadorCpf String       
+  cpfs String       
 }
 
 model AlunoOrientado {
@@ -51,7 +53,7 @@ model AlunoOrientado {
   semestre            String
   filaDependencia     Boolean
   professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
-  professorOrientadorCpf String          @unique
+  professorOrientadorCpf String          
   trabalhos           Trabalho[]
 }
 
