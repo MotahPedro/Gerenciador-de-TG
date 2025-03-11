@@ -17,7 +17,8 @@ CREATE TABLE `professororientador` (
 CREATE TABLE `LinhaOrientacao` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `linha` VARCHAR(191) NOT NULL,
-    `professorOrientadorId` INTEGER NOT NULL,
+    `professorOrientadorCpf` VARCHAR(191) NOT NULL,
+    `cpfs` JSON NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -26,7 +27,8 @@ CREATE TABLE `LinhaOrientacao` (
 CREATE TABLE `CursoAtuacao` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `curso` VARCHAR(191) NOT NULL,
-    `professorOrientadorId` INTEGER NOT NULL,
+    `professorOrientadorCpf` VARCHAR(191) NOT NULL,
+    `cpfs` JSON NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -43,7 +45,7 @@ CREATE TABLE `AlunoOrientado` (
     `periodo` VARCHAR(191) NOT NULL,
     `semestre` VARCHAR(191) NOT NULL,
     `filaDependencia` BOOLEAN NOT NULL,
-    `professorOrientadorId` INTEGER NOT NULL,
+    `professorOrientadorCpf` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `AlunoOrientado_matricula_key`(`matricula`),
     PRIMARY KEY (`id`)
@@ -55,19 +57,20 @@ CREATE TABLE `Trabalho` (
     `tema` VARCHAR(191) NOT NULL,
     `objetivo` VARCHAR(191) NOT NULL,
     `questaoProblema` VARCHAR(191) NOT NULL,
-    `alunoOrientadoId` INTEGER NOT NULL,
+    `alunoOrientadoRa` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `Trabalho_alunoOrientadoRa_key`(`alunoOrientadoRa`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `LinhaOrientacao` ADD CONSTRAINT `LinhaOrientacao_professorOrientadorId_fkey` FOREIGN KEY (`professorOrientadorId`) REFERENCES `professororientador`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `LinhaOrientacao` ADD CONSTRAINT `LinhaOrientacao_professorOrientadorCpf_fkey` FOREIGN KEY (`professorOrientadorCpf`) REFERENCES `professororientador`(`cpf`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `CursoAtuacao` ADD CONSTRAINT `CursoAtuacao_professorOrientadorId_fkey` FOREIGN KEY (`professorOrientadorId`) REFERENCES `professororientador`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `CursoAtuacao` ADD CONSTRAINT `CursoAtuacao_professorOrientadorCpf_fkey` FOREIGN KEY (`professorOrientadorCpf`) REFERENCES `professororientador`(`cpf`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `AlunoOrientado` ADD CONSTRAINT `AlunoOrientado_professorOrientadorId_fkey` FOREIGN KEY (`professorOrientadorId`) REFERENCES `professororientador`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `AlunoOrientado` ADD CONSTRAINT `AlunoOrientado_professorOrientadorCpf_fkey` FOREIGN KEY (`professorOrientadorCpf`) REFERENCES `professororientador`(`cpf`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Trabalho` ADD CONSTRAINT `Trabalho_alunoOrientadoId_fkey` FOREIGN KEY (`alunoOrientadoId`) REFERENCES `AlunoOrientado`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Trabalho` ADD CONSTRAINT `Trabalho_alunoOrientadoRa_fkey` FOREIGN KEY (`alunoOrientadoRa`) REFERENCES `AlunoOrientado`(`matricula`) ON DELETE CASCADE ON UPDATE CASCADE;

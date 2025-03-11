@@ -30,7 +30,7 @@ model LinhaOrientacao {
   linha               String
   professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
   professorOrientadorCpf String
-  cpfs String          
+  cpfs Json          
 }
 
 model CursoAtuacao {
@@ -38,7 +38,7 @@ model CursoAtuacao {
   curso               String
   professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
   professorOrientadorCpf String       
-  cpfs String       
+  cpfs Json       
 }
 
 model AlunoOrientado {
