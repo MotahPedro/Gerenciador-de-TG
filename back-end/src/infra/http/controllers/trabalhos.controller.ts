@@ -374,63 +374,63 @@ export class TrabalhoController extends BaseController {
   }
 
   @Get('trabalho/')
-    @ApiExcludeEndpoint()
-    @ApiResponse({
-      status: HttpStatus.OK,
-      description: 'Success',
-      type: TrabalhoResponseDto,
-    })
-    @ApiResponse({
-      status: 400,
-      description: 'Bad Request',
-      type: BadRequest,
-    })
-    @ApiResponse({
-      status: 401,
-      description: 'Unauthorized',
-      type: Unauthorized,
-    })
-    @ApiResponse({
-      status: 403,
-      description: 'Forbidden',
-      type: Forbidden,
-    })
-    @ApiResponse({
-      status: 404,
-      description: 'Not Found',
-      type: NotFound,
-    })
-    @ApiResponse({
-      status: 405,
-      description: 'Method Not allowed',
-      type: MethodNotAllowed,
-    })
-    @ApiResponse({
-      status: 409,
-      description: 'Conflict',
-      type: Conflict,
-    })
-    @ApiResponse({
-      status: 500,
-      description: 'Internal Server Error',
-      type: InternalServerError,
-    })
-    @ApiResponse({
-      status: 503,
-      description: 'Service Unavailable',
-      type: ServiceUnavailable,
-    })
-    @ApiResponse({
-      status: 504,
-      description: 'Gateway Timeout',
-      type: GatewayTimeout,
-    })
-    async findAll(
-      @Res() res: Response,
-    ) {
-      const response = await this.getTodosTrabalhosUsecase.execute();
-      this.ok(res, response);
-    }
-  
+  @ApiExcludeEndpoint()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Success',
+    type: TrabalhoResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+    type: BadRequest,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+    type: Unauthorized,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+    type: Forbidden,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found',
+    type: NotFound,
+  })
+  @ApiResponse({
+    status: 405,
+    description: 'Method Not allowed',
+    type: MethodNotAllowed,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Conflict',
+    type: Conflict,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Server Error',
+    type: InternalServerError,
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Service Unavailable',
+    type: ServiceUnavailable,
+  })
+  @ApiResponse({
+    status: 504,
+    description: 'Gateway Timeout',
+    type: GatewayTimeout,
+  })
+  async findAll(
+    @Res() res: Response,
+  ) {
+    const response = await this.getTodosTrabalhosUsecase.execute();
+    this.ok(res, response);
+  }
+
 
 }
