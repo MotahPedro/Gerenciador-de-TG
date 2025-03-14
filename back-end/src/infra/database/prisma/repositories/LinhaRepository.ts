@@ -32,11 +32,13 @@ export class PrismaLinhaRepository
     }
     
     async findByCpf(professorOrientadorCpf: string): Promise<any> {
-        // return await this.prisma.linhaOrientacao.findUnique({
-        //     where: {
-        //         professorOrientadorCpf,
-        //     },
-        // });
+        return await this.prisma.linhaOrientacao.findFirst({
+            where: {
+                cpfs: {
+                    array_contains: professorOrientadorCpf,
+                },
+            },
+        });
     }
     
     async update(id: number, data: Partial<LinhaProps>): Promise<any> {

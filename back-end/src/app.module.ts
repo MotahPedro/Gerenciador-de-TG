@@ -19,7 +19,11 @@ import { DeleteTrabalhoUseCase } from '@application/useCases/Trabalhos/DeleteTra
 import { UpdateTrabalhoUseCase } from '@application/useCases/Trabalhos/UpdateTrabalho.usecase';
 import { TrabalhoController } from '@infra/http/controllers/trabalhos.controller';
 import { CreateLinhaUseCase } from '@application/useCases/LinhaOrientacao/CreateLinha.usecase';
+import { GetLinhaUseCase } from '@application/useCases/LinhaOrientacao/GetLinha.usecase';
 import { LinhaController } from '@infra/http/controllers/linha.controller';
+import { GetTodasLinhasUseCase } from '@application/useCases/LinhaOrientacao/GetTodasLinhas.usecase';
+import { UpdateLinhaUseCase } from '@application/useCases/LinhaOrientacao/UpdateLinha.usecase';
+import { DeleteLinhaUseCase } from '@application/useCases/LinhaOrientacao/deleteLinha.usecase';
 
 @Module({
   imports: [RepositoriesModule],
@@ -40,6 +44,10 @@ import { LinhaController } from '@infra/http/controllers/linha.controller';
     DeleteTrabalhoUseCase,
     UpdateTrabalhoUseCase,
     CreateLinhaUseCase,
+    GetLinhaUseCase,
+    GetTodasLinhasUseCase,
+    UpdateLinhaUseCase,
+    DeleteLinhaUseCase,
   ],
   controllers: [
     ProfessorOrientadorController,
