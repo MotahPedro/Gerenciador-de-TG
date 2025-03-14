@@ -304,7 +304,70 @@ export class LinhaController extends BaseController {
     @Body() linha: LinhaRequestDto,
     @Res() res: Response,
   ) {
-    const response = await this.updateLinhaUseCase.execute(id, linha);
+    const response = await this.updateLinhaUseCase.fullUpdate(id, linha);
+
+    this.ok(res, response);
+  }
+
+  @Patch('linha/add/orientador/:id')
+  @ApiExcludeEndpoint()
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Success',
+    type: LinhaResponsetDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+    type: BadRequest,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+    type: Unauthorized,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+    type: Forbidden,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found',
+    type: NotFound,
+  })
+  @ApiResponse({
+    status: 405,
+    description: 'Method Not allowed',
+    type: MethodNotAllowed,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Conflict',
+    type: Conflict,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Server Error',
+    type: InternalServerError,
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Service Unavailable',
+    type: ServiceUnavailable,
+  })
+  @ApiResponse({
+    status: 504,
+    description: 'Gateway Timeout',
+    type: GatewayTimeout,
+  })
+  async addOrientadorCpf(
+    @Param('id') id: number,
+    @Body() cpf: string,
+    @Res() res: Response,
+  ) {
+    const response = await this.updateLinhaUseCase.addOrientadorCpf(id, cpf);
 
     this.ok(res, response);
   }

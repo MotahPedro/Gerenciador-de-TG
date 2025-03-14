@@ -62,4 +62,35 @@ export class PrismaLinhaRepository
         });
     }
 
+    async addOrientadorCpf(id: number, orientadorCpf: string): Promise<any> {
+        const linha = await this.prisma.linhaOrientacao.findUnique({
+            where: { id: Number(id) },
+        });
+
+        if (!linha) {
+            throw new Error('Linha not found');
+        }
+
+        const cpfsArray: string[] = Array.isArray(linha.cpfs) ? linha.cpfs.map(cpf => String(cpf)) : [];
+
+        let cpfString = orientadorCpf;
+        if (typeof orientadorCpf !== 'string') {
+            const match = JSON.stringify(orientadorCpf).match(/"cpfs":"(\d+)"/);
+            if (match) {
+                cpfString = match[1];
+            }
+        }
+
+        const updatedCpfs = [...cpfsArray, cpfString];
+
+        console.log(updatedCpfs);
+
+        return await this.prisma.linhaOrientacao.update({
+            where: { id: Number(id) },
+            data: {
+                cpfs: updatedCpfs,
+            },
+        });
+    }
+
 }

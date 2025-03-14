@@ -30,19 +30,15 @@ export class GetLinhaUseCase {
     async byOrientadorCpf(orientadorCpf: string): Promise<LinhaProps[]> {
         const data = await this.repository.findByCpf(orientadorCpf);
 
-        console.log(data);
+        const targetCpf = data.cpfs.find(cpf => cpf === orientadorCpf);
+
+        console.log(targetCpf);
         
-        if (!data || !Array.isArray(data) || data.length === 0) {
+        if (!targetCpf) {
             throw new AppError(constant.LINHA.GET_CPF.VAZIO, HttpStatus.NOT_FOUND.toString());
         }
     
-        const response = data.map(LinhaMapper.toGET);
-    
-        if (!response || response.length === 0) {
-            throw new AppError(constant.LINHA.GET_CPF.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
-        }
-    
-        return response;
+        return data;
     }
 
 }

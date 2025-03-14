@@ -10,19 +10,35 @@ const constant = getConstants()
 export class UpdateLinhaUseCase {
     constructor(private readonly repository: PrismaLinhaRepository) {}
     
-    async execute(id: number, linha: LinhaProps): Promise<LinhaProps> {
+    async fullUpdate(id: number, linha: LinhaProps): Promise<LinhaProps> {
         const data = await this.repository.findById(id);
     
         if (!data) {
-        throw new AppError(constant.LINHA.GET_ID.ERRO, HttpStatus.NOT_FOUND.toString());
+        throw new AppError(constant.LINHA.GET_ID.VAZIO, HttpStatus.NOT_FOUND.toString());
         }
     
         const response = await this.repository.update(id, linha);
-    
+
         if (!response) {
         throw new AppError(constant.LINHA.UPDATE.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
         }
     
+        return response;
+    }
+
+    async addOrientadorCpf(id: number, orientadorCpf: string): Promise<LinhaProps> {
+        const data = await this.repository.findById(id);
+
+        if (!data) {
+            throw new AppError(constant.LINHA.GET_ID.VAZIO, HttpStatus.NOT_FOUND.toString());
+        }
+
+        const response = await this.repository.addOrientadorCpf(id, orientadorCpf);
+
+        if (!response) {
+            throw new AppError(constant.LINHA.UPDATE.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+        }
+
         return response;
     }
 }

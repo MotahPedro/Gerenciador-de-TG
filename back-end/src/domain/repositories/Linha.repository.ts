@@ -6,5 +6,6 @@ export abstract class LinhaRepository {
   abstract findByCpf(professorOrientadorCpf: string): Promise<LinhaProps>;
   abstract delete(id: number): Promise<void>;
   abstract update(id: number, linha: LinhaProps): Promise<void>;
+  abstract addOrientadorCpf(id: number, orientadorCpf: string): Promise<void>;
   abstract findAll(): Promise<void>;
 }
