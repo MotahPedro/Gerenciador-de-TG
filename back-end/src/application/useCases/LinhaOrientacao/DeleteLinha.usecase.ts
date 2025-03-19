@@ -15,13 +15,13 @@ export class DeleteLinhaUseCase {
         const data = await this.repository.findById(id);
     
         if (!data) {
-        throw new AppError(constant.TRABALHO.NOT_FOUND, HttpStatus.NOT_FOUND.toString());
+        throw new AppError(constant.LINHA.NOT_FOUND, HttpStatus.NOT_FOUND.toString());
         }
     
         const response = LinhaMapper.toGET(data);
     
         if (!response) {
-        throw new AppError(constant.TRABALHO.NOT_FOUND, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+        throw new AppError(constant.LINHA.NOT_FOUND, HttpStatus.INTERNAL_SERVER_ERROR.toString());
         }
     
         return await this.repository.delete(id);

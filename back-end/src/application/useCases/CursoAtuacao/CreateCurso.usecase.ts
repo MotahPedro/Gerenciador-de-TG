@@ -9,7 +9,7 @@ import { PrismaOrientadorRepository } from '@infra/database/prisma/repositories/
 const constant = getConstants()
 
 @Injectable()
-export class CreateLinhaUseCase {
+export class CreateCursoUseCase {
     constructor(
         private readonly repository: PrismaCursoRepository,
         private readonly orientadorRepository: PrismaOrientadorRepository
@@ -20,7 +20,7 @@ export class CreateLinhaUseCase {
             const linha = CursoMapper.toPrisma(data);
 
             if (!linha) {
-                throw new AppError(constant.LINHA.CREATE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+                throw new AppError(constant.CURSO.CREATE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString());
             }
 
             console.log(linha);            
@@ -30,7 +30,7 @@ export class CreateLinhaUseCase {
             console.log(orientadorCpf);
 
             if (!orientadorCpf) {
-                throw new AppError(constant.LINHA.INVALID_CPF, HttpStatus.BAD_REQUEST.toString());
+                throw new AppError(constant.CURSO.INVALID_CPF, HttpStatus.BAD_REQUEST.toString());
             }
 
             const linhaSalva = await this.repository.save(data);
