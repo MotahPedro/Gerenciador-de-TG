@@ -4,6 +4,7 @@ import { PrismaRepository } from '@infra/database/prisma/core/PrismaRepository';
 import { PrismaAlunoRepository } from './repositories/AlunoRepository';
 import { PrismaTrabalhoRepository } from './repositories/TrabalhoRepository';
 import { PrismaLinhaRepository } from './repositories/LinhaRepository';
+import { PrismaCursoRepository } from './repositories/CursoRepository';
 
 @Module({
   providers: [
@@ -11,13 +12,15 @@ import { PrismaLinhaRepository } from './repositories/LinhaRepository';
     PrismaOrientadorRepository,
     PrismaAlunoRepository,
     PrismaTrabalhoRepository,
-    PrismaLinhaRepository
+    PrismaLinhaRepository,
+    PrismaCursoRepository
   ],
   exports: [
     PrismaOrientadorRepository,
     PrismaAlunoRepository,
     PrismaTrabalhoRepository,
     PrismaLinhaRepository,
+    PrismaCursoRepository
   ],
 })
 export class RepositoriesModule { }

@@ -92,5 +92,27 @@ export default function getConstants() {
             },
             NOT_FOUND: 'Linha de orientação não encontrada',
         },
+        CURSO: {
+            CREATE_ERROR: 'Nome e Descrição são obrigatórios',
+            INTERNAL: 'Erro ao criar curso de atuação: ',
+            GET_ID: {
+                ERRO: 'Erro ao buscar curso de atuação por ID',
+                VAZIO: 'ID não pode ser vazio',
+            },
+            GET_CPF: {
+                ERRO: 'Erro ao buscar curso de atuação por CPF',
+                VAZIO: 'CPF não pode ser vazio',
+            },
+            INVALID_CPF: 'CPF do professor orientador não cadastrado',
+            GET_ALL: {
+                ERRO: 'Erro ao buscar cursos de atuação',
+                NÃO_HA: 'Nenhum curso de atuação cadastrado',
+            },
+            UPDATE: {
+                ERRO: 'Erro ao atualizar curso de atuação',
+                VAZIO: 'Os dados não podem ser vazios',
+            },
+            NOT_FOUND: 'Curso de atuação não encontrado',
+        },
     }
 }
