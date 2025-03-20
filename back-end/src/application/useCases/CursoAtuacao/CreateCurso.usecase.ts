@@ -17,15 +17,15 @@ export class CreateCursoUseCase {
 
     async execute(data: CursoProps): Promise<any> {
         try {
-            const linha = CursoMapper.toPrisma(data);
+            const curso = CursoMapper.toPrisma(data);
 
-            if (!linha) {
+            if (!curso) {
                 throw new AppError(constant.CURSO.CREATE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString());
             }
 
-            console.log(linha);            
+            console.log(curso);            
             
-            const orientadorCpf = await this.orientadorRepository.findByCpf(linha.professorOrientadorCpf);
+            const orientadorCpf = await this.orientadorRepository.findByCpf(curso.professorOrientadorCpf);
             
             console.log(orientadorCpf);
 
@@ -33,8 +33,8 @@ export class CreateCursoUseCase {
                 throw new AppError(constant.CURSO.INVALID_CPF, HttpStatus.BAD_REQUEST.toString());
             }
 
-            const linhaSalva = await this.repository.save(data);
-            return CursoMapper.toDomain(linhaSalva);
+            const cursoSalvo = await this.repository.save(data);
+            return CursoMapper.toDomain(cursoSalvo);
 
         } catch (error) {
             throw new AppError(

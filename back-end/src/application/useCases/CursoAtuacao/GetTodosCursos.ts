@@ -7,7 +7,7 @@ import { PrismaCursoRepository } from '@infra/database/prisma/repositories/Curso
 const constant = getConstants()
 
 @Injectable()
-export class GetTodasCursosUseCase {
+export class GetTodosCursosUseCase {
     constructor(private repository: PrismaCursoRepository) {}
 
     async execute(): Promise<CursoProps[]> {

@@ -38,18 +38,18 @@ import { CreateCursoUseCase } from '@application/useCases/CursoAtuacao/CreateCur
 import { GetCursoUseCase } from '@application/useCases/CursoAtuacao/GetCurso.usecase';
 import { DeleteCursoUseCase } from '@application/useCases/CursoAtuacao/DeleteCurso.usecase';
 import { UpdateCursoUseCase } from '@application/useCases/CursoAtuacao/UpdateCurso.usecase';
-import { GetTodasCursosUseCase } from '@application/useCases/CursoAtuacao/GetTodosCursos';
+import { GetTodosCursosUseCase } from '@application/useCases/CursoAtuacao/GetTodosCursos';
 // mais 4 dtos a fazer
 // JwtAuth
 
 @Controller('gerenciadorDeTG/v1')
-export class TrabalhoController extends BaseController {
+export class CursoController extends BaseController {
     constructor(
         private readonly createCurso: CreateCursoUseCase,
         private readonly getCurso: GetCursoUseCase,
         private readonly deleteCurso: DeleteCursoUseCase,
         private readonly updateCurso: UpdateCursoUseCase,
-        private readonly getTodosCursos: GetTodasCursosUseCase,
+        private readonly getTodosCursos: GetTodosCursosUseCase,
 
     ) {
         super();
