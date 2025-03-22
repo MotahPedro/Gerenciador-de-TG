@@ -23,6 +23,7 @@ export default function getConstants() {
                 VAZIO: 'CPF não pode ser vazio',
             },
             NOT_FOUND: 'Admin não encontrado',
+            CARGO: 'Cargo inválido. O cargo deve ser Administrador',
         },
         ORIENTADOR: {
             VALIDADE: 'CPF, Nome, Email, Senha, linhasOrientacao e cursosAtuacaoo são obrigatórios',

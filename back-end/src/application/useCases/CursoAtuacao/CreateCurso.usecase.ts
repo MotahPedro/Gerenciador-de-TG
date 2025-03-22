@@ -21,13 +21,9 @@ export class CreateCursoUseCase {
 
             if (!curso) {
                 throw new AppError(constant.CURSO.CREATE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString());
-            }
-
-            console.log(curso);            
+            }   
             
             const orientadorCpf = await this.orientadorRepository.findByCpf(curso.professorOrientadorCpf);
-            
-            console.log(orientadorCpf);
 
             if (!orientadorCpf) {
                 throw new AppError(constant.CURSO.INVALID_CPF, HttpStatus.BAD_REQUEST.toString());

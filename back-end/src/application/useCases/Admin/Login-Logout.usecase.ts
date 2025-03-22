@@ -20,22 +20,18 @@ export class LoginLogoutUseCase {
         }
 
         const admin = await this.repository.findByEmail(email);
-        console.log(admin);
         
         if (!admin) {
             throw new AppError(constant.AUTH.INVALIDO, HttpStatus.UNAUTHORIZED.toString());
         }
 
         const isPasswordCorrect = await AdminProps.comparePassword(senha, admin.senha);
-        console.log(admin.senha);
-        console.log(senha);
-        console.log(isPasswordCorrect);
         
         if (!isPasswordCorrect) {
             throw new AppError(constant.AUTH.INVALIDO, HttpStatus.UNAUTHORIZED.toString());
         }
 
-        const token = JwtUtils.createJwt({ _id: admin.id, name: admin.nome, role: 'admin' }, 'admin');
+        const token = JwtUtils.createJwt({ _id: admin.id, name: admin.nome, role: 'Administrador' }, 'Administrador');
         JwtUtils.setResponseCookie(token, res);
 
         return res.status(HttpStatus.OK).json({ admin: { _id: admin.id, name: admin.nome, role: 'admin' }, msg: 'Logged in successfully' });

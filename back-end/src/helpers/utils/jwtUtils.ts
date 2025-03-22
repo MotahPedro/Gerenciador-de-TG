@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import AppError from '@helpers/errors/AppError';
 import { HttpStatus } from '@nestjs/common';
 
-export type JwtRoles = 'instructor' | 'student' | 'admin';
+export type JwtRoles = 'Orientador' | 'Aluno' | 'Administrador';
 
 export interface JwtEntity {
   _id: string;

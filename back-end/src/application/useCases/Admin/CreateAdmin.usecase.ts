@@ -43,6 +43,13 @@ export class CreateAdminUseCase {
 
     private async validadeAdmin(admin: AdminProps) {
         const requiredFields = ['cpf', 'nome', 'email', 'senha', 'cargo', 'chave'];
+
+        admin.cargo = admin.cargo.toLowerCase() === 'administrador' ? 'Administrador' : admin.cargo;
+
+        if(admin.cargo !== 'Administrador') {
+            throw new AppError(constant.ADMIN.CARGO, HttpStatus.BAD_REQUEST.toString());
+        }
+
         for (const field of requiredFields) {
             if (!admin[field]) {
                 throw new AppError(constant.ADMIN.VALIDADE, HttpStatus.BAD_REQUEST.toString());
