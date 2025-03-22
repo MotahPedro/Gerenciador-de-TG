@@ -1,4 +1,4 @@
-import { JwtEntity } from '@helpers/utils/jwtUtils'
+import { JwtEntity } from '@helpers/utils/JwtUtils'
 
 declare global {
 	namespace Express {

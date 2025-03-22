@@ -187,7 +187,7 @@ export class CursoController extends BaseController {
         this.ok(res, response);
     }
 
-    @Get('curso/aluno/:cpf')
+    @Get('curso/orientador/:cpf')
     @ApiExcludeEndpoint()
     @ApiParam({ name: 'cpf', type: String })
     @ApiResponse({
@@ -437,7 +437,7 @@ export class CursoController extends BaseController {
         this.ok(res, response);
     }
 
-    @Get('curso/')
+    @Get('cursos/')
     @ApiExcludeEndpoint()
     @ApiResponse({
         status: HttpStatus.OK,

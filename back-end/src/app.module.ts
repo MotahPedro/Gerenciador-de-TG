@@ -31,6 +31,10 @@ import { UpdateCursoUseCase } from '@application/useCases/CursoAtuacao/UpdateCur
 import { DeleteCursoUseCase } from '@application/useCases/CursoAtuacao/DeleteCurso.usecase';
 import { CursoController } from '@infra/http/controllers/curso.controller';
 import { AuthModule } from '@infra/http/auth/auth.module';
+import { CreateAdminUseCase } from '@application/useCases/Admin/CreateAdmin.usecase';
+import { AdminController } from '@infra/http/controllers/admin.controller';
+import { GetAdminUseCase } from '@application/useCases/Admin/GetAdmin.usecase';
+import { LoginLogoutUseCase } from '@application/useCases/Admin/Login-Logout.usecase';
 
 @Module({
   imports: [
@@ -62,14 +66,18 @@ import { AuthModule } from '@infra/http/auth/auth.module';
     GetCursoUseCase,
     GetTodosCursosUseCase,
     UpdateCursoUseCase,
-    DeleteCursoUseCase
+    DeleteCursoUseCase,
+    CreateAdminUseCase,
+    GetAdminUseCase,
+    LoginLogoutUseCase,
   ],
   controllers: [
     ProfessorOrientadorController,
     AlunoOrientadoController,
     TrabalhoController,
     LinhaController,
-    CursoController
+    CursoController,
+    AdminController
   ]
 })
 export class AppModule { }

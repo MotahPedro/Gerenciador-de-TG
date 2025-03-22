@@ -1,5 +1,29 @@
 export default function getConstants() {
     return {
+        ADMIN: {
+            VALIDADE: 'CPF, Nome, Email, Senha, Cargo e Chave são obrigatórios',
+            INTERNAL: 'Erro ao criar admin: ',
+            CPF: 'CPF já cadastrado',
+            EMAIL: 'Email já cadastrado',
+            KEY_ERROR: 'Chave inválida',
+            GET_CPF: {
+                ERRO: 'Erro ao buscar admin',
+                VAZIO: 'CPF não pode ser vazio',
+            },
+            GET_EMAIL: {
+                ERRO: 'Erro ao buscar admin',
+                VAZIO: 'Email não pode ser vazio',
+            },
+            GET_ALL: {
+                ERRO: 'Erro ao buscar admins',
+                NÃO_HA: 'Nenhum admin cadastrado',
+            },
+            UPDATE: {
+                ERRO: 'Erro ao atualizar admin',
+                VAZIO: 'CPF não pode ser vazio',
+            },
+            NOT_FOUND: 'Admin não encontrado',
+        },
         ORIENTADOR: {
             VALIDADE: 'CPF, Nome, Email, Senha, linhasOrientacao e cursosAtuacaoo são obrigatórios',
             INTERNAL: 'Erro ao criar orientador: ',
@@ -113,6 +137,11 @@ export default function getConstants() {
                 VAZIO: 'Os dados não podem ser vazios',
             },
             NOT_FOUND: 'Curso de atuação não encontrado',
+        },
+        AUTH: {
+            INVALIDO: 'Credenciais inválidas',
+            NÃO_AUTORIZADO: 'Não autorizado',
+            PROIBIDO: 'Acesso negado',
         },
     }
 }

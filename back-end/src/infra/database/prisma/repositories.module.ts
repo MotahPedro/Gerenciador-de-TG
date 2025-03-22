@@ -5,6 +5,7 @@ import { PrismaAlunoRepository } from './repositories/AlunoRepository';
 import { PrismaTrabalhoRepository } from './repositories/TrabalhoRepository';
 import { PrismaLinhaRepository } from './repositories/LinhaRepository';
 import { PrismaCursoRepository } from './repositories/CursoRepository';
+import { PrismaAdminRepository } from './repositories/AdminRepository';
 
 @Module({
   providers: [
@@ -13,14 +14,16 @@ import { PrismaCursoRepository } from './repositories/CursoRepository';
     PrismaAlunoRepository,
     PrismaTrabalhoRepository,
     PrismaLinhaRepository,
-    PrismaCursoRepository
+    PrismaCursoRepository,
+    PrismaAdminRepository
   ],
   exports: [
     PrismaOrientadorRepository,
     PrismaAlunoRepository,
     PrismaTrabalhoRepository,
     PrismaLinhaRepository,
-    PrismaCursoRepository
+    PrismaCursoRepository,
+    PrismaAdminRepository
   ],
 })
 export class RepositoriesModule { }

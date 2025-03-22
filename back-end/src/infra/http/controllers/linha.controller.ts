@@ -178,12 +178,74 @@ export class LinhaController extends BaseController {
     description: 'Gateway Timeout',
     type: GatewayTimeout,
   })
-  async findByAlunoRa(
+  async findByOrientadorCpf(
     @Param('cpf') cpf: string,
     @Res() res: Response,
   ) {
     console.log('Ra recebido:', cpf);
     const response = await this.getLinhaUseCase.byOrientadorCpf(cpf);
+    this.ok(res, response);
+  }
+
+  @Get('linha/:id')
+  @ApiExcludeEndpoint()
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Success',
+    type: LinhaResponsetDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+    type: BadRequest,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+    type: Unauthorized,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+    type: Forbidden,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found',
+    type: NotFound,
+  })
+  @ApiResponse({
+    status: 405,
+    description: 'Method Not allowed',
+    type: MethodNotAllowed,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Conflict',
+    type: Conflict,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Server Error',
+    type: InternalServerError,
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Service Unavailable',
+    type: ServiceUnavailable,
+  })
+  @ApiResponse({
+    status: 504,
+    description: 'Gateway Timeout',
+    type: GatewayTimeout,
+  })
+  async findById(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ) {
+    console.log('Id recebido:', id);
+    const response = await this.getLinhaUseCase.byId(Number(id));
     this.ok(res, response);
   }
 
