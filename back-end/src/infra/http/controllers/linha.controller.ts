@@ -10,8 +10,9 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -39,9 +40,8 @@ import { GetLinhaUseCase } from '@application/useCases/LinhaOrientacao/GetLinha.
 import { GetTodasLinhasUseCase } from '@application/useCases/LinhaOrientacao/GetTodasLinhas.usecase';
 import { UpdateLinhaUseCase } from '@application/useCases/LinhaOrientacao/UpdateLinha.usecase';
 import { DeleteLinhaUseCase } from '@application/useCases/LinhaOrientacao/deleteLinha.usecase';
-//   import { DeleteLinhaUseCase } from '@application/useCases/Linhas/DeleteLinha.usecase';
-//   import { UpdateLinhaUseCase } from '@application/useCases/Linhas/UpdateLinha.usecase';
-//   import { GetTodasLinhasUseCase } from '@application/useCases/Linhas/GetTodosLinhas';
+import { JwtAuthGuard } from '../auth/JwtAuth.guard';
+import { JwtUtils } from '@helpers/utils/jwtUtils';
 
 @Controller('gerenciadorDeTG/v1')
 export class LinhaController extends BaseController {
@@ -56,6 +56,7 @@ export class LinhaController extends BaseController {
   }
 
   @Post('linha')
+  @UseGuards(JwtAuthGuard)
   @ApiBody({ type: LinhaRequestDto })
   @ApiResponse({
     status: HttpStatus.OK,
@@ -119,10 +120,14 @@ export class LinhaController extends BaseController {
   async create(
     @Body() linha: LinhaRequestDto,
     @Res() res: Response,
+    @Req() req: Request,
   ) {
-    const response = await this.createLinhaUsecase.execute(linha);
-
-    this.ok(res, response);
+  
+    JwtUtils.requireRole('Administrador')(req, res, async () => {
+      const response = await this.createLinhaUsecase.execute(linha);
+      
+      this.ok(res, response);
+    });
   }
 
   @Get('linha/orientador/:cpf')
@@ -178,12 +183,74 @@ export class LinhaController extends BaseController {
     description: 'Gateway Timeout',
     type: GatewayTimeout,
   })
-  async findByAlunoRa(
+  async findByOrientadorCpf(
     @Param('cpf') cpf: string,
     @Res() res: Response,
   ) {
     console.log('Ra recebido:', cpf);
     const response = await this.getLinhaUseCase.byOrientadorCpf(cpf);
+    this.ok(res, response);
+  }
+
+  @Get('linha/:id')
+  @ApiExcludeEndpoint()
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Success',
+    type: LinhaResponsetDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+    type: BadRequest,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+    type: Unauthorized,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+    type: Forbidden,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found',
+    type: NotFound,
+  })
+  @ApiResponse({
+    status: 405,
+    description: 'Method Not allowed',
+    type: MethodNotAllowed,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Conflict',
+    type: Conflict,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Server Error',
+    type: InternalServerError,
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Service Unavailable',
+    type: ServiceUnavailable,
+  })
+  @ApiResponse({
+    status: 504,
+    description: 'Gateway Timeout',
+    type: GatewayTimeout,
+  })
+  async findById(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ) {
+    console.log('Id recebido:', id);
+    const response = await this.getLinhaUseCase.byId(Number(id));
     this.ok(res, response);
   }
 

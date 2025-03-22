@@ -83,8 +83,6 @@ export class PrismaCursoRepository
 
         const updatedCpfs = [...cpfsArray, cpfString];
 
-        console.log(updatedCpfs);
-
         return await this.prisma.cursoAtuacao.update({
             where: { id: Number(id) },
             data: {

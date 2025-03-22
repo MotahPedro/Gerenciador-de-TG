@@ -23,11 +23,7 @@ export class CreateLinhaUseCase {
                 throw new AppError(constant.LINHA.CREATE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString());
             }
 
-            console.log(linha);            
-            
             const orientadorCpf = await this.orientadorRepository.findByCpf(linha.professorOrientadorCpf);
-            
-            console.log(orientadorCpf);
 
             if (!orientadorCpf) {
                 throw new AppError(constant.LINHA.INVALID_CPF, HttpStatus.BAD_REQUEST.toString());

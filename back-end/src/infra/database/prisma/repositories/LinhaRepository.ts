@@ -83,8 +83,6 @@ export class PrismaLinhaRepository
 
         const updatedCpfs = [...cpfsArray, cpfString];
 
-        console.log(updatedCpfs);
-
         return await this.prisma.linhaOrientacao.update({
             where: { id: Number(id) },
             data: {

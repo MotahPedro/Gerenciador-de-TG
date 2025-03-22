@@ -31,8 +31,6 @@ export class GetCursoUseCase {
         const data = await this.repository.findByCpf(orientadorCpf);
 
         const targetCpf = data.cpfs.find(cpf => cpf === orientadorCpf);
-
-        console.log(targetCpf);
         
         if (!targetCpf) {
             throw new AppError(constant.CURSO.GET_CPF.VAZIO, HttpStatus.NOT_FOUND.toString());

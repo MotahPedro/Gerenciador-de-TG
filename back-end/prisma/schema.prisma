@@ -7,6 +7,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Administrador {
+  id                  Int                @id @default(autoincrement())
+  cpf                 String             @unique
+  nome                String
+  email               String             @unique
+  senha               String
+  cargo               String
+}
+
 model ProfessorOrientador {
   id                  Int                @id @default(autoincrement())
   cpf                 String             @unique
@@ -30,15 +39,16 @@ model LinhaOrientacao {
   linha               String
   professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
   professorOrientadorCpf String
-  cpfs Json          
+  orientadoresCpfs Json          
 }
 
 model CursoAtuacao {
   id                  Int                @id @default(autoincrement())
-  curso               String
+  curso               String             @unique
   professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
-  professorOrientadorCpf String       
-  cpfs Json       
+  professorOrientadorCpf              String       
+  orientadoresCpfs         Json     
+  matriculas                          Json 
 }
 
 model AlunoOrientado {
