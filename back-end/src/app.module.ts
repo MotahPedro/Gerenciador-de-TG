@@ -30,9 +30,13 @@ import { GetTodosCursosUseCase } from '@application/useCases/CursoAtuacao/GetTod
 import { UpdateCursoUseCase } from '@application/useCases/CursoAtuacao/UpdateCurso.usecase';
 import { DeleteCursoUseCase } from '@application/useCases/CursoAtuacao/DeleteCurso.usecase';
 import { CursoController } from '@infra/http/controllers/curso.controller';
+import { AuthModule } from '@infra/http/auth/auth.module';
 
 @Module({
-  imports: [RepositoriesModule],
+  imports: [
+    RepositoriesModule,
+    AuthModule
+  ],
   providers: [
     CreateOrientadorUseCase,
     GetOrientadorUseCase,

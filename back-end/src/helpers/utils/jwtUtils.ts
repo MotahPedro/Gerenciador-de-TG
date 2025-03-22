@@ -1,17 +1,60 @@
 import jwt from 'jsonwebtoken'
-import { Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
+import AppError from '@helpers/errors/AppError'
+import { HttpStatus } from '@nestjs/common'
 
-export type jwtRoles = 'instructor' | 'student' | 'admin'
+export type JwtRoles = 'instructor' | 'student' | 'admin'
 
-export interface jwtEntitie {
+export interface JwtEntity {
 	_id: string
 	name: string
+	role?: JwtRoles
 }
 
-export function createJwt(entitie: jwtEntitie, role: jwtRoles) {
-	return jwt.sign({ id: entitie._id, name: entitie.name, role: role }, process.env.JWT_SECRET, { expiresIn: Number(process.env.JWT_LIFETIME) })
-}
+export class JwtUtils {
+	static createJwt(entity: JwtEntity, role: JwtRoles): string {
+		return jwt.sign(
+			{
+				sub: entity._id,
+				name: entity.name,
+				role
+			},
+			process.env.JWT_SECRET,
+			{ expiresIn: Number(process.env.JWT_LIFETIME) }
+		)
+	}
 
-export function setResponseCookie(token: string, res: Response) {
-	res.cookie('token', token, { httpOnly: true, expires: new Date(Date.now() + Number(process.env.JWT_LIFETIME) * 1000), signed: true })
+	static setResponseCookie(token: string, res: Response): void {
+		res.cookie('token', token, {
+			httpOnly: true,
+			sameSite: 'strict',
+			expires: new Date(Date.now() + Number(process.env.JWT_LIFETIME) * 1000),
+			signed: true
+		})
+	}
+
+	static verifyJwt(req: Request, res: Response, next: NextFunction): void | Response {
+		const token = req.signedCookies?.token || req.headers.authorization?.split(' ')[1]
+
+		if (!token) {
+			throw new AppError('Unauthorized', HttpStatus.UNAUTHORIZED.toString())
+		}
+
+		try {
+			const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtEntity
+			req.user = decoded // Adiciona o usuário ao request
+			next()
+		} catch (error) {
+			throw new AppError('Unauthorized', HttpStatus.UNAUTHORIZED.toString())
+		}
+	}
+
+	static requireRole(requiredRole: JwtRoles) {
+		return (req: Request, res: Response, next: NextFunction) => {
+			if (!req.user || req.user.role !== requiredRole) {
+				throw new AppError('Forbidden', HttpStatus.FORBIDDEN.toString())
+			}
+			next()
+		}
+	}
 }
