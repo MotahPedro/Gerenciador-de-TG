@@ -24,7 +24,7 @@ export class CreateLinhaUseCase {
             }
 
             const orientadorCpf = await this.orientadorRepository.findByCpf(linha.professorOrientadorCpf);
-
+            
             if (!orientadorCpf) {
                 throw new AppError(constant.LINHA.INVALID_CPF, HttpStatus.BAD_REQUEST.toString());
             }

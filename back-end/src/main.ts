@@ -1,11 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(cookieParser(process.env.COOKIE_SECRET));
 
   // Configurar CORS
   const allowedOrigins = ['http://127.0.0.1:5500', 'http://localhost:3000'];

@@ -34,7 +34,7 @@ export class PrismaLinhaRepository
     async findByCpf(professorOrientadorCpf: string): Promise<any> {
         return await this.prisma.linhaOrientacao.findFirst({
             where: {
-                cpfs: {
+                orientadoresCpfs: {
                     array_contains: professorOrientadorCpf,
                 },
             },
@@ -71,22 +71,22 @@ export class PrismaLinhaRepository
             throw new Error('Linha not found');
         }
 
-        const cpfsArray: string[] = Array.isArray(linha.cpfs) ? linha.cpfs.map(cpf => String(cpf)) : [];
+        const orientadoresCpfsArray: string[] = Array.isArray(linha.orientadoresCpfs) ? linha.orientadoresCpfs.map(cpf => String(cpf)) : [];
 
         let cpfString = orientadorCpf;
         if (typeof orientadorCpf !== 'string') {
-            const match = JSON.stringify(orientadorCpf).match(/"cpfs":"(\d+)"/);
+            const match = JSON.stringify(orientadorCpf).match(/"orientadoresCpfs":"(\d+)"/);
             if (match) {
                 cpfString = match[1];
             }
         }
 
-        const updatedCpfs = [...cpfsArray, cpfString];
+        const updatedCpfs = [...orientadoresCpfsArray, cpfString];
 
         return await this.prisma.linhaOrientacao.update({
             where: { id: Number(id) },
             data: {
-                cpfs: updatedCpfs,
+                orientadoresCpfs: updatedCpfs,
             },
         });
     }

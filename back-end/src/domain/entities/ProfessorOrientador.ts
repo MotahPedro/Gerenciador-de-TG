@@ -4,7 +4,7 @@ export interface ProfessorOrientadorProps {
   nome: string;
   email: string;
   senha: string;
-  linhasOrientacao: { linha: string }[];
+  linhasOrientacao: string[]
   quantidadeInstituicoes: number;
   cursosAtuacao: { curso: string }[];
   quantidadeAlunos: number;

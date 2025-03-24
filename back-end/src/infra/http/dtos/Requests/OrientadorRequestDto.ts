@@ -13,8 +13,8 @@ export class OrientadorRequestDto {
   @ApiProperty({ example: '123456789'})
   senha: string;
 
-  @ApiProperty({ type: [Object], example: [{ linha: 'Linha 1' }, { linha: 'Linha 2' }] })
-  linhasOrientacao: { linha: string }[];
+  @ApiProperty({ example: [ 'Linha 1', 'Linha 2'] })
+  linhasOrientacao: string[];
 
   @ApiProperty({ example: 3 })
   quantidadeInstituicoes: number;
