@@ -38,7 +38,6 @@ export class CreateAdminUseCase {
                 HttpStatus.INTERNAL_SERVER_ERROR.toString()
             );
         }
-
     }
 
     private async validadeAdmin(admin: AdminProps) {

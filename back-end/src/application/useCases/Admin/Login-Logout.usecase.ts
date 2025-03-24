@@ -14,7 +14,7 @@ export class LoginLogoutUseCase {
     ) { }
 
     async login(@Body() body: AdminLoginProps, @Res() res: any) {
-        const { email, senha } = body;
+        const { email, senha, chave } = body;
         if (!email || !senha) {
             throw new AppError(constant.AUTH.INVALIDO, HttpStatus.BAD_REQUEST.toString());
         }
@@ -28,6 +28,10 @@ export class LoginLogoutUseCase {
         const isPasswordCorrect = await AdminProps.comparePassword(senha, admin.senha);
         
         if (!isPasswordCorrect) {
+            throw new AppError(constant.AUTH.INVALIDO, HttpStatus.UNAUTHORIZED.toString());
+        }
+
+        if (chave !== process.env.CREATE_ADMIN_KEY) {
             throw new AppError(constant.AUTH.INVALIDO, HttpStatus.UNAUTHORIZED.toString());
         }
 

@@ -17,4 +17,5 @@ export class AdminProps {
 export class AdminLoginProps {
   email: string;
   senha: string;
+  chave: string;
 }
