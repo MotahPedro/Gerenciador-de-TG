@@ -1,9 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+
+  if (!process.env.COOKIE_SECRET) {
+    throw new Error('COOKIE_SECRET is not defined');
+  }
+  app.use(cookieParser(process.env.COOKIE_SECRET));
 
   // Configurar CORS
   const allowedOrigins = ['http://127.0.0.1:5500', 'http://localhost:3000'];
@@ -27,18 +34,6 @@ async function bootstrap() {
       'Ambiente Swagger UI gerado com sucesso',
     )
     .setVersion('1.0')
-    // .addOAuth2(
-    //   {
-    //     type: 'oauth2',
-    //     flows: {
-    //       clientCredentials: {
-    //         tokenUrl: process.env.COGNITO_AUTH,
-    //         scopes: {},
-    //       },
-    //     },
-    //   },
-    //   'oauth2',
-    // )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('gerenciadorDeTG/v1/api', app, document);

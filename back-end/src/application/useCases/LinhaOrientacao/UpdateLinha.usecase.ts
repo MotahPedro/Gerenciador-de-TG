@@ -33,6 +33,8 @@ export class UpdateLinhaUseCase {
             throw new AppError(constant.LINHA.GET_ID.VAZIO, HttpStatus.NOT_FOUND.toString());
         }
 
+        
+
         const response = await this.repository.addOrientadorCpf(id, orientadorCpf);
 
         if (!response) {

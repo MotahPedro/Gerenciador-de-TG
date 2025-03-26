@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { LinhaProps } from '@domain/entities/LinhaOrientacao';
 import { LinhaMapper } from '../mappers/Linha.mapper';
 import { BaseRepository } from '../core/Base.repository';
+import { GetOrientadorUseCase } from '@application/useCases/Orientador/GetOrientador.usecase';
 
 @Injectable()
 export class PrismaLinhaRepository
@@ -11,7 +12,9 @@ export class PrismaLinhaRepository
     implements LinhaRepository {
 
     constructor(
-        public readonly prisma: PrismaRepository) {
+        public readonly prisma: PrismaRepository,
+        public readonly getOrientador: GetOrientadorUseCase
+    ) {
         super(prisma, 'linhaOrientacao');
     }
 
@@ -22,7 +25,7 @@ export class PrismaLinhaRepository
             data: accountDb,
         });
     }
-    
+
     async findById(id: number): Promise<any> {
         return await this.prisma.linhaOrientacao.findUnique({
             where: {
@@ -30,7 +33,7 @@ export class PrismaLinhaRepository
             },
         });
     }
-    
+
     async findByCpf(professorOrientadorCpf: string): Promise<any> {
         return await this.prisma.linhaOrientacao.findFirst({
             where: {
@@ -40,7 +43,7 @@ export class PrismaLinhaRepository
             },
         });
     }
-    
+
     async update(id: number, data: Partial<LinhaProps>): Promise<any> {
         const accountDb = LinhaMapper.toPrisma(data);
 
@@ -79,16 +82,31 @@ export class PrismaLinhaRepository
             if (match) {
                 cpfString = match[1];
             }
-        }
+        }        
 
-        const updatedCpfs = [...orientadoresCpfsArray, cpfString];
+        const orientador = await this.getOrientador.execute(cpfString)
 
-        return await this.prisma.linhaOrientacao.update({
+        const nomeLinha = linha.linha
+        
+        const linhasOrientadorArray: string[] = Array.isArray(orientador.linhasOrientacao) ? orientador.linhasOrientacao.map(cpf => String(cpf)) : [];
+
+        const updatedLinhas = [...linhasOrientadorArray, nomeLinha]
+        const updatedCpfs = [...orientadoresCpfsArray, cpfString];        
+
+        const updatedOrientador = await this.prisma.professorOrientador.update({
+            where: { cpf: cpfString },
+            data: {
+                linhasOrientacao: updatedLinhas
+            }
+        })
+
+        const updatedLinha = await this.prisma.linhaOrientacao.update({
             where: { id: Number(id) },
             data: {
                 orientadoresCpfs: updatedCpfs,
             },
         });
-    }
 
+        return { updatedLinha, updatedOrientador }
+    }
 }
