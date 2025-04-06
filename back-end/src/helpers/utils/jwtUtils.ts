@@ -33,7 +33,7 @@ export class JwtUtils {
       httpOnly: true,
       sameSite: 'strict',
       expires: new Date(Date.now() + Number(process.env.JWT_LIFETIME) * 1000),
-      signed: true
+      signed: true,
     });
   }
 

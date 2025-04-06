@@ -23,11 +23,11 @@ export class CreateLinhaUseCase {
                 throw new AppError(constant.LINHA.CREATE_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.toString());
             }
 
-            const orientadorCpf = await this.orientadorRepository.findByCpf(linha.professorOrientadorCpf);
-
-            if (!orientadorCpf) {
-                throw new AppError(constant.LINHA.INVALID_CPF, HttpStatus.BAD_REQUEST.toString());
-            }
+            // const orientadorCpf = await this.orientadorRepository.findByCpf(linha.professorOrientadorCpf);
+            
+            // if (!orientadorCpf) {
+            //     throw new AppError(constant.LINHA.INVALID_CPF, HttpStatus.BAD_REQUEST.toString());
+            // }
 
             const linhaSalva = await this.repository.save(data);
             return LinhaMapper.toDomain(linhaSalva);

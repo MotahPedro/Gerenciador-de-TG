@@ -22,7 +22,6 @@ export class PrismaOrientadorRepository
     return await this.prisma.professorOrientador.create({
       data: accountDb,
       include: {
-        linhasOrientacao: true,
         cursosAtuacao: true,
         alunosOrientados: true,
       }
@@ -44,6 +43,9 @@ export class PrismaOrientadorRepository
   }
 
   async findByCpf(cpf: string): Promise<any> {
+    if (!cpf) {
+      throw new Error('CPF is required and cannot be undefined or null.');
+    }
 
     return await this.prisma.professorOrientador.findUnique({
       where: {
@@ -71,5 +73,4 @@ export class PrismaOrientadorRepository
       },
     });
   }
-  
 }

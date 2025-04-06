@@ -26,7 +26,7 @@ model ProfessorOrientador {
   quantidadeInstituicoes Int             @default(0)
   quantidadeAlunos    Int                @default(0)
 
-  linhasOrientacao    LinhaOrientacao[]
+  linhasOrientacao    Json
   cursosAtuacao       CursoAtuacao[]
   
   alunosOrientados    AlunoOrientado[]
@@ -37,9 +37,7 @@ model ProfessorOrientador {
 model LinhaOrientacao {
   id                  Int                @id @default(autoincrement())
   linha               String
-  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
-  professorOrientadorCpf String
-  orientadoresCpfs Json          
+  orientadoresCpfs    Json          
 }
 
 model CursoAtuacao {
@@ -47,8 +45,7 @@ model CursoAtuacao {
   curso               String             @unique
   professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
   professorOrientadorCpf              String       
-  orientadoresCpfs         Json     
-  matriculas                          Json 
+  cpfs                                Json     
 }
 
 model AlunoOrientado {
