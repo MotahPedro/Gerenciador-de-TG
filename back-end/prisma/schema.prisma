@@ -46,7 +46,6 @@ model CursoAtuacao {
   professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
   professorOrientadorCpf              String       
   cpfs                                Json     
-  matriculas                          Json 
 }
 
 model AlunoOrientado {
