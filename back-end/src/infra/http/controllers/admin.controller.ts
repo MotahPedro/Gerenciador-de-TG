@@ -33,10 +33,10 @@ import { Forbidden } from '../dtos/errors/forbidden.dto';
 import { NotFound } from '../dtos/errors/notFound.dto';
 
 import { CreateAdminUseCase } from '@application/useCases/Admin/CreateAdmin.usecase';
-// import { GetAdminUseCase } from '@application/useCases/Admin/GetAdmin.usecase';
-// import { DeleteAdminUseCase } from '@application/useCases/Admin/DeleteAdmin.usecase';
-// import { UpdateAdminUsecase } from '@application/useCases/Admin/UpdateAdmin.usecase';
-// import { GetTodosAdminUseCase } from '@application/useCases/Admin/GetTodosAdmins.usecase';
+import { GetAdminUseCase } from '@application/useCases/Admin/GetAdmin.usecase';
+import { DeleteAdminUseCase } from '@application/useCases/Admin/DeleteAdmin.usecase';
+import { UpdateAdminUseCase } from '@application/useCases/Admin/UpdateAdmin.usecase';
+import { GetTodosAdminsUseCase } from '@application/useCases/Admin/GetTodosAdmins.usecase';
 import { LoginLogoutUseCase } from '@application/useCases/Admin/Login-Logout.usecase';
 import { AdminsRequestDto } from '../dtos/Requests/AdminRequestDto';
 import { AdminsResponseDto } from '../dtos/Responses/AdminRespondeDto';
@@ -49,10 +49,10 @@ import { AdminProps } from '@domain/entities/Admin';
 export class AdminController extends BaseController {
     constructor(
         private readonly createAdminUseCase: CreateAdminUseCase,
-        // private readonly getAdminUseCase: GetAdminUseCase,
-        // private readonly getTodosAdminsUsecase: GetTodosAdminUseCase,
-        // private readonly deleteAdminUseCase: DeleteAdminUseCase,
-        // private readonly updateAdminUseCase: UpdateAdminUsecase,
+        private readonly getAdminUseCase: GetAdminUseCase,
+        private readonly getTodosAdminsUsecase: GetTodosAdminsUseCase,
+        private readonly deleteAdminUseCase: DeleteAdminUseCase,
+        private readonly updateAdminUseCase: UpdateAdminUseCase,
         private readonly loginLogoutUseCase: LoginLogoutUseCase,
     ) {
         super();
@@ -128,6 +128,252 @@ export class AdminController extends BaseController {
 
         this.ok(res, response);
     }
+
+    @Get('admin/:cpf')
+      @ApiExcludeEndpoint()
+      @ApiParam({ name: 'cpf', type: String })
+      @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Success',
+        type: AdminsResponseDto,
+      })
+      @ApiResponse({
+        status: 400,
+        description: 'Bad Request',
+        type: BadRequest,
+      })
+      @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+        type: Unauthorized,
+      })
+      @ApiResponse({
+        status: 403,
+        description: 'Forbidden',
+        type: Forbidden,
+      })
+      @ApiResponse({
+        status: 404,
+        description: 'Not Found',
+        type: NotFound,
+      })
+      @ApiResponse({
+        status: 405,
+        description: 'Method Not allowed',
+        type: MethodNotAllowed,
+      })
+      @ApiResponse({
+        status: 409,
+        description: 'Conflict',
+        type: Conflict,
+      })
+      @ApiResponse({
+        status: 500,
+        description: 'Internal Server Error',
+        type: InternalServerError,
+      })
+      @ApiResponse({
+        status: 503,
+        description: 'Service Unavailable',
+        type: ServiceUnavailable,
+      })
+      @ApiResponse({
+        status: 504,
+        description: 'Gateway Timeout',
+        type: GatewayTimeout,
+      })
+      async findByCpf(
+        @Param('cpf') cpf: string,
+        @Res() res: Response,
+      ) {
+        console.log('CPF recebido:', cpf);
+        const response = await this.getAdminUseCase.getByCpf(cpf);
+        this.ok(res, response);
+      }
+    
+      @Delete('admin/delete/:cpf')
+      @ApiExcludeEndpoint()
+      @ApiParam({ name: 'cpf', type: String })
+      @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Success',
+        type: AdminsResponseDto,
+      })
+      @ApiResponse({
+        status: 400,
+        description: 'Bad Request',
+        type: BadRequest,
+      })
+      @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+        type: Unauthorized,
+      })
+      @ApiResponse({
+        status: 403,
+        description: 'Forbidden',
+        type: Forbidden,
+      })
+      @ApiResponse({
+        status: 404,
+        description: 'Not Found',
+        type: NotFound,
+      })
+      @ApiResponse({
+        status: 405,
+        description: 'Method Not allowed',
+        type: MethodNotAllowed,
+      })
+      @ApiResponse({
+        status: 409,
+        description: 'Conflict',
+        type: Conflict,
+      })
+      @ApiResponse({
+        status: 500,
+        description: 'Internal Server Error',
+        type: InternalServerError,
+      })
+      @ApiResponse({
+        status: 503,
+        description: 'Service Unavailable',
+        type: ServiceUnavailable,
+      })
+      @ApiResponse({
+        status: 504,
+        description: 'Gateway Timeout',
+        type: GatewayTimeout,
+      })
+      async delete(
+        @Param('cpf') cpf: string,
+        @Res() res: Response,
+      ) {
+        const response = await this.deleteAdminUseCase.execute(cpf);
+    
+        this.ok(res, response);
+      }
+    
+      @Patch('admin/update/:cpf')
+      @ApiExcludeEndpoint()
+      @ApiParam({ name: 'cpf', type: String })
+      @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Success',
+        type: AdminsResponseDto,
+      })
+      @ApiResponse({
+        status: 400,
+        description: 'Bad Request',
+        type: BadRequest,
+      })
+      @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+        type: Unauthorized,
+      })
+      @ApiResponse({
+        status: 403,
+        description: 'Forbidden',
+        type: Forbidden,
+      })
+      @ApiResponse({
+        status: 404,
+        description: 'Not Found',
+        type: NotFound,
+      })
+      @ApiResponse({
+        status: 405,
+        description: 'Method Not allowed',
+        type: MethodNotAllowed,
+      })
+      @ApiResponse({
+        status: 409,
+        description: 'Conflict',
+        type: Conflict,
+      })
+      @ApiResponse({
+        status: 500,
+        description: 'Internal Server Error',
+        type: InternalServerError,
+      })
+      @ApiResponse({
+        status: 503,
+        description: 'Service Unavailable',
+        type: ServiceUnavailable,
+      })
+      @ApiResponse({
+        status: 504,
+        description: 'Gateway Timeout',
+        type: GatewayTimeout,
+      })
+      async update(
+        @Param('cpf') cpf: string,
+        @Body() admin: AdminsRequestDto,
+        @Res() res: Response,
+      ) {
+        const response = await this.updateAdminUseCase.execute(cpf, admin);
+    
+        this.ok(res, response);
+      }
+    
+      @Get('admin/')
+      @ApiExcludeEndpoint()
+      @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Success',
+        type: AdminsResponseDto,
+      })
+      @ApiResponse({
+        status: 400,
+        description: 'Bad Request',
+        type: BadRequest,
+      })
+      @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+        type: Unauthorized,
+      })
+      @ApiResponse({
+        status: 403,
+        description: 'Forbidden',
+        type: Forbidden,
+      })
+      @ApiResponse({
+        status: 404,
+        description: 'Not Found',
+        type: NotFound,
+      })
+      @ApiResponse({
+        status: 405,
+        description: 'Method Not allowed',
+        type: MethodNotAllowed,
+      })
+      @ApiResponse({
+        status: 409,
+        description: 'Conflict',
+        type: Conflict,
+      })
+      @ApiResponse({
+        status: 500,
+        description: 'Internal Server Error',
+        type: InternalServerError,
+      })
+      @ApiResponse({
+        status: 503,
+        description: 'Service Unavailable',
+        type: ServiceUnavailable,
+      })
+      @ApiResponse({
+        status: 504,
+        description: 'Gateway Timeout',
+        type: GatewayTimeout,
+      })
+      async findAll(
+        @Res() res: Response,
+      ) {
+        const response = await this.getTodosAdminsUsecase.execute();
+        this.ok(res, response);
+      }
 
     @Post('admin/login')
     async login(@Body() body: any, @Res() res: any) {

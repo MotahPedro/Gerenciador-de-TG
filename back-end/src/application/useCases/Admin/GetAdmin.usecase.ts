@@ -5,7 +5,6 @@ import AppError from '@helpers/errors/AppError';
 import getConstants from '@helpers/constants/getConstants';
 import { PrismaAdminRepository } from '@infra/database/prisma/repositories/AdminRepository';
 
-
 const constant = getConstants()
 
 @Injectable()
@@ -16,13 +15,13 @@ export class GetAdminUseCase {
         const data = await this.repository.findByCpf(cpf);
 
         if (!data) {
-            throw new AppError(constant.ORIENTADOR.GET_CPF.ERRO, HttpStatus.NOT_FOUND.toString());
+            throw new AppError(constant.ADMIN.GET_CPF.ERRO, HttpStatus.NOT_FOUND.toString());
         }
 
         const response = AdminMapper.toGET(data);
 
         if (!response) {
-            throw new AppError(constant.ORIENTADOR.GET_CPF.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            throw new AppError(constant.ADMIN.GET_CPF.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
         }
 
         return response;
@@ -32,13 +31,13 @@ export class GetAdminUseCase {
         const data = await this.repository.findByEmail(email);
 
         if (!data) {
-            throw new AppError(constant.ORIENTADOR.GET_CPF.ERRO, HttpStatus.NOT_FOUND.toString());
+            throw new AppError(constant.ADMIN.GET_CPF.ERRO, HttpStatus.NOT_FOUND.toString());
         }
 
         const response = AdminMapper.toGET(data);
 
         if (!response) {
-            throw new AppError(constant.ORIENTADOR.GET_CPF.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            throw new AppError(constant.ADMIN.GET_CPF.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
         }
 
         return response;
@@ -48,13 +47,13 @@ export class GetAdminUseCase {
         const data = await this.repository.findById(id);
 
         if (!data) {
-            throw new AppError(constant.ORIENTADOR.GET_CPF.ERRO, HttpStatus.NOT_FOUND.toString());
+            throw new AppError(constant.ADMIN.GET_CPF.ERRO, HttpStatus.NOT_FOUND.toString());
         }
 
         const response = AdminMapper.toGET(data);
 
         if (!response) {
-            throw new AppError(constant.ORIENTADOR.GET_CPF.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            throw new AppError(constant.ADMIN.GET_CPF.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
         }
 
         return response;
