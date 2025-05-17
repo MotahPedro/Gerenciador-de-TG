@@ -8,7 +8,7 @@ import getConstants from '@helpers/constants/getConstants';
 const constant = getConstants()
 
 @Injectable()
-export class LoginLogoutUseCase {
+export class AdminLoginLogoutUseCase {
     constructor(
         private repository: PrismaAdminRepository
     ) { }

@@ -4,6 +4,7 @@ import { AlunoMapper } from '@infra/database/prisma/mappers/Aluno.mapper';
 import AppError from '@helpers/errors/AppError';
 import getConstants from '@helpers/constants/getConstants';
 import { PrismaAlunoRepository } from '@infra/database/prisma/repositories/AlunoRepository';
+import { PasswordHasherService } from '@application/services/passwordHasher.service';
 
 const constant = getConstants()
 
@@ -11,11 +12,14 @@ const constant = getConstants()
 export class CreateAlunosUseCase {
     constructor(
         private readonly repository: PrismaAlunoRepository,
-    ) {}
+        private readonly passwordHasherService: PasswordHasherService
+    ) { }
 
     async execute(aluno: AlunoOrientadoProps) {
-        
+
         await this.validadeAluno(aluno);
+
+        aluno.senha = await this.passwordHasherService.hashPassword(aluno.senha);
 
         const prismaAluno = AlunoMapper.toPrisma(aluno);
 
@@ -49,5 +53,7 @@ export class CreateAlunosUseCase {
         if (existingEmail) {
             throw new AppError(constant.ALUNO.EMAIL, HttpStatus.BAD_REQUEST.toString());
         }
+
+        aluno.cargo = 'Aluno';
     }
 }

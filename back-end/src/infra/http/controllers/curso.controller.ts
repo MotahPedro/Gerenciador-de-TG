@@ -10,8 +10,9 @@ import {
     Patch,
     Param,
     Delete,
+    Req,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import {
     ApiBearerAuth,
     ApiBody,
@@ -39,6 +40,10 @@ import { GetCursoUseCase } from '@application/useCases/CursoAtuacao/GetCurso.use
 import { DeleteCursoUseCase } from '@application/useCases/CursoAtuacao/DeleteCurso.usecase';
 import { UpdateCursoUseCase } from '@application/useCases/CursoAtuacao/UpdateCurso.usecase';
 import { GetTodosCursosUseCase } from '@application/useCases/CursoAtuacao/GetTodosCursos';
+import { JwtUtils } from '@helpers/utils/jwtUtils';
+import { JwtAuthGuard } from '../auth/JwtAuth.guard';
+import AppError from '@helpers/errors/AppError';
+import getConstants from '@helpers/constants/getConstants';
 // mais 4 dtos a fazer
 // JwtAuth
 
@@ -56,6 +61,7 @@ export class CursoController extends BaseController {
     }
 
     @Post('curso')
+    @UseGuards(JwtAuthGuard)
     @ApiBody({ type: CursoRequestDto })
     @ApiResponse({
         status: HttpStatus.OK,
@@ -119,13 +125,18 @@ export class CursoController extends BaseController {
     async create(
         @Body() curso: CursoRequestDto,
         @Res() res: Response,
+        @Req() req: Request,
     ) {
-        const response = await this.createCurso.execute(curso);
 
-        this.ok(res, response);
+        JwtUtils.requireRole('Administrador')(req, res, async () => {
+            const response = await this.createCurso.execute(curso);
+
+            this.ok(res, response);
+        });
     }
 
     @Get('curso/:id')
+    @UseGuards(JwtAuthGuard)
     @ApiExcludeEndpoint()
     @ApiParam({ name: 'id', type: Number })
     @ApiResponse({
@@ -181,13 +192,22 @@ export class CursoController extends BaseController {
     async findById(
         @Param('id') id: number,
         @Res() res: Response,
+        @Req() req: Request,
     ) {
         console.log('Id recebido:', id);
+
+        const constant = getConstants()
+
+        const roles: string[] = ['Administrador', 'Aluno', 'Orientador'];
+        if (!roles.includes(req.user?.role)) {
+            throw new AppError(constant.AUTH.NÃO_AUTORIZADO, HttpStatus.FORBIDDEN.toString());
+        }
         const response = await this.getCurso.byId(Number(id));
         this.ok(res, response);
     }
 
     @Get('curso/orientador/:cpf')
+    @UseGuards(JwtAuthGuard)
     @ApiExcludeEndpoint()
     @ApiParam({ name: 'cpf', type: String })
     @ApiResponse({
@@ -240,16 +260,24 @@ export class CursoController extends BaseController {
         description: 'Gateway Timeout',
         type: GatewayTimeout,
     })
-    async findByAlunoRa(
+    async findByOrientadorCpf(
         @Param('cpf') cpf: string,
         @Res() res: Response,
+        @Req() req: Request,
     ) {
         console.log('Ra recebido:', cpf);
+        const constant = getConstants()
+
+        const roles: string[] = ['Administrador', 'Aluno', 'Orientador'];
+        if (!roles.includes(req.user?.role)) {
+            throw new AppError(constant.AUTH.NÃO_AUTORIZADO, HttpStatus.FORBIDDEN.toString());
+        }
         const response = await this.getCurso.byOrientadorCpf(cpf);
         this.ok(res, response);
     }
 
     @Delete('curso/delete/:id')
+    @UseGuards(JwtAuthGuard)
     @ApiExcludeEndpoint()
     @ApiParam({ name: 'id', type: Number })
     @ApiResponse({
@@ -312,6 +340,7 @@ export class CursoController extends BaseController {
     }
 
     @Patch('curso/update/:id')
+    @UseGuards(JwtAuthGuard)
     @ApiExcludeEndpoint()
     @ApiParam({ name: 'id', type: Number })
     @ApiResponse({
@@ -368,13 +397,18 @@ export class CursoController extends BaseController {
         @Param('id') id: number,
         @Body() curso: CursoRequestDto,
         @Res() res: Response,
+        @Req() req: Request,
     ) {
-        const response = await this.updateCurso.fullUpdate(id, curso);
 
-        this.ok(res, response);
+        JwtUtils.requireRole('Administrador')(req, res, async () => {
+            const response = await this.updateCurso.fullUpdate(id, curso);
+
+            this.ok(res, response);
+        });
     }
 
     @Patch('curso/add/orientador/:id')
+    @UseGuards(JwtAuthGuard)
     @ApiExcludeEndpoint()
     @ApiParam({ name: 'id', type: Number })
     @ApiResponse({
@@ -431,14 +465,21 @@ export class CursoController extends BaseController {
         @Param('id') id: number,
         @Body() cpf: string,
         @Res() res: Response,
+        @Req() req: Request,
     ) {
-        const response = await this.updateCurso.addOrientadorCpf(id, cpf);
+        const constant = getConstants()
 
+        const roles: string[] = ['Administrador', 'Orientador'];
+        if (!roles.includes(req.user?.role as string)) {
+            throw new AppError(constant.AUTH.NÃO_AUTORIZADO, HttpStatus.FORBIDDEN.toString());
+        }
+        const response = await this.updateCurso.addOrientadorCpf(id, cpf);
         this.ok(res, response);
     }
 
     @Get('cursos/')
     @ApiExcludeEndpoint()
+    @UseGuards(JwtAuthGuard)
     @ApiResponse({
         status: HttpStatus.OK,
         description: 'Success',
@@ -491,7 +532,15 @@ export class CursoController extends BaseController {
     })
     async findAll(
         @Res() res: Response,
+        @Req() req: Request,
     ) {
+        const constant = getConstants()
+
+        const roles: string[] = ['Administrador', 'Aluno', 'Orientador'];
+        if (!roles.includes(req.user?.role as string)) {
+            throw new AppError(constant.AUTH.NÃO_AUTORIZADO, HttpStatus.FORBIDDEN.toString());
+        }
+
         const response = await this.getTodosCursos.execute();
         this.ok(res, response);
     }

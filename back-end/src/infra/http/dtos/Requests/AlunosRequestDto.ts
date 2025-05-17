@@ -37,6 +37,9 @@ export class AlunosRequestDto {
     @ApiProperty({ example: "123456789012" })
     professorOrientadorCpf: string;
 
+    @ApiProperty({ example: 'Aluno' })
+    cargo?: string;
+
     @ApiProperty({
         type: [Object],
         example: [

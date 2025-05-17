@@ -10,6 +10,7 @@ import { GetAlunoUseCase } from '@application/useCases/Aluno/GetAluno.usecase';
 import { GetTodosAlunoUseCase } from '@application/useCases/Aluno/GetTodosAlunos.usecase';
 import { UpdateAlunoUsecase } from '@application/useCases/Aluno/UpdateAluno.usecase';
 import { DeleteAlunoUseCase } from '@application/useCases/Aluno/DeleteAluno.usecase';
+import { AlunoLoginLogoutUseCase } from './useCases/Aluno/AlunoLogin-Logout.usecase';
 import { CreateTrabalhoUseCase } from '@application/useCases/Trabalhos/CreateTrabalho.usecase';
 import { GetTrabalhoUseCase } from '@application/useCases/Trabalhos/GetTrabalho.usecase';
 import { GetTodosTrabalhosUseCase } from '@application/useCases/Trabalhos/GetTodosTrabalhos';
@@ -28,7 +29,11 @@ import { DeleteCursoUseCase } from '@application/useCases/CursoAtuacao/DeleteCur
 import { AuthModule } from '@infra/http/auth/auth.module';
 import { CreateAdminUseCase } from '@application/useCases/Admin/CreateAdmin.usecase';
 import { GetAdminUseCase } from '@application/useCases/Admin/GetAdmin.usecase';
-import { LoginLogoutUseCase } from '@application/useCases/Admin/Login-Logout.usecase';
+import { DeleteAdminUseCase } from './useCases/Admin/DeleteAdmin.usecase';
+import { UpdateAdminUseCase } from './useCases/Admin/UpdateAdmin.usecase';
+import { GetTodosAdminsUseCase } from './useCases/Admin/GetTodosAdmins.usecase';
+import { AdminLoginLogoutUseCase } from '@application/useCases/Admin/AdminLogin-Logout.usecase';
+import { PasswordHasherService } from './services/passwordHasher.service';
 
 @Module({
     imports: [
@@ -46,6 +51,7 @@ import { LoginLogoutUseCase } from '@application/useCases/Admin/Login-Logout.use
         GetTodosAlunoUseCase,
         UpdateAlunoUsecase,
         DeleteAlunoUseCase,
+        AlunoLoginLogoutUseCase,
         CreateTrabalhoUseCase,
         GetTrabalhoUseCase,
         GetTodosTrabalhosUseCase,
@@ -63,7 +69,11 @@ import { LoginLogoutUseCase } from '@application/useCases/Admin/Login-Logout.use
         DeleteCursoUseCase,
         CreateAdminUseCase,
         GetAdminUseCase,
-        LoginLogoutUseCase,
+        DeleteAdminUseCase,
+        UpdateAdminUseCase,
+        GetTodosAdminsUseCase,
+        AdminLoginLogoutUseCase,
+        PasswordHasherService,
     ],
     exports: [
         CreateOrientadorUseCase,
@@ -76,6 +86,7 @@ import { LoginLogoutUseCase } from '@application/useCases/Admin/Login-Logout.use
         GetTodosAlunoUseCase,
         UpdateAlunoUsecase,
         DeleteAlunoUseCase,
+        AlunoLoginLogoutUseCase,
         CreateTrabalhoUseCase,
         GetTrabalhoUseCase,
         GetTodosTrabalhosUseCase,
@@ -93,7 +104,11 @@ import { LoginLogoutUseCase } from '@application/useCases/Admin/Login-Logout.use
         DeleteCursoUseCase,
         CreateAdminUseCase,
         GetAdminUseCase,
-        LoginLogoutUseCase,
+        DeleteAdminUseCase,
+        UpdateAdminUseCase,
+        GetTodosAdminsUseCase,
+        AdminLoginLogoutUseCase,
+        PasswordHasherService,
     ]
 })
 export class ApplicationModule { }
