@@ -4,6 +4,7 @@ import { GetOrientadorUseCase } from '@application/useCases/Orientador/GetOrient
 import { GetTodosOrientadoresUseCase } from '@application/useCases/Orientador/GetTodosOrientadores';
 import { UpdateOrientadorUseCase } from '@application/useCases/Orientador/UpdateOrientador.usecase';
 import { DeleteOrientadorUseCase } from '@application/useCases/Orientador/DeleteOrientador.usecase';
+import { OrientadorLoginLogoutUseCase } from './useCases/Orientador/OrientadorLogin-Logout.usecase';
 import { RepositoriesModule } from '@infra/database/prisma/repositories.module';
 import { CreateAlunosUseCase } from '@application/useCases/Aluno/CreateAluno.usecase';
 import { GetAlunoUseCase } from '@application/useCases/Aluno/GetAluno.usecase';
@@ -46,6 +47,7 @@ import { PasswordHasherService } from './services/passwordHasher.service';
         GetTodosOrientadoresUseCase,
         UpdateOrientadorUseCase,
         DeleteOrientadorUseCase,
+        OrientadorLoginLogoutUseCase,
         CreateAlunosUseCase,
         GetAlunoUseCase,
         GetTodosAlunoUseCase,
@@ -81,6 +83,7 @@ import { PasswordHasherService } from './services/passwordHasher.service';
         GetTodosOrientadoresUseCase,
         UpdateOrientadorUseCase,
         DeleteOrientadorUseCase,
+        OrientadorLoginLogoutUseCase,
         CreateAlunosUseCase,
         GetAlunoUseCase,
         GetTodosAlunoUseCase,

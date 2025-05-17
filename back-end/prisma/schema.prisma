@@ -22,6 +22,7 @@ model ProfessorOrientador {
   nome                String
   email               String             @unique
   senha               String
+  cargo               String
 
   quantidadeInstituicoes Int             @default(0)
   quantidadeAlunos    Int                @default(0)

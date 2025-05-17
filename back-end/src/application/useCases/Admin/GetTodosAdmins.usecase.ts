@@ -19,7 +19,6 @@ export class GetTodosAdminsUseCase {
 
         return data.map(admin => ({
             ...admin,
-            // Add any necessary transformations here
         }));
     }
 }
