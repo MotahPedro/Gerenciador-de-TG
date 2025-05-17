@@ -41,4 +41,20 @@ export class UpdateCursoUseCase {
 
         return response;
     }
+
+    async addAlunoMatricula(id: number, matricula: string): Promise<CursoProps> {
+        const data = await this.repository.findById(id);
+
+        if (!data) {
+            throw new AppError(constant.CURSO.GET_ID.VAZIO, HttpStatus.NOT_FOUND.toString());
+        }
+
+        const response = await this.repository.addAlunoMatricula(id, matricula);
+
+        if (!response) {
+            throw new AppError(constant.CURSO.UPDATE.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+        }
+
+        return response;
+    }
 }

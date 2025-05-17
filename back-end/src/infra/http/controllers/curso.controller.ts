@@ -477,6 +477,76 @@ export class CursoController extends BaseController {
         this.ok(res, response);
     }
 
+    @Patch('curso/add/aluno/:id')
+    @UseGuards(JwtAuthGuard)
+    @ApiExcludeEndpoint()
+    @ApiParam({ name: 'id', type: Number })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Success',
+        type: CursoResponsetDto,
+    })
+    @ApiResponse({
+        status: 400,
+        description: 'Bad Request',
+        type: BadRequest,
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+        type: Unauthorized,
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Forbidden',
+        type: Forbidden,
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'Not Found',
+        type: NotFound,
+    })
+    @ApiResponse({
+        status: 405,
+        description: 'Method Not allowed',
+        type: MethodNotAllowed,
+    })
+    @ApiResponse({
+        status: 409,
+        description: 'Conflict',
+        type: Conflict,
+    })
+    @ApiResponse({
+        status: 500,
+        description: 'Internal Server Error',
+        type: InternalServerError,
+    })
+    @ApiResponse({
+        status: 503,
+        description: 'Service Unavailable',
+        type: ServiceUnavailable,
+    })
+    @ApiResponse({
+        status: 504,
+        description: 'Gateway Timeout',
+        type: GatewayTimeout,
+    })
+    async addAlunoMatricula(
+        @Param('id') id: number,
+        @Body() ra: string,
+        @Res() res: Response,
+        @Req() req: Request,
+    ) {
+        const constant = getConstants()
+
+        const roles: string[] = ['Administrador', 'Orientador'];
+        if (!roles.includes(req.user?.role as string)) {
+            throw new AppError(constant.AUTH.NÃO_AUTORIZADO, HttpStatus.FORBIDDEN.toString());
+        }
+        const response = await this.updateCurso.addAlunoMatricula(id, ra);
+        this.ok(res, response);
+    }
+
     @Get('cursos/')
     @ApiExcludeEndpoint()
     @UseGuards(JwtAuthGuard)

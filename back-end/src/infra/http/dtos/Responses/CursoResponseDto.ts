@@ -8,5 +8,8 @@ export class CursoResponsetDto {
   professorOrientadorCpf: string;
 
   @ApiProperty({ example: ['123456789012', '321321421512'] })
-  cpfs: string[];
+  orientadoresCpfs: string[];
+
+  @ApiProperty({ example: ['123456789012', '321321421512'] })
+  alunosMatriculas: string[];
 }

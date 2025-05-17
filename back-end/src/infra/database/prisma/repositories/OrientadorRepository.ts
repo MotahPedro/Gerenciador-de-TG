@@ -22,7 +22,6 @@ export class PrismaOrientadorRepository
     return await this.prisma.professorOrientador.create({
       data: accountDb,
       include: {
-        cursosAtuacao: true,
         alunosOrientados: true,
       }
     });

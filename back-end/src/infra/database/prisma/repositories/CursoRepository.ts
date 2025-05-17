@@ -31,10 +31,10 @@ export class PrismaCursoRepository
         });
     }
     
-    async findByCpf(professorOrientadorCpf: string): Promise<any> {
+    async findByOrientadorCpf(professorOrientadorCpf: string): Promise<any> {
         return await this.prisma.cursoAtuacao.findFirst({
             where: {
-                cpfs: {
+                orientadoresCpfs: {
                     array_contains: professorOrientadorCpf,
                 },
             },
@@ -71,11 +71,11 @@ export class PrismaCursoRepository
             throw new Error('Linha not found');
         }
 
-        const cpfsArray: string[] = Array.isArray(linha.cpfs) ? linha.cpfs.map(cpf => String(cpf)) : [];
+        const cpfsArray: string[] = Array.isArray(linha.orientadoresCpfs) ? linha.orientadoresCpfs.map(cpf => String(cpf)) : [];
 
         let cpfString = orientadorCpf;
         if (typeof orientadorCpf !== 'string') {
-            const match = JSON.stringify(orientadorCpf).match(/"cpfs":"(\d+)"/);
+            const match = JSON.stringify(orientadorCpf).match(/"orientadoresCpfs":"(\d+)"/);
             if (match) {
                 cpfString = match[1];
             }
@@ -86,7 +86,36 @@ export class PrismaCursoRepository
         return await this.prisma.cursoAtuacao.update({
             where: { id: Number(id) },
             data: {
-                cpfs: updatedCpfs,
+                orientadoresCpfs: updatedCpfs,
+            },
+        });
+    }
+
+    async addAlunoMatricula(id: number, alunoCpf: string): Promise<any> {
+        const linha = await this.prisma.cursoAtuacao.findUnique({
+            where: { id: Number(id) },
+        });
+
+        if (!linha) {
+            throw new Error('Linha not found');
+        }
+
+        const cpfsArray: string[] = Array.isArray(linha.alunosMatriculas) ? linha.alunosMatriculas.map(cpf => String(cpf)) : [];
+
+        let cpfString = alunoCpf;
+        if (typeof alunoCpf !== 'string') {
+            const match = JSON.stringify(alunoCpf).match(/"alunosMatriculas":"(\d+)"/);
+            if (match) {
+                cpfString = match[1];
+            }
+        }
+
+        const updatedCpfs = [...cpfsArray, cpfString];
+
+        return await this.prisma.cursoAtuacao.update({
+            where: { id: Number(id) },
+            data: {
+                alunosMatriculas: updatedCpfs,
             },
         });
     }

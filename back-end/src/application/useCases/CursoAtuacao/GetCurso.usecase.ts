@@ -28,7 +28,7 @@ export class GetCursoUseCase {
     }
 
     async byOrientadorCpf(orientadorCpf: string): Promise<CursoProps[]> {
-        const data = await this.repository.findByCpf(orientadorCpf);
+        const data = await this.repository.findByOrientadorCpf(orientadorCpf);
 
         const targetCpf = data.cpfs.find(cpf => cpf === orientadorCpf);
         
