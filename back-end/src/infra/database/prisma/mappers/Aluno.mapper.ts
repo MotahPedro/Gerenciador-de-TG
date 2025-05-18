@@ -7,7 +7,7 @@ export class AlunoMapper {
             nome: aluno.nome,
             email: aluno.email,
             senha: aluno.senha,
-            curso: aluno.curso,
+            curso: aluno.curso ?? undefined,
             turma: aluno.turma,
             periodo: aluno.periodo ?? undefined,
             semestre: aluno.semestre ?? undefined,

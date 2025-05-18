@@ -20,6 +20,7 @@ export class CreateAlunosUseCase {
         await this.validadeAluno(aluno);
 
         aluno.senha = await this.passwordHasherService.hashPassword(aluno.senha);
+        aluno.curso = ""
 
         const prismaAluno = AlunoMapper.toPrisma(aluno);
 
@@ -37,7 +38,7 @@ export class CreateAlunosUseCase {
 
     // Fazer turma do aluno ser gerado automaticamente concatenando o ano, o semestre e periodo. Exemplo: 202411 que seria 2024 + 1º semestre + 1º periodo(sendo 2 para a noite)
     private async validadeAluno(aluno: AlunoOrientadoProps) {
-        const requiredFields = ['matricula', 'nome', 'email', 'senha', 'curso', 'turma'];
+        const requiredFields = ['matricula', 'nome', 'email', 'senha', 'turma'];
         for (const field of requiredFields) {
             if (!aluno[field]) {
                 throw new AppError(constant.ALUNO.VALIDADE, HttpStatus.BAD_REQUEST.toString());

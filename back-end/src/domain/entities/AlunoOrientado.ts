@@ -6,7 +6,7 @@ export class AlunoOrientadoProps {
   nome: string;
   email: string;
   senha: string;
-  curso: string;
+  curso?: string;
   turma: string;
   periodo: string;
   semestre: string;

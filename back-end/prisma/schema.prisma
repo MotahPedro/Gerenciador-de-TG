@@ -30,7 +30,7 @@ model ProfessorOrientador {
   linhasOrientacao    Json
   cursosAtuacao       Json
   
-  alunosOrientados    AlunoOrientado[]
+  alunosOrientados    Json
 
   @@map("professororientador")
 }
@@ -59,7 +59,6 @@ model AlunoOrientado {
   periodo             String
   semestre            String
   filaDependencia     Boolean
-  professorOrientador ProfessorOrientador @relation(fields: [professorOrientadorCpf], references: [cpf], onDelete: Cascade)
   professorOrientadorCpf String    
   cargo               String      
   trabalhos           Trabalho[]

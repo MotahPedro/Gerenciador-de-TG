@@ -7,6 +7,7 @@ import { PrismaLinhaRepository } from './repositories/LinhaRepository';
 import { PrismaCursoRepository } from './repositories/CursoRepository';
 import { PrismaAdminRepository } from './repositories/AdminRepository';
 import { GetOrientadorUseCase } from '@application/useCases/Orientador/GetOrientador.usecase';
+import { GetAlunoUseCase } from '@application/useCases/Aluno/GetAluno.usecase';
 
 @Module({
   providers: [
@@ -17,7 +18,8 @@ import { GetOrientadorUseCase } from '@application/useCases/Orientador/GetOrient
     PrismaLinhaRepository,
     PrismaCursoRepository,
     PrismaAdminRepository,
-    GetOrientadorUseCase
+    GetOrientadorUseCase,
+    GetAlunoUseCase,
   ],
   exports: [
     PrismaOrientadorRepository,
