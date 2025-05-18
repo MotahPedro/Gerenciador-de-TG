@@ -5,6 +5,7 @@ import { OrientadorMapper } from '@infra/database/prisma/mappers/Orientador.mapp
 import AppError from '@helpers/errors/AppError';
 import getConstants from '@helpers/constants/getConstants';
 import { PrismaOrientadorRepository } from '@infra/database/prisma/repositories/OrientadorRepository';
+import { PasswordHasherService } from '@application/services/passwordHasher.service';
 
 const constant = getConstants()
 
@@ -12,11 +13,14 @@ const constant = getConstants()
 export class CreateOrientadorUseCase {
     constructor(
         private readonly repository: PrismaOrientadorRepository,
+        private readonly passwordHasherService: PasswordHasherService,
     ) {}
 
     async execute(orientador: ProfessorOrientadorProps) {
         
         await this.validadeOrientador(orientador);
+
+        orientador.senha = await this.passwordHasherService.hashPassword(orientador.senha);
 
         const prismaOrientador = OrientadorMapper.toPrisma(orientador);
 
@@ -49,5 +53,7 @@ export class CreateOrientadorUseCase {
         if (existingEmail) {
             throw new AppError(constant.ORIENTADOR.EMAIL, HttpStatus.BAD_REQUEST.toString());
         }
+
+        orientador.cargo = 'Orientador';
     }
 }

@@ -4,6 +4,8 @@ import { Injectable } from '@nestjs/common';
 import { CursoProps } from '@domain/entities/CursoProps';
 import { CursoMapper } from '../mappers/Curso.mapper';
 import { BaseRepository } from '../core/Base.repository';
+import { GetOrientadorUseCase } from '@application/useCases/Orientador/GetOrientador.usecase';
+import { GetAlunoUseCase } from '@application/useCases/Aluno/GetAluno.usecase';
 
 @Injectable()
 export class PrismaCursoRepository
@@ -11,7 +13,10 @@ export class PrismaCursoRepository
     implements CursoRepository {
 
     constructor(
-        public readonly prisma: PrismaRepository) {
+        public readonly prisma: PrismaRepository,
+        public readonly getOrientador: GetOrientadorUseCase,
+        public readonly getAluno: GetAlunoUseCase,
+    ) {
         super(prisma, 'cursoAtuacao');
     }
 
@@ -31,10 +36,10 @@ export class PrismaCursoRepository
         });
     }
     
-    async findByCpf(professorOrientadorCpf: string): Promise<any> {
+    async findByOrientadorCpf(professorOrientadorCpf: string): Promise<any> {
         return await this.prisma.cursoAtuacao.findFirst({
             where: {
-                cpfs: {
+                orientadoresCpfs: {
                     array_contains: professorOrientadorCpf,
                 },
             },
@@ -63,32 +68,89 @@ export class PrismaCursoRepository
     }
 
     async addOrientadorCpf(id: number, orientadorCpf: string): Promise<any> {
-        const linha = await this.prisma.cursoAtuacao.findUnique({
+        const curso = await this.prisma.cursoAtuacao.findUnique({
             where: { id: Number(id) },
         });
 
-        if (!linha) {
+        if (!curso) {
             throw new Error('Linha not found');
         }
 
-        const cpfsArray: string[] = Array.isArray(linha.cpfs) ? linha.cpfs.map(cpf => String(cpf)) : [];
+        const cpfsArray: string[] = Array.isArray(curso.orientadoresCpfs) ? curso.orientadoresCpfs.map(cpf => String(cpf)) : [];
 
         let cpfString = orientadorCpf;
         if (typeof orientadorCpf !== 'string') {
-            const match = JSON.stringify(orientadorCpf).match(/"cpfs":"(\d+)"/);
+            const match = JSON.stringify(orientadorCpf).match(/"orientadoresCpfs":"(\d+)"/);
             if (match) {
                 cpfString = match[1];
             }
         }
 
+        const orientador = await this.getOrientador.execute(cpfString)
+
+        const nomeCurso = curso.curso
+        
+        const cursosOrientadorArray: string[] = Array.isArray(orientador.cursosAtuacao) ? orientador.cursosAtuacao.map(cpf => String(cpf)) : [];
+
+        const updatedOrientadorCursos = [...cursosOrientadorArray, nomeCurso]
         const updatedCpfs = [...cpfsArray, cpfString];
 
-        return await this.prisma.cursoAtuacao.update({
+        const updatedOrientador = await this.prisma.professorOrientador.update({
+            where: { cpf: cpfString },
+            data: {
+                cursosAtuacao: updatedOrientadorCursos,
+            }
+        })
+
+        const updatedCurso = await this.prisma.cursoAtuacao.update({
             where: { id: Number(id) },
             data: {
-                cpfs: updatedCpfs,
+                orientadoresCpfs: updatedCpfs,
             },
         });
+
+        return { updatedCurso, updatedOrientador }
+    }
+
+    async addAlunoMatricula(id: number, alunoMatricula: string): Promise<any> {
+        const curso = await this.prisma.cursoAtuacao.findUnique({
+            where: { id: Number(id) },
+        });
+
+        if (!curso) {
+            throw new Error('Linha not found');
+        }
+
+        const cpfsArray: string[] = Array.isArray(curso.alunosMatriculas) ? curso.alunosMatriculas.map(cpf => String(cpf)) : [];
+
+        let matriculaString = alunoMatricula;
+        if (typeof alunoMatricula !== 'string') {
+            const match = JSON.stringify(alunoMatricula).match(/"alunosMatriculas":"(\d+)"/);
+            if (match) {
+                matriculaString = match[1];
+            }
+        }
+
+        const nomeCurso = curso.curso
+
+        const cursoDoAluno = nomeCurso
+        const updatedCpfs = [...cpfsArray, matriculaString];
+
+        const updatedOrientador = await this.prisma.alunoOrientado.update({
+            where: { matricula: matriculaString },
+            data: {
+                curso: cursoDoAluno,
+            }
+        })
+
+        const updatedCurso =  await this.prisma.cursoAtuacao.update({
+            where: { id: Number(id) },
+            data: {
+                alunosMatriculas: updatedCpfs,
+            },
+        });
+
+        return { updatedCurso, updatedOrientador }
     }
 
 }

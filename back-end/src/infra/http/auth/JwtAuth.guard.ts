@@ -12,7 +12,7 @@ export class JwtAuthGuard implements CanActivate {
 
 		try {
 			const decoded = jwt.verify(token, process.env.JWT_SECRET)
-			req['user'] = decoded 
+			req['user'] = decoded
 			return true
 		} catch (error) {
 			throw new UnauthorizedException('Invalid token')

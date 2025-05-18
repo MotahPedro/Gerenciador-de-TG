@@ -7,9 +7,10 @@ export class OrientadorMapper {
             nome: orientador.nome,
             email: orientador.email,
             senha: orientador.senha,
+            cargo: orientador.cargo ?? 'Orientador',
             
             linhasOrientacao: orientador.linhasOrientacao ?? [],
-            cursosAtuacao: Array.isArray(orientador.cursosAtuacao) && orientador.cursosAtuacao.length > 0 ? { create: orientador.cursosAtuacao.map((curso) => ({ curso: curso.curso })) } : undefined,
+            cursosAtuacao: orientador.cursosAtuacao ?? [],
             
             alunosOrientados: Array.isArray(orientador.alunosOrientados) && orientador.alunosOrientados.length > 0
                 ? { create: orientador.alunosOrientados.map(a => ({
@@ -41,6 +42,7 @@ export class OrientadorMapper {
         nome: raw.nome,
         email: raw.email,
         senha: raw.senha,
+        cargo: raw.cargo ?? 'Orientador',
         linhasOrientacao: Array.isArray(raw.linhasOrientacao) ? raw.linhasOrientacao.map(linha => linha.linha) : [],
         quantidadeInstituicoes: raw.quantidadeInstituicoes,
         cursosAtuacao: Array.isArray(raw.cursosAtuacao) ? raw.cursosAtuacao.map(curso => curso.curso) : [],
@@ -71,6 +73,7 @@ export class OrientadorMapper {
         nome: raw.nome,
         email: raw.email,
         senha: raw.senha,
+        cargo: raw.cargo ?? 'Orientador',
         linhasOrientacao: Array.isArray(raw.linhasOrientacao) ? raw.linhasOrientacao.map(linha => linha.linha) : [],
         quantidadeInstituicoes: raw.quantidadeInstituicoes,
         cursosAtuacao: Array.isArray(raw.cursosAtuacao) ? raw.cursosAtuacao.map(curso => curso.curso) : [],

@@ -40,6 +40,7 @@ import {
   import { AlunosRequestDto } from '../dtos/Requests/AlunosRequestDto';
   import { AlunosResponseDto } from '../dtos/Responses/AlunosResponseDto';
   import { createAlunoResponseExample } from '../dtos/examples/CreateAlunoREsponseExample';
+import { AlunoLoginLogoutUseCase } from '@application/useCases/Aluno/AlunoLogin-Logout.usecase';
   // mais 4 dtos a fazer
   // JwtAuth
   
@@ -51,6 +52,7 @@ import {
       private readonly getTodosAlunosUsecase: GetTodosAlunoUseCase,
       private readonly deleteAlunoUseCase: DeleteAlunoUseCase,
       private readonly updateAlunoUseCase: UpdateAlunoUsecase,
+      private readonly loginLogoutUseCase: AlunoLoginLogoutUseCase,
     ) {
       super();
     }
@@ -369,5 +371,15 @@ import {
     ) {
       const response = await this.getTodosAlunosUsecase.execute();
       this.ok(res, response);
+    }
+
+    @Post('aluno/login')
+    async login(@Body() body: any, @Res() res: any) {
+        return this.loginLogoutUseCase.login(body, res);
+    }
+
+    @Post('aluno/logout')
+    async logout(@Res() res: any) {
+        return this.loginLogoutUseCase.logout(res);
     }
 }

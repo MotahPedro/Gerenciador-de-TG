@@ -37,7 +37,7 @@ import { GetAdminUseCase } from '@application/useCases/Admin/GetAdmin.usecase';
 import { DeleteAdminUseCase } from '@application/useCases/Admin/DeleteAdmin.usecase';
 import { UpdateAdminUseCase } from '@application/useCases/Admin/UpdateAdmin.usecase';
 import { GetTodosAdminsUseCase } from '@application/useCases/Admin/GetTodosAdmins.usecase';
-import { LoginLogoutUseCase } from '@application/useCases/Admin/Login-Logout.usecase';
+import { AdminLoginLogoutUseCase } from '@application/useCases/Admin/AdminLogin-Logout.usecase';
 import { AdminsRequestDto } from '../dtos/Requests/AdminRequestDto';
 import { AdminsResponseDto } from '../dtos/Responses/AdminRespondeDto';
 import { CreateAdminResponseExample } from '../dtos/examples/CreateAdminResponseExample';
@@ -53,7 +53,7 @@ export class AdminController extends BaseController {
         private readonly getTodosAdminsUsecase: GetTodosAdminsUseCase,
         private readonly deleteAdminUseCase: DeleteAdminUseCase,
         private readonly updateAdminUseCase: UpdateAdminUseCase,
-        private readonly loginLogoutUseCase: LoginLogoutUseCase,
+        private readonly loginLogoutUseCase: AdminLoginLogoutUseCase,
     ) {
         super();
     }

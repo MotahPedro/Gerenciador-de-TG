@@ -39,6 +39,7 @@ import { OrientadorResponseDto } from '../dtos/Responses/OrientadorResponseDto';
 import { DeleteOrientadorUseCase } from '@application/useCases/Orientador/DeleteOrientador.usecase';
 import { UpdateOrientadorUseCase } from '@application/useCases/Orientador/UpdateOrientador.usecase';
 import { GetTodosOrientadoresUseCase } from '@application/useCases/Orientador/GetTodosOrientadores';
+import { OrientadorLoginLogoutUseCase } from '@application/useCases/Orientador/OrientadorLogin-Logout.usecase';
 
 // mais 4 dtos a fazer
 // JwtAuth
@@ -51,6 +52,7 @@ export class ProfessorOrientadorController extends BaseController {
     private readonly getTodosOrientadoresUsecase: GetTodosOrientadoresUseCase,
     private readonly deleteOrientadorUseCase: DeleteOrientadorUseCase,
     private readonly updateOrientadorUseCase: UpdateOrientadorUseCase,
+    private readonly loginLogoutUseCase: OrientadorLoginLogoutUseCase,
   ) {
     super();
   }
@@ -370,5 +372,15 @@ export class ProfessorOrientadorController extends BaseController {
     const response = await this.getTodosOrientadoresUsecase.execute();
     this.ok(res, response);
   }
+
+  @Post('orientador/login')
+    async login(@Body() body: any, @Res() res: any) {
+        return this.loginLogoutUseCase.login(body, res);
+    }
+
+    @Post('orientador/logout')
+    async logout(@Res() res: any) {
+        return this.loginLogoutUseCase.logout(res);
+    }
 
 }

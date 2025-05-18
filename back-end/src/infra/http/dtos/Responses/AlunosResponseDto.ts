@@ -37,6 +37,9 @@ export class AlunosResponseDto {
     @ApiProperty({ example: 1 })
     professorOrientadorId: number;
 
+    @ApiProperty({ example: 'Aluno' })
+    cargo: string;
+
     @ApiProperty({
         type: [Object],
         example: [

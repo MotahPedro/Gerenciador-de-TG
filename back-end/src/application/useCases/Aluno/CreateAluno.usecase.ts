@@ -4,6 +4,7 @@ import { AlunoMapper } from '@infra/database/prisma/mappers/Aluno.mapper';
 import AppError from '@helpers/errors/AppError';
 import getConstants from '@helpers/constants/getConstants';
 import { PrismaAlunoRepository } from '@infra/database/prisma/repositories/AlunoRepository';
+import { PasswordHasherService } from '@application/services/passwordHasher.service';
 
 const constant = getConstants()
 
@@ -11,11 +12,15 @@ const constant = getConstants()
 export class CreateAlunosUseCase {
     constructor(
         private readonly repository: PrismaAlunoRepository,
-    ) {}
+        private readonly passwordHasherService: PasswordHasherService
+    ) { }
 
     async execute(aluno: AlunoOrientadoProps) {
-        
+
         await this.validadeAluno(aluno);
+
+        aluno.senha = await this.passwordHasherService.hashPassword(aluno.senha);
+        aluno.curso = ""
 
         const prismaAluno = AlunoMapper.toPrisma(aluno);
 
@@ -33,7 +38,7 @@ export class CreateAlunosUseCase {
 
     // Fazer turma do aluno ser gerado automaticamente concatenando o ano, o semestre e periodo. Exemplo: 202411 que seria 2024 + 1º semestre + 1º periodo(sendo 2 para a noite)
     private async validadeAluno(aluno: AlunoOrientadoProps) {
-        const requiredFields = ['matricula', 'nome', 'email', 'senha', 'curso', 'turma'];
+        const requiredFields = ['matricula', 'nome', 'email', 'senha', 'turma'];
         for (const field of requiredFields) {
             if (!aluno[field]) {
                 throw new AppError(constant.ALUNO.VALIDADE, HttpStatus.BAD_REQUEST.toString());
@@ -49,5 +54,7 @@ export class CreateAlunosUseCase {
         if (existingEmail) {
             throw new AppError(constant.ALUNO.EMAIL, HttpStatus.BAD_REQUEST.toString());
         }
+
+        aluno.cargo = 'Aluno';
     }
 }

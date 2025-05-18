@@ -11,6 +11,7 @@ export const createAlunoResponseExample = {
     filaDependencia: false,
     professorOrientador: { nome: 'John Smith' },
     professorOrientadorId: 1,
+    cargo: 'Aluno',
     trabalhos: [
         {
         tema: 'Topic 1',

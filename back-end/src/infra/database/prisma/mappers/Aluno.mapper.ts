@@ -7,13 +7,14 @@ export class AlunoMapper {
             nome: aluno.nome,
             email: aluno.email,
             senha: aluno.senha,
-            curso: aluno.curso,
+            curso: aluno.curso ?? undefined,
             turma: aluno.turma,
             periodo: aluno.periodo ?? undefined,
             semestre: aluno.semestre ?? undefined,
             filaDependencia: aluno.filaDependencia ?? false,
             professorOrientador: aluno.professorOrientador ?? undefined,
             professorOrientadorCpf: aluno.professorOrientadorCpf ?? undefined,
+            cargo: aluno.cargo ?? 'Aluno',
             trabalhos: Array.isArray(aluno.trabalhos) && aluno.trabalhos.length > 0 ? { create: aluno.trabalhos.map(t => ({ tema: t.tema, objetivo: t.objetivo, questaoProblema: t.questaoProblema })) } : undefined
         }
     }
@@ -31,6 +32,7 @@ export class AlunoMapper {
             filaDependencia: raw.filaDependencia,
             professorOrientador: raw.professorOrientador,
             professorOrientadorCpf: raw.professorOrientadorCpf,
+            cargo: raw.cargo,
             trabalhos: Array.isArray(raw.trabalhos) ? raw.trabalhos.map(t => ({ tema: t.tema, objetivo: t.objetivo, questaoProblema: t.questaoProblema })) : []
         }
     }
@@ -48,6 +50,7 @@ export class AlunoMapper {
             filaDependencia: raw.filaDependencia,
             professorOrientador: raw.professorOrientador,
             professorOrientadorCpf: raw.professorOrientadorCpf,
+            cargo: raw.cargo,
             trabalhos: Array.isArray(raw.trabalhos) ? raw.trabalhos.map(t => ({ tema: t.tema, objetivo: t.objetivo, questaoProblema: t.questaoProblema })) : []
         }
     }
