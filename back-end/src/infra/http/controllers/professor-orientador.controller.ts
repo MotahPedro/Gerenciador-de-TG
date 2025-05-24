@@ -309,7 +309,133 @@ export class ProfessorOrientadorController extends BaseController {
     @Body() orientador: OrientadorRequestDto,
     @Res() res: Response,
   ) {
-    const response = await this.updateOrientadorUseCase.execute(cpf, orientador);
+    const response = await this.updateOrientadorUseCase.fullUpdate(cpf, orientador);
+
+    this.ok(res, response);
+  }
+
+  @Patch('orientador/add/aluno/:cpf')
+  @ApiExcludeEndpoint()
+  @ApiParam({ name: 'cpf', type: String })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Success',
+    type: OrientadorResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+    type: BadRequest,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+    type: Unauthorized,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+    type: Forbidden,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found',
+    type: NotFound,
+  })
+  @ApiResponse({
+    status: 405,
+    description: 'Method Not allowed',
+    type: MethodNotAllowed,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Conflict',
+    type: Conflict,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Server Error',
+    type: InternalServerError,
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Service Unavailable',
+    type: ServiceUnavailable,
+  })
+  @ApiResponse({
+    status: 504,
+    description: 'Gateway Timeout',
+    type: GatewayTimeout,
+  })
+  async addAlunoToOrientador(
+    @Param('cpf') cpf: string,
+    @Body() alunoRa: string,
+    @Res() res: Response,
+  ) {
+    const response = await this.updateOrientadorUseCase.addAlunoToOrientador(cpf, alunoRa);
+
+    this.ok(res, response);
+  }
+
+  @Patch('orientador/remove/aluno/:cpf')
+  @ApiExcludeEndpoint()
+  @ApiParam({ name: 'cpf', type: String })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Success',
+    type: OrientadorResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+    type: BadRequest,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+    type: Unauthorized,
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden',
+    type: Forbidden,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found',
+    type: NotFound,
+  })
+  @ApiResponse({
+    status: 405,
+    description: 'Method Not allowed',
+    type: MethodNotAllowed,
+  })
+  @ApiResponse({
+    status: 409,
+    description: 'Conflict',
+    type: Conflict,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal Server Error',
+    type: InternalServerError,
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Service Unavailable',
+    type: ServiceUnavailable,
+  })
+  @ApiResponse({
+    status: 504,
+    description: 'Gateway Timeout',
+    type: GatewayTimeout,
+  })
+  async removeAlunoFromOrientador(
+    @Param('cpf') cpf: string,
+    @Body() alunoRa: string,
+    @Res() res: Response,
+  ) {
+    const response = await this.updateOrientadorUseCase.removeAlunoFromOrientador(cpf, alunoRa);
 
     this.ok(res, response);
   }

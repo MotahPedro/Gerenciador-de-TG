@@ -10,7 +10,7 @@ const constant = getConstants()
 export class UpdateOrientadorUseCase {
     constructor(private repository: PrismaOrientadorRepository) {}
 
-    async execute(cpf: string, orientador: ProfessorOrientadorProps): Promise<ProfessorOrientadorProps> {
+    async fullUpdate(cpf: string, orientador: ProfessorOrientadorProps): Promise<ProfessorOrientadorProps> {
         const data = await this.repository.findByCpf(cpf);
 
         if (!data) {
@@ -18,6 +18,38 @@ export class UpdateOrientadorUseCase {
         }
 
         const response = await this.repository.update(cpf, orientador);
+
+        if (!response) {
+            throw new AppError(constant.ORIENTADOR.UPDATE.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+        }
+
+        return response;
+    }
+
+    async addAlunoToOrientador(cpf: string, alunoOrientadoRa: string): Promise<ProfessorOrientadorProps> {
+        const data = await this.repository.findByCpf(cpf);
+
+        if (!data) {
+            throw new AppError(constant.ORIENTADOR.GET_CPF.ERRO, HttpStatus.NOT_FOUND.toString());
+        }
+
+        const response = await this.repository.addAlunoOrientado(cpf, alunoOrientadoRa);
+
+        if (!response) {
+            throw new AppError(constant.ORIENTADOR.UPDATE.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());
+        }
+
+        return response;
+    }
+
+    async removeAlunoFromOrientador(cpf: string, alunoOrientadoRa: string): Promise<ProfessorOrientadorProps> {
+        const data = await this.repository.findByCpf(cpf);
+
+        if (!data) {
+            throw new AppError(constant.ORIENTADOR.GET_CPF.ERRO, HttpStatus.NOT_FOUND.toString());
+        }
+
+        const response = await this.repository.removeAlunoOrientado(cpf, alunoOrientadoRa);
 
         if (!response) {
             throw new AppError(constant.ORIENTADOR.UPDATE.ERRO, HttpStatus.INTERNAL_SERVER_ERROR.toString());

@@ -20,7 +20,6 @@ export class CreateAlunosUseCase {
         await this.validadeAluno(aluno);
 
         aluno.senha = await this.passwordHasherService.hashPassword(aluno.senha);
-        aluno.curso = ""
 
         const prismaAluno = AlunoMapper.toPrisma(aluno);
 

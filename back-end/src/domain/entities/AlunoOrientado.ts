@@ -11,8 +11,7 @@ export class AlunoOrientadoProps {
   periodo: string;
   semestre: string;
   filaDependencia: boolean;
-  professorOrientador: { nome: string };
-  professorOrientadorCpf: string;
+  professorOrientadorCpf?: string;
   cargo?: string;
   trabalhos: {
     tema: string;
