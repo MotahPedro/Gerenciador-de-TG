@@ -11,22 +11,7 @@ export class ProfessorOrientadorProps {
   quantidadeAlunos: number;
   cargo?: string;
   cursosAtuacao: { curso: string }[];
-  alunosOrientados: {
-    matricula: string;
-    nome: string;
-    email: string;
-    senha: string;
-    curso: string;
-    turma: string;
-    periodo: string;
-    semestre: string;
-    filaDependencia: string;
-    trabalhos: {
-      tema: string;
-      objetivo: string;
-      questaoProblema: string;
-    }[];
-  }[];
+  alunosOrientados: string[]; // Array de RAs de alunos orientados
 
   static async comparePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
     return bcrypt.compare(plainPassword, hashedPassword);

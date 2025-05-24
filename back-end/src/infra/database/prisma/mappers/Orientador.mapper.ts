@@ -11,25 +11,8 @@ export class OrientadorMapper {
             
             linhasOrientacao: orientador.linhasOrientacao ?? [],
             cursosAtuacao: orientador.cursosAtuacao ?? [],
+            alunosOrientados: orientador.alunosOrientados ?? [],
             
-            alunosOrientados: Array.isArray(orientador.alunosOrientados) && orientador.alunosOrientados.length > 0
-                ? { create: orientador.alunosOrientados.map(a => ({
-                    matricula: a.matricula,
-                    nome: a.nome,
-                    email: a.email,
-                    senha: a.senha,
-                    curso: a.curso,
-                    turma: a.turma,
-                    periodo: a.periodo,
-                    semestre: a.semestre,
-                    filaDependencia: a.filaDependencia,
-                    trabalhos: a.trabalhos ? a.trabalhos.map(t => ({
-                        tema: t.tema,
-                        objetivo: t.objetivo,
-                        questaoProblema: t.questaoProblema,
-                    })) : []
-                })) }
-                : undefined,
             quantidadeInstituicoes: orientador.quantidadeInstituicoes ?? 0,
             quantidadeAlunos: orientador.quantidadeAlunos ?? 0,
         }

@@ -47,6 +47,17 @@ export default function getConstants() {
                 VAZIO: 'Os dados não podem ser vazios',
             },
             NOT_FOUND: 'Orientador não encontrado',
+            ADD_ALUNO: {
+                ERRO: 'Erro ao adicionar aluno orientado',
+                VAZIO: 'RA não pode ser vazio',
+                ALUNO_NAO_ENCONTRADO: 'Aluno não encontrado',
+            },
+            REMOVE_ALUNO: {
+                ERRO: 'Erro ao remover aluno orientado',
+                VAZIO: 'RA não pode ser vazio',
+                ALUNO_NAO_ENCONTRADO: 'Aluno não encontrado',
+                ALUNO_NAO_ORIENTADO: 'Aluno não orientado',
+            },
         },
         ALUNO: {
             VALIDADE: 'CPF, Nome, Email, Senha, curso e turma são obrigatórios',
